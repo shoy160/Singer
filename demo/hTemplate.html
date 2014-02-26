@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>hTemplate</title>
+    <link rel="stylesheet" href="../css/h-pager.css" type="text/css" media="all">
+</head>
+<body>
+    <div class="container">
+
+    </div>
+    <div class="h-pager"></div>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/hTemplate.js"></script>
+    <script>
+        var h = new hTemplate({
+            tmp:'{id}=--{name}',
+            container:$(".container"),
+            filter:function(json){
+                for(var s in json){
+                    if("id" === s)
+                        json[s] = "id:"+json[s];
+                    if("name" === s)
+                        json[s] = '<span style="color:red">'+json[s]+'</span>';
+                }
+                return json;
+            }
+        });
+        (function(){
+            h.set({page:1});
+            h.bind({id:23,name:"单独辅导"},120);
+        })();
+    </script>
+</body>
+</html>
