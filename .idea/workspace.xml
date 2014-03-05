@@ -5,6 +5,7 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/plugs/Jq.lineSlide.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/demo/class.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/plugs/class.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/demo/css/h-pager.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/seed/src/json.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/demo/seed.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/plugs/slider.js" />
@@ -12,6 +13,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gruntfile.js" afterPath="$PROJECT_DIR$/Gruntfile.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugs/Jq.lazyLoad.js" afterPath="$PROJECT_DIR$/plugs/Jq.lazyLoad.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugs/Jq.lazyLoad.test.js" afterPath="$PROJECT_DIR$/plugs/Jq.lazyLoad.test.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugs/hTemplate.js" afterPath="$PROJECT_DIR$/plugs/hTemplate.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/seed/src/singer.js" afterPath="$PROJECT_DIR$/src/seed/src/singer.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -45,10 +47,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="seed.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="seed.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/build/seed.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="33" selection-start="81" selection-end="81" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="140">
+            <state line="1" column="2194" selection-start="2242" selection-end="2242" vertical-scroll-proportion="0.028011205" vertical-offset="0" max-vertical-offset="714">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -65,10 +67,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="seed.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="seed.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/demo/seed.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="9" selection-start="487" selection-end="487" vertical-scroll-proportion="0.5157593" vertical-offset="0" max-vertical-offset="698">
+            <state line="18" column="9" selection-start="487" selection-end="487" vertical-scroll-proportion="-12.413794" vertical-offset="0" max-vertical-offset="520">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="hTemplate.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/plugs/hTemplate.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="38" selection-start="602" selection-end="602" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2780">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="h-pager.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/demo/css/h-pager.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="26" selection-start="145" selection-end="145" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1280">
               <folding />
             </state>
           </provider>
@@ -92,7 +112,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/singer.js" />
         <option value="$PROJECT_DIR$/plugs/Jq.lazyLoad.test.js" />
         <option value="$PROJECT_DIR$/demo/index.html" />
         <option value="$PROJECT_DIR$/plugs/Jq.lazyLoad.js" />
@@ -108,6 +127,7 @@
         <option value="$PROJECT_DIR$/Gruntfile.js" />
         <option value="$PROJECT_DIR$/src/seed/src/singer.js" />
         <option value="$PROJECT_DIR$/demo/seed.html" />
+        <option value="$PROJECT_DIR$/plugs/hTemplate.js" />
       </list>
     </option>
   </component>
@@ -171,74 +191,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="seed" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Singer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Singer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="seed" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Singer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Singer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="demo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Singer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Singer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="collection" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Singer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Singer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="build" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -260,6 +212,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Shoy\git\github\Singer\demo\css" />
       <recent name="D:\Shoy\git\github\Singer\plugs" />
     </key>
   </component>
@@ -339,22 +292,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/plugs/Jq.shoyLazy.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="29" selection-start="1917" selection-end="1917" vertical-scroll-proportion="0.0" vertical-offset="893" max-vertical-offset="1620">
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plugs/slider.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="20" selection-start="744" selection-end="744" vertical-scroll-proportion="0.0" vertical-offset="3875" max-vertical-offset="4580">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/plugs/Jq.lineSlide.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="15" column="50" selection-start="415" selection-end="415" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1200">
@@ -432,15 +369,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build/seed.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="33" selection-start="81" selection-end="81" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="140">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/seed/src/json.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="3" column="0" selection-start="20" selection-end="20" vertical-scroll-proportion="0.0" vertical-offset="253" max-vertical-offset="980">
@@ -450,8 +378,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/demo/seed.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="9" selection-start="487" selection-end="487" vertical-scroll-proportion="0.5157593" vertical-offset="0" max-vertical-offset="698">
+        <state line="18" column="9" selection-start="487" selection-end="487" vertical-scroll-proportion="-12.413794" vertical-offset="0" max-vertical-offset="520">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugs/hTemplate.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="38" selection-start="602" selection-end="602" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2780">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demo/css/h-pager.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="26" selection-start="145" selection-end="145" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1280">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/seed.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="2194" selection-start="2242" selection-end="2242" vertical-scroll-proportion="0.028011205" vertical-offset="0" max-vertical-offset="714">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
