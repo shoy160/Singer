@@ -3,7 +3,7 @@
  * @author shoy
  * @date 2014-02-18
  */
-var SINGER = (function (undefined) {
+var singer = window.SINGER = (function (undefined) {
     var self = this,
         S,
         guid = 0,
@@ -13,8 +13,7 @@ var SINGER = (function (undefined) {
             info: 20,
             warn: 30,
             error: 40
-        },
-        toString = Object.prototype.toString;
+        };
 
     function getLogger(logger) {
         var obj = {};
@@ -39,6 +38,51 @@ var SINGER = (function (undefined) {
         },
         Version: '@VERSION@',
         /**
+         * 类型判断
+         * @param obj
+         * @param type
+         * @return boolean
+         */
+        is: function (obj, type) {
+            var isNan = {"NaN": 1, "Infinity": 1, "-Infinity": 1}
+            type = type.toLowerCase();
+            if (type == "finite") {
+                return !isNan["hasOwnProperty"](+obj);
+            }
+            if (type == "array") {
+                return obj instanceof Array;
+            }
+            return  (type == "null" && obj === null) ||
+                // is(undefined,'undefined')
+                (type == typeof obj && obj !== null) ||
+                // Object(Object) == Object -> true
+                // Object({}) == {}         -> false
+                (type == "object" && obj === Object(obj)) ||
+                (type == "array" && Array.isArray && Array.isArray(obj)) ||
+                Object.prototype.toString.call(obj).slice(8, -1).toLowerCase() == type;
+        },
+        isObject: function (obj) {
+            return S.is(obj, "object");
+        },
+        isArray: function (obj) {
+            return S.is(obj, "array");
+        },
+        isNumber: function (obj) {
+            return S.is(obj, "number");
+        },
+        isFunction: function (obj) {
+            return S.is(obj, "function");
+        },
+        isNull: function (obj) {
+            return S.is(obj, "null");
+        },
+        isString: function (obj) {
+            return S.is(obj, "string");
+        },
+        isEmpty: function (obj) {
+            return EMPTY === obj || S.isNull(obj);
+        },
+        /**
          * set SINGER Configuration
          * @param configName
          * @param configValue
@@ -47,10 +91,9 @@ var SINGER = (function (undefined) {
             var cfg,
                 r,
                 self = this,
-                toString = Object.prototype.toString,
                 Config = S.Config,
                 configFns = Config.fns;
-            if ("[object Object]" === toString.call(configName)) {
+            if (S.isObject(configName)) {
                 for (var c in configName) {
                     Config[c] = configName[c];
                 }
@@ -74,18 +117,16 @@ var SINGER = (function (undefined) {
         },
         log: function (msg, cat, logger) {
             if ('@DEBUG@') {
-                var matched = 1;
+                var matched = 0;
                 if (logger) {
-                    var level,minLevel,maxLevel,cfg;
-                    cfg = S.Config.logger||{};
-                    cat = cat || 'debug';
-                    level = loggerLevel[cat] || loggerLevel.debug;
-
-                    if (matched) {
+                    if (S.isString(msg)) {
                         msg = logger + ": " + msg;
+                    } else {
+                        matched = 1;
                     }
                 }
                 if (typeof console !== 'undefined' && console.log) {
+                    if (matched) console[cat && console[cat] ? cat : 'log'](logger + ":");
                     console[cat && console[cat] ? cat : 'log'](msg);
                     return msg;
                 }
@@ -94,6 +135,9 @@ var SINGER = (function (undefined) {
         },
         getLogger: function (logger) {
             return getLogger(logger);
+        },
+        guid: function (pre) {
+            return (pre || '') + guid++;
         }
     };
     S.Logger = {};

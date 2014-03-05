@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>Seed Demo</title>
+</head>
+<body>
+
+<script type="text/javascript" src="../build/seed.js"></script>
+<script type="text/javascript">
+    (function (S) {
+        var tag = "Seed Demo",
+            log = S.getLogger(tag),
+            json = S.json({date: "2013-05-04", strs: ["北京", "上海"]});
+        log.debug(S.guid(tag));
+        log.info(S.json(json));
+        log.warn(S.guid(tag));
+    })(SINGER);
+</script>
+</body>
+</html>

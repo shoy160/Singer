@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>Class Demo</title>
+    <style>
+        .date em {
+            color: #ff2356;
+            font-family: Monaco, Consolas, "Lucida Console", monospace;
+            font-size: 15px;
+            font-weight: 700;
+            padding: 0 3px;
+        }
+    </style>
+</head>
+<body>
+<div class="date">
+
+</div>
+</body>
+<script src="../plugs/class.js"></script>
+<script>
+    (function () {
+        var date = new Date("2011/08/08 23:00:00"),
+                div = document.getElementsByTagName("div")[0],
+                left;
+        setInterval(function () {
+            left = date.left();
+            var html = "<em>{dd}</em>天<em>{hh}</em>小时<em>{mm}</em>分<em>{ss}</em>秒".format(left);
+            if (left.state > 0) html = "已过去 " + html;
+            else html = "还剩 " + html + " 结束";
+            div.innerHTML = html;
+        }, 1000);
+    })();
+</script>
+</html>
