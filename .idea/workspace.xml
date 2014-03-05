@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ae72892a-60e6-4420-a245-6c51feed57ad" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/seed/demo/base.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/seed/src/singer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/plugs/Jq.countDown.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/plugs/Jq.stars.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Singer.iws" />
@@ -28,10 +27,57 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="singer.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="singer.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/seed/src/singer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="75" column="28" selection-start="2039" selection-end="2039" vertical-scroll-proportion="0.5323246" vertical-offset="1113" max-vertical-offset="2240">
+            <state line="70" column="17" selection-start="1920" selection-end="1920" vertical-scroll-proportion="0.0" vertical-offset="1113" max-vertical-offset="2240">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Jq.countDown.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/plugs/Jq.countDown.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="44" column="39" selection-start="1580" selection-end="1580" vertical-scroll-proportion="0.0" vertical-offset="480" max-vertical-offset="1500">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Jq.stars.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/plugs/Jq.stars.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="14" column="11" selection-start="350" selection-end="350" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="400">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Jq.lazyLoad.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/plugs/Jq.lazyLoad.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="100" column="13" selection-start="2737" selection-end="2737" vertical-scroll-proportion="0.0" vertical-offset="1893" max-vertical-offset="2620">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Jq.shoyLazy.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/plugs/Jq.shoyLazy.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="52" column="51" selection-start="1756" selection-end="1756" vertical-scroll-proportion="0.20220083" vertical-offset="893" max-vertical-offset="1620">
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Jq.lazyLoad.test.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/plugs/Jq.lazyLoad.test.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="117" column="2" selection-start="3754" selection-end="3754" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2460">
               <folding />
             </state>
           </provider>
@@ -40,7 +86,7 @@
       <file leaf-file-name="base.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/seed/demo/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="22" selection-start="277" selection-end="277" vertical-scroll-proportion="-7.586207" vertical-offset="0" max-vertical-offset="400">
+            <state line="11" column="22" selection-start="277" selection-end="277" vertical-scroll-proportion="0.0" vertical-offset="220" max-vertical-offset="400">
               <folding />
             </state>
           </provider>
@@ -70,6 +116,9 @@
         <option value="$PROJECT_DIR$/plugs/Jq.lazyLoad.js" />
         <option value="$PROJECT_DIR$/src/seed/demo/base.html" />
         <option value="$PROJECT_DIR$/src/seed/src/singer.js" />
+        <option value="$PROJECT_DIR$/plugs/Jq.countDown.js" />
+        <option value="$PROJECT_DIR$/plugs/Jq.stars.js" />
+        <option value="$PROJECT_DIR$/plugs/Jq.shoyLazy.js" />
       </list>
     </option>
   </component>
@@ -133,33 +182,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="seed" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Singer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Singer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="seed" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="demo" />
+              <option name="myItemId" value="plugs" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -187,6 +210,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="options.lastSelected" value="editor.preferences.completion" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
@@ -233,14 +257,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1456" height="886" extended-state="6" />
+    <frame x="-8" y="-8" width="1456" height="886" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24930556" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24930556" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -267,6 +291,13 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/seed/demo/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="22" selection-start="277" selection-end="277" vertical-scroll-proportion="0.0" vertical-offset="220" max-vertical-offset="400">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/seed/src/singer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="36" column="13" selection-start="900" selection-end="900" vertical-scroll-proportion="0.0" vertical-offset="273" max-vertical-offset="1120">
@@ -283,9 +314,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/singer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="156" column="29" selection-start="4717" selection-end="4717" vertical-scroll-proportion="0.0" vertical-offset="2964" max-vertical-offset="3496">
-          <folding />
-        </state>
+        <state line="156" column="29" selection-start="4717" selection-end="4717" vertical-scroll-proportion="0.0" vertical-offset="2964" max-vertical-offset="3496" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/plugs/Jq.lazyLoad.js">
@@ -295,55 +324,72 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/plugs/Jq.lazyLoad.test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="117" column="2" selection-start="3754" selection-end="3754" vertical-scroll-proportion="0.0" vertical-offset="2223" max-vertical-offset="2337">
-          <folding />
-        </state>
+        <state line="117" column="2" selection-start="3754" selection-end="3754" vertical-scroll-proportion="0.0" vertical-offset="2223" max-vertical-offset="2337" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/demo/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="143" selection-start="1835" selection-end="1835" vertical-scroll-proportion="0.0" vertical-offset="684" max-vertical-offset="1254">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plugs/Jq.lazyLoad.test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="117" column="2" selection-start="3754" selection-end="3754" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
-        </state>
+        <state line="36" column="143" selection-start="1835" selection-end="1835" vertical-scroll-proportion="0.0" vertical-offset="684" max-vertical-offset="1254" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/demo/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="143" selection-start="1835" selection-end="1835" vertical-scroll-proportion="0.0" vertical-offset="684" max-vertical-offset="1254">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plugs/Jq.lazyLoad.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="11" selection-start="1776" selection-end="1776" vertical-scroll-proportion="0.0" vertical-offset="703" max-vertical-offset="2489" />
+        <state line="36" column="143" selection-start="1835" selection-end="1835" vertical-scroll-proportion="0.0" vertical-offset="684" max-vertical-offset="1254" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/singer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="32" selection-start="274" selection-end="274" vertical-scroll-proportion="0.19257222" vertical-offset="0" max-vertical-offset="3600">
-          <folding />
-        </state>
+        <state line="11" column="32" selection-start="274" selection-end="274" vertical-scroll-proportion="0.19257222" vertical-offset="0" max-vertical-offset="3600" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/seed/demo/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="22" selection-start="277" selection-end="277" vertical-scroll-proportion="-7.586207" vertical-offset="0" max-vertical-offset="400">
+        <state line="11" column="22" selection-start="277" selection-end="277" vertical-scroll-proportion="0.0" vertical-offset="220" max-vertical-offset="400">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/seed/src/singer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="28" selection-start="2039" selection-end="2039" vertical-scroll-proportion="0.5323246" vertical-offset="1113" max-vertical-offset="2240">
+        <state line="70" column="17" selection-start="1920" selection-end="1920" vertical-scroll-proportion="0.0" vertical-offset="1113" max-vertical-offset="2240">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugs/Jq.stars.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="11" selection-start="350" selection-end="350" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="400">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugs/Jq.countDown.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="39" selection-start="1580" selection-end="1580" vertical-scroll-proportion="0.0" vertical-offset="660" max-vertical-offset="1500">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugs/Jq.lazyLoad.test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="117" column="2" selection-start="3754" selection-end="3754" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2460">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugs/Jq.lazyLoad.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="100" column="13" selection-start="2737" selection-end="2737" vertical-scroll-proportion="0.0" vertical-offset="1893" max-vertical-offset="2620">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugs/Jq.shoyLazy.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="52" column="51" selection-start="1756" selection-end="1756" vertical-scroll-proportion="0.20220083" vertical-offset="893" max-vertical-offset="1620">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
