@@ -20,18 +20,41 @@ var hTemplate = window.hTemplate = (function ($, f) {
         t = t.bind("[^}]+", "");
         return t;
     };
-    var def = {
-        tmp: '',
-        empty: '',
-        container: $(document),
-        pager: $(".h-pager"),
-        page: 1,
-        size: 20,
-        total: 0,
-        filter: f,       //json数据过滤
-        fill: f,          //绑定前处理
-        pageClick: f     //页面点击事件
+    String.prototype.format = function () {
+        if (arguments.length <= 0) return this;
+        var result = this,
+            type = function (obj) {
+                return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
+            };
+        if (1 === arguments.length && "object" === type(arguments[0])) {
+            for (var key in arguments[0]) {
+                var reg = new RegExp("\\{\\{" + key + "\\}\\}", "gi");
+                result = result.replace(reg, arguments[0][key]);
+            }
+        } else {
+            for (var i = 0; i < arguments.length; i++) {
+                var reg = new RegExp("\\{" + i + "\\}", "gi");
+                result = result.replace(reg, arguments[i]);
+            }
+        }
+        //未绑定的默认以空字符填充
+        reg = new RegExp("(\\{[0-9]+\\})|(\\{\\{[0-9a-z]+\\}\\})", "gi");
+        result=result.replace(reg,"");
+        return result;
     };
+    var def = {
+            tmp: '',
+            empty: '',
+            container: $(document),
+            pager: $(".h-pager"),
+            page: 1,
+            size: 20,
+            total: 0,
+            filter: f,       //json数据过滤
+            fill: f,          //绑定前处理
+            pageClick: f     //页面点击事件
+        },
+        pagerTmp = '<li class="{{class}}"><a data-act="{{act}}" href="#">{{page}}</a></li>';
     var H = function (option) {
         option = $.extend(def, option || {});
         this.opt = option;
@@ -60,7 +83,7 @@ var hTemplate = window.hTemplate = (function ($, f) {
                 prev = !f,
                 next = !f,
                 getItem = function (n) {
-                    return '<li' + (n == current ? ' class="active"' : "") + '><a href="javascript:void(0)">' + n + '</a></li>';
+                    return pagerTmp.format({"class": (n === current ? "active" : ""), "page": n});
                 };
             if (1 == current) prev = f;
             if (current == total) next = f;
@@ -75,21 +98,22 @@ var hTemplate = window.hTemplate = (function ($, f) {
             } else {
                 html += getItem(1);
                 if (current - 4 > 1)
-                    html += '<li><span>...</span></li>';
+                    html += pagerTmp.format({"class": "disabled", "page": "..."});
                 for (i = current - 3; i < current + 4; i++) {
                     if (i > 1 && i < total)
                         html += getItem(i);
                 }
                 if (current + 4 < total)
-                    html += '<li><span>...</span></li>';
+                    html += pagerTmp.format({"class": "disabled", "page": "..."});
                 html += getItem(total);
             }
-            if (prev) html = '<li><a href="javascript:void(0)" data-act="-1">&laquo;</a></li>' + html;
-            if (next) html += '<li><a href="javascript:void(0)" data-act="1">&raquo;</a></li>';
+            html = pagerTmp.format({"class": (prev ? "" : "disabled"), "page": "&laquo;", "act": (prev ? -1 : 0)}) + html;
+            html += pagerTmp.format({"class": (next ? "" : "disabled"), "page": "&raquo;", "act": (next ? 1 : 0)});
             opt.pager.html("<ul>" + html + "</ul>");
             opt.pager.find("ul li a").bind("click.hPager", function () {
-                var $t = $(this);
-                if ($t.parent().hasClass("active")) return false;
+                var $t = $(this),
+                    $p = $t.parent();
+                if ($p.hasClass("active") || $p.hasClass("disabled")) return false;
                 var page = ~~opt.pager.find(".active a").html();
                 var act = ~~$t.data("act");
                 if (act)

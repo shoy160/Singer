@@ -39,10 +39,11 @@
 .h-pager li a{
     color: #428BCA;
 }
+.h-pager li.disabled a,
 .h-pager li span{
-    color: #666;
-    font-size: 12px;
-    padding-bottom: 8px;
+    color: #999;
+    background-color: #EEEEEE;
+    cursor: not-allowed;
 }
 .h-pager li a:hover,
 .h-pager li span:focus{

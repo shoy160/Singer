@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>form Demo</title>
+    <style>
+        .form-error{
+            color: #ff0000;
+            padding: 0 0 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1">
+        <input type="text" name="id" data-rules="{require:true}" data-messages="{require:'Id不能为空！'}" />
+    </form>
+    <script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+    <script src="../plugs/form.js"></script>
+    <script>
+        (function($){
+            var form = $("#form1").form();
+            //form.verify();
+        })(jQuery);
+    </script>
+</body>
+</html>

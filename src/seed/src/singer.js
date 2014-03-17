@@ -117,13 +117,11 @@ var singer = window.SINGER = (function (undefined) {
         },
         log: function (msg, cat, logger) {
             if ('@DEBUG@') {
-                var matched = 0;
+                var matched = false;
                 if (logger) {
-                    if (S.isString(msg)) {
+                    matched = S.isObject(msg);
+                    if(!matched)
                         msg = logger + ": " + msg;
-                    } else {
-                        matched = 1;
-                    }
                 }
                 if (typeof console !== 'undefined' && console.log) {
                     if (matched) console[cat && console[cat] ? cat : 'log'](logger + ":");
