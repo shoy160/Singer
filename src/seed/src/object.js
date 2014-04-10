@@ -64,6 +64,31 @@
                 delete c[MIX_CIRCULAR_DETECTION];
             }
             return target;
+        },
+        /**
+         * 克隆对象
+         * @param obj
+         * @returns {*}
+         */
+        clone: function (obj) {
+            var objClone;
+            if (obj.constructor === Object) {
+                objClone = new obj.constructor();
+            } else {
+                objClone = new obj.constructor(obj.valueOf());
+            }
+            for (var key in obj) {
+                if (obj.hasOwnProperty(key) && objClone[key] != obj[key]) {
+                    if (typeof(obj[key]) == 'object') {
+                        objClone[key] = obj[key].clone();
+                    } else {
+                        objClone[key] = obj[key];
+                    }
+                }
+            }
+            objClone.toString = obj.toString;
+            objClone.valueOf = obj.valueOf;
+            return objClone;
         }
     });
 
