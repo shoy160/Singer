@@ -1,7 +1,7 @@
 /**
  * Uri
  */
-(function(S,undefined){
+(function(S){
     S.uri = function (uri) {
         var q = [], qs;
         qs = (uri ? uri + "" : location.search);
@@ -19,5 +19,4 @@
         }
         return q;
     };
-    return S;
 })(SINGER);

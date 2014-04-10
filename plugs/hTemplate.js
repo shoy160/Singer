@@ -1,3 +1,6 @@
+/*
+ * hTemplate js模板
+ */
 var hTemplate = window.hTemplate = (function ($, f) {
     if (!String.prototype.replaceAll) {
         String.prototype.replaceAll = function (reg, str) {
@@ -39,7 +42,7 @@ var hTemplate = window.hTemplate = (function ($, f) {
         }
         //未绑定的默认以空字符填充
         reg = new RegExp("(\\{[0-9]+\\})|(\\{\\{[0-9a-z]+\\}\\})", "gi");
-        result=result.replace(reg,"");
+        result = result.replace(reg, "");
         return result;
     };
     var def = {
@@ -52,14 +55,15 @@ var hTemplate = window.hTemplate = (function ($, f) {
             total: 0,
             filter: f,       //json数据过滤
             fill: f,          //绑定前处理
-            pageClick: f     //页面点击事件
+            pageClick: f,     //页面点击事件
+            complete: f        //完成绑定事件
         },
         pagerTmp = '<li class="{{class}}"><a data-act="{{act}}" href="#">{{page}}</a></li>';
     var H = function (option) {
-        option = $.extend(def, option || {});
+        option = $.extend({}, def, option);
         this.opt = option;
         this.set = function (option) {
-            $.extend(this.opt, option || {});
+            this.opt = $.extend({}, this.opt, option);
         };
         this.fill = function (json) {
             var opt = this.opt;
@@ -128,8 +132,10 @@ var hTemplate = window.hTemplate = (function ($, f) {
             });
         };
         this.bind = function (json, total, append) {
+            var complete = this.opt.complete;
             if (!json || (json instanceof Array && !json.length)) {
                 if (!append) this.empty();
+                complete && "function" === typeof complete && complete.apply();
                 return f;
             }
             if (!append) this.clear();
@@ -144,6 +150,7 @@ var hTemplate = window.hTemplate = (function ($, f) {
             }
             this.set({total: total});
             this.pager();
+            complete && "function" === typeof complete && complete.apply();
             return f;
         };
         this.clear = function () {

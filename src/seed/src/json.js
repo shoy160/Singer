@@ -1,7 +1,7 @@
 /**
  * Json 序列化
  */
-(function(S,undefined){
+(function(S){
     S.json = function (json) {
         if (S.isEmpty(json)) return json;
         if (S.isObject(json)) {
@@ -40,5 +40,4 @@
             return eval("(" + json + ")");
         }
     };
-    return S;
 })(SINGER);

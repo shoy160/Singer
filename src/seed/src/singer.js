@@ -53,10 +53,7 @@ var singer = window.SINGER = (function (undefined) {
                 return obj instanceof Array;
             }
             return  (type == "null" && obj === null) ||
-                // is(undefined,'undefined')
                 (type == typeof obj && obj !== null) ||
-                // Object(Object) == Object -> true
-                // Object({}) == {}         -> false
                 (type == "object" && obj === Object(obj)) ||
                 (type == "array" && Array.isArray && Array.isArray(obj)) ||
                 Object.prototype.toString.call(obj).slice(8, -1).toLowerCase() == type;
@@ -136,6 +133,12 @@ var singer = window.SINGER = (function (undefined) {
         },
         guid: function (pre) {
             return (pre || '') + guid++;
+        },
+        _mix:function(target,resource){
+            for(var name in resource){
+                if(resource.hasOwnProperty(name))
+                target[name]=resource[name];
+            }
         }
     };
     S.Logger = {};

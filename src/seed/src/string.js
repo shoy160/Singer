@@ -34,7 +34,7 @@
      * @param str
      * @returns {string}
      */
-    S.ucFirst=function(str){
+    S.ucFirst = function (str) {
         str += '';
         return str.charAt(0).toUpperCase() + str.substring(1);
     };
@@ -44,7 +44,7 @@
      * @param prefix
      * @returns {boolean}
      */
-    S.startsWith=function (str, prefix) {
+    S.startsWith = function (str, prefix) {
         return str.lastIndexOf(prefix, 0) === 0;
     };
     /**
@@ -53,7 +53,7 @@
      * @param suffix
      * @returns {boolean}
      */
-    S.endsWith=function (str, suffix) {
+    S.endsWith = function (str, suffix) {
         var ind = str.length - suffix.length;
         return ind >= 0 && str.indexOf(suffix, ind) === ind;
     };
@@ -72,7 +72,7 @@
             }
         } else {
             for (var i = 1; i < arguments.length; i++) {
-                var reg = new RegExp("\\{" + (i-1) + "\\}", "gi");
+                var reg = new RegExp("\\{" + (i - 1) + "\\}", "gi");
                 result = result.replace(reg, arguments[i]);
             }
         }

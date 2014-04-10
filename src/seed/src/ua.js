@@ -1,6 +1,6 @@
 /**
  * 终端识别
  */
-(function(S,undefined){
+(function(S){
 
 })(SINGER);

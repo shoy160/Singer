@@ -6,16 +6,19 @@
 </head>
 <body>
 
-<script type="text/javascript" src="../build/seed.js"></script>
+<script type="text/javascript" src="../build/seed.min.js"></script>
 <script type="text/javascript">
     (function (S) {
         var tag = "Seed Demo",
-            log = S.getLogger(tag),
-            json = S.json({date: "2013-05-04", strs: ["北京", "上海"]});
+                log = S.getLogger(tag),
+                json = S.json({date: "2013-05-04", strs: ["北京", "上海"]});
         log.debug(S.guid(tag));
         log.debug(json);
         log.info(S.json(json));
         log.warn(S.guid(tag));
+        var t = {};
+        var a = S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: true});
+        log.info(a);
     })(SINGER);
 </script>
 </body>

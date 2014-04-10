@@ -53,10 +53,7 @@ var singer = window.SINGER = (function (undefined) {
                 return obj instanceof Array;
             }
             return  (type == "null" && obj === null) ||
-                // is(undefined,'undefined')
                 (type == typeof obj && obj !== null) ||
-                // Object(Object) == Object -> true
-                // Object({}) == {}         -> false
                 (type == "object" && obj === Object(obj)) ||
                 (type == "array" && Array.isArray && Array.isArray(obj)) ||
                 Object.prototype.toString.call(obj).slice(8, -1).toLowerCase() == type;
@@ -136,6 +133,12 @@ var singer = window.SINGER = (function (undefined) {
         },
         guid: function (pre) {
             return (pre || '') + guid++;
+        },
+        _mix:function(target,resource){
+            for(var name in resource){
+                if(resource.hasOwnProperty(name))
+                target[name]=resource[name];
+            }
         }
     };
     S.Logger = {};
@@ -147,10 +150,50 @@ var singer = window.SINGER = (function (undefined) {
     };
     return S;
 })();
+(function (S, undefined) {
+    var AP = Array.prototype,
+        indexOf = AP.indexOf,
+        lastIndexOf = AP.lastIndexOf,
+        UF = undefined;
+    S._mix(S, {
+        index: function (item, arr, fromIndex) {
+            if (indexOf) {
+                return fromIndex === UF ?
+                    indexOf.call(arr, item) :
+                    indexOf.call(arr, item, fromIndex);
+            }
+            var i = fromIndex || 0;
+            for (; i < arr.length; i++) {
+                if (arr[i] === item)
+                    break;
+            }
+            return i;
+        },
+        lastIndex: function (item, arr, fromIndex) {
+            if (lastIndexOf) {
+                return fromIndex === UF ?
+                    lastIndexOf.call(arr, item) :
+                    lastIndexOf.call(arr, item, fromIndex);
+            }
+            if (fromIndex === UF) {
+                fromIndex = arr.length - 1;
+            }
+            var i = fromIndex;
+            for (; i >= 0; i--) {
+                if (arr[i] === item)
+                    break;
+            }
+            return i;
+        },
+        inArray: function (item, arr) {
+            return S.index(item, arr) >= 0;
+        }
+    });
+})(SINGER);
 /**
  * Json 序列化
  */
-(function(S,undefined){
+(function(S){
     S.json = function (json) {
         if (S.isEmpty(json)) return json;
         if (S.isObject(json)) {
@@ -189,7 +232,137 @@ var singer = window.SINGER = (function (undefined) {
             return eval("(" + json + ")");
         }
     };
-    return S;
+})(SINGER);
+(function (S) {
+    var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
+        hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),
+        enumProperties = [
+            'constructor',
+            'hasOwnProperty',
+            'isPrototypeOf',
+            'propertyIsEnumerable',
+            'toString',
+            'toLocaleString',
+            'valueOf'
+        ];
+    S._mix(S, {
+        /**
+         * 获取对象属性名
+         */
+        keys: Object.keys || function (o) {
+            var result = [], p, i;
+
+            for (p in o) {
+                if (o.hasOwnProperty(p)) {
+                    result.push(p);
+                }
+            }
+            if (hasEnumBug) {
+                for (i = enumProperties.length - 1; i >= 0; i--) {
+                    p = enumProperties[i];
+                    if (o.hasOwnProperty(p)) {
+                        result.push(p);
+                    }
+                }
+            }
+
+            return result;
+        },
+        /**
+         * 扩展
+         * @param target    当前对象
+         * @param resource  资源对象
+         * @param overwrite 是否重写
+         * @param whiteList 白名单
+         * @param deep      是否深度复制
+         */
+        mix: function (target, resource, overwrite, whiteList, deep) {
+            if (S.isObject(overwrite)) {
+                whiteList = overwrite["whiteList"];
+                deep = overwrite["deep"];
+                overwrite = overwrite["overwrite"]
+            }
+            if (whiteList && (typeof whiteList !== 'function')) {
+                var originalWl = whiteList;
+                whiteList = function (name, val) {
+                    return S.inArray(name, originalWl) ? val : undefined;
+                };
+            }
+            if (overwrite === undefined) {
+                overwrite = true;
+            }
+            var cache = [],
+                c,
+                i = 0;
+            mixInternal(target, resource, overwrite, whiteList, deep, cache);
+            while ((c = cache[i++])) {
+                delete c[MIX_CIRCULAR_DETECTION];
+            }
+            return target;
+        }
+    });
+
+    function mixInternal(target, resource, overwrite, whiteList, deep, cache) {
+        if (!resource || !target) {
+            return resource;
+        }
+        var i, p, keys, len;
+
+        // 记录循环标志
+        resource[MIX_CIRCULAR_DETECTION] = target;
+
+        // 记录被记录了循环标志的对像
+        cache.push(resource);
+
+        // mix all properties
+        keys = S.keys(resource);
+        len = keys.length;
+        for (i = 0; i < len; i++) {
+            p = keys[i];
+            if (p !== MIX_CIRCULAR_DETECTION) {
+                // no hasOwnProperty judge!
+                _mix(p, target, resource, overwrite, whiteList, deep, cache);
+            }
+        }
+        return target;
+    }
+
+    function _mix(p, r, s, ov, wl, deep, cache) {
+        // 要求覆盖
+        // 或者目的不存在
+        // 或者深度mix
+        if (ov || !(p in r) || deep) {
+            var target = r[p],
+                src = s[p];
+            // prevent never-end loop
+            if (target === src) {
+                // S.mix({},{x:undefined})
+                if (target === undefined) {
+                    r[p] = target;
+                }
+                return;
+            }
+            if (wl) {
+                src = wl.call(s, p, src);
+            }
+            // 来源是数组和对象，并且要求深度 mix
+            if (deep && src && (S.isArray(src) || S.isObject(src))) {
+                if (src[MIX_CIRCULAR_DETECTION]) {
+                    r[p] = src[MIX_CIRCULAR_DETECTION];
+                } else {
+                    // 目标值为对象或数组，直接 mix
+                    // 否则 新建一个和源值类型一样的空数组/对象，递归 mix
+                    var clone = target && (S.isArray(target) || S.isObject(target)) ?
+                        target :
+                        (S.isArray(src) ? [] : {});
+                    r[p] = clone;
+                    mixInternal(clone, src, ov, wl, true, cache);
+                }
+            } else if (src !== undefined && (ov || !(p in r))) {
+                r[p] = src;
+            }
+        }
+    }
 })(SINGER);
 (function (S, undefined) {
     var RE_TRIM = /^[\s\xa0]+|[\s\xa0]+$/g,
@@ -227,7 +400,7 @@ var singer = window.SINGER = (function (undefined) {
      * @param str
      * @returns {string}
      */
-    S.ucFirst=function(str){
+    S.ucFirst = function (str) {
         str += '';
         return str.charAt(0).toUpperCase() + str.substring(1);
     };
@@ -237,7 +410,7 @@ var singer = window.SINGER = (function (undefined) {
      * @param prefix
      * @returns {boolean}
      */
-    S.startsWith=function (str, prefix) {
+    S.startsWith = function (str, prefix) {
         return str.lastIndexOf(prefix, 0) === 0;
     };
     /**
@@ -246,7 +419,7 @@ var singer = window.SINGER = (function (undefined) {
      * @param suffix
      * @returns {boolean}
      */
-    S.endsWith=function (str, suffix) {
+    S.endsWith = function (str, suffix) {
         var ind = str.length - suffix.length;
         return ind >= 0 && str.indexOf(suffix, ind) === ind;
     };
@@ -265,7 +438,7 @@ var singer = window.SINGER = (function (undefined) {
             }
         } else {
             for (var i = 1; i < arguments.length; i++) {
-                var reg = new RegExp("\\{" + (i-1) + "\\}", "gi");
+                var reg = new RegExp("\\{" + (i - 1) + "\\}", "gi");
                 result = result.replace(reg, arguments[i]);
             }
         }
@@ -273,9 +446,15 @@ var singer = window.SINGER = (function (undefined) {
     };
 })(SINGER);
 /**
+ * 终端识别
+ */
+(function(S){
+
+})(SINGER);
+/**
  * Uri
  */
-(function(S,undefined){
+(function(S){
     S.uri = function (uri) {
         var q = [], qs;
         qs = (uri ? uri + "" : location.search);
@@ -293,5 +472,4 @@ var singer = window.SINGER = (function (undefined) {
         }
         return q;
     };
-    return S;
 })(SINGER);
