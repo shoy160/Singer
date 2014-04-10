@@ -30,7 +30,6 @@
                     }
                 }
             }
-
             return result;
         },
         /**
@@ -42,12 +41,12 @@
          * @param deep      是否深度复制
          */
         mix: function (target, resource, overwrite, whiteList, deep) {
-            if (S.isObject(overwrite)) {
+            if (overwrite && S.isObject(overwrite)) {
                 whiteList = overwrite["whiteList"];
                 deep = overwrite["deep"];
-                overwrite = overwrite["overwrite"]
+                overwrite = overwrite["overwrite"];
             }
-            if (whiteList && (typeof whiteList !== 'function')) {
+            if (whiteList && !S.isFunction(whiteList)) {
                 var originalWl = whiteList;
                 whiteList = function (name, val) {
                     return S.inArray(name, originalWl) ? val : undefined;

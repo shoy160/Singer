@@ -52,11 +52,21 @@ var singer = window.SINGER = (function (undefined) {
             if (type == "array") {
                 return obj instanceof Array;
             }
+            if (undefined === obj && type !== "undefined") return false;
             return  (type == "null" && obj === null) ||
                 (type == typeof obj && obj !== null) ||
                 (type == "object" && obj === Object(obj)) ||
                 (type == "array" && Array.isArray && Array.isArray(obj)) ||
                 Object.prototype.toString.call(obj).slice(8, -1).toLowerCase() == type;
+        },
+        isBoolean: function (obj) {
+            return S.is(obj, "boolean");
+        },
+        isDate: function (obj) {
+            return S.is(obj, "date");
+        },
+        isRegExp: function (obj) {
+            return S.is(obj, "regexp");
         },
         isObject: function (obj) {
             return S.is(obj, "object");
@@ -117,7 +127,7 @@ var singer = window.SINGER = (function (undefined) {
                 var matched = false;
                 if (logger) {
                     matched = S.isObject(msg);
-                    if(!matched)
+                    if (!matched)
                         msg = logger + ": " + msg;
                 }
                 if (typeof console !== 'undefined' && console.log) {
@@ -134,10 +144,10 @@ var singer = window.SINGER = (function (undefined) {
         guid: function (pre) {
             return (pre || '') + guid++;
         },
-        _mix:function(target,resource){
-            for(var name in resource){
-                if(resource.hasOwnProperty(name))
-                target[name]=resource[name];
+        _mix: function (target, resource) {
+            for (var name in resource) {
+                if (resource.hasOwnProperty(name))
+                    target[name] = resource[name];
             }
         }
     };
@@ -265,7 +275,6 @@ var singer = window.SINGER = (function (undefined) {
                     }
                 }
             }
-
             return result;
         },
         /**
@@ -277,12 +286,12 @@ var singer = window.SINGER = (function (undefined) {
          * @param deep      是否深度复制
          */
         mix: function (target, resource, overwrite, whiteList, deep) {
-            if (S.isObject(overwrite)) {
+            if (overwrite && S.isObject(overwrite)) {
                 whiteList = overwrite["whiteList"];
                 deep = overwrite["deep"];
-                overwrite = overwrite["overwrite"]
+                overwrite = overwrite["overwrite"];
             }
-            if (whiteList && (typeof whiteList !== 'function')) {
+            if (whiteList && !S.isFunction(whiteList)) {
                 var originalWl = whiteList;
                 whiteList = function (name, val) {
                     return S.inArray(name, originalWl) ? val : undefined;
