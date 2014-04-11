@@ -9,7 +9,8 @@ var hTemplate = window.hTemplate = (function ($, f) {
         };
     }
     String.prototype.bind = function (name, value) {
-        value = value || "";
+        if (isNaN(value))
+            value = value || "";
         return this.replaceAll('\\{' + name + '\\}', value);
     };
     String.prototype.fill = function (json) {
@@ -17,7 +18,7 @@ var hTemplate = window.hTemplate = (function ($, f) {
             return "";
         var t = this;
         for (var s in json) {
-            var value = json[s] || "";
+            var value = json[s];
             t = t.bind(s, value);
         }
         t = t.bind("[^}]+", "");
@@ -53,8 +54,8 @@ var hTemplate = window.hTemplate = (function ($, f) {
             page: 1,
             size: 20,
             total: 0,
-            filter: f,       //json数据过滤
-            fill: f,          //绑定前处理
+            filter: f,       //json数据过滤,返回json数据
+            fill: f,          //绑定前处理,返回字符串
             pageClick: f,     //页面点击事件
             complete: f        //完成绑定事件
         },
