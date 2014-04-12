@@ -34,63 +34,11 @@
             val = (val === u ? "" : val);
             return $.trim(val);
         },
-        setValue: function (name, value) {
-            var form = this,
-                $item, $list, obj;
-            obj = form.find('[name="' + name + '"]').eq(0);
-            if (obj.is(":radio")) {
-                $list = form.find(":radio[name='" + name + "']");
-                if ("" === value) {
-                    $list.each(function () {
-                        this.checked = false;
-                    });
-                    return false;
-                }
-                for (var i = 0; i < $list.length; i++) {
-                    $item = $list.eq(i);
-                    var v = $item.val();
-                    if (v === value || (!isNaN(v) && ~~v === value)) {
-                        $item.get(0).checked = true;
-                        break;
-                    }
-                }
-            } else if (obj.is(":checkbox")) {
-                if (value && "string" === typeof value)
-                    value = value.split(',');
-                $list = form.find(":checkbox[name='" + name + "']");
-                if ("" === value) {
-                    $list.each(function () {
-                        this.checked = false;
-                    });
-                    return false;
-                }
-                $list.each(function () {
-                    $item = $(this);
-                    var v = $item.val();
-                    if ($.inArray(v, value) >= 0 || (!isNaN(v) && $.inArray(~~v, value) >= 0)) {
-                        $item.get(0).checked = true;
-                    }
-                });
-            } else if (obj.is("select")) {
-                $list = form.find("select[name='" + name + "'] option");
-                value = value.toString();
-                for (var i = 0; i < $list.length; i++) {
-                    $item = $list.eq(i);
-                    if (value === $item.val()) {
-                        $item.get(0).selected = true;
-                        break;
-                    }
-                }
-            } else {
-                $list = form.find('[name="' + name + '"]');
-                $list.val(value) || $list.text(value);
-            }
-        },
         check: function (form) {
             var $t = $(this),
                 ps = $(form).data("valid"),
-                opt = $t.data("rule");
-            if (!opt) return true;
+                opt = $t.data("valid") || $t.attr("data-valid");
+            if (!opt) return false;
             if ("string" === typeof opt) {
                 opt = eval('(' + opt + ')');
             }
@@ -107,7 +55,7 @@
                 $tip.removeClass("valid-success").addClass("valid-error").html(msg);
                 if (!$(form).data("focus")) {
                     $t.focus();
-                    $(top.window || window).scrollTop($t);
+                    $(top.window || window).scrollTop(0);
                     $(form).data("focus", !f);
                 }
                 return false;
@@ -121,13 +69,12 @@
     var validForm = function (forms, options) {
         var opts = $.extend({
             rules: valid.rules,
-            rulesMsg: valid.rulesMsg,
-            submit: f
+            rulesMsg: valid.rulesMsg
         }, options || {});
         var $forms = this.forms = $(forms);
         $.each(this.forms, function (i) {
-            var $form = $forms.eq(i),
-                optionData = $form.data("form") || $form.attr("data-form"),
+            var $item = $forms.eq(i),
+                optionData = $item.data("form") || $item.attr("data-form"),
                 ps = $.extend({}, opts);
             if (optionData && "string" === typeof optionData) {
                 optionData = eval('(' + optionData + ')');
@@ -135,20 +82,16 @@
             if (optionData && "object" === typeof optionData) {
                 ps = $.extend(ps, optionData);
             }
-            $form.data("valid", ps);
-            var $inputs = $form.find("[data-valid]");
-            $inputs.each(function () {
-                $(this).data("rule", $(this).data("valid") || $(this).attr("data-valid"));
-            });
-            $form.find("[name]").bind("blur",function(){
-                if($(this).data("rule"))
-                    valid.check.call(this,$form);
-            });
-            $form.find("[key-submit]").bind("keyup",function(e){
-                if (13 === e.keyCode) {
-                    ps.submit && "function" === typeof ps.submit && ps.submit.call(this);
-                }
-            });
+            $item.data("valid", ps);
+            $item
+                .delegate("[data-valid]", "blur", function () {
+                    valid.check.call(this, $item);
+                })
+                .delegate(":text", "press", function (e) {
+                    if (13 === e.keyCode && ps.submitFn && "function" === typeof ps.submitFn) {
+                        ps.submitFn();
+                    }
+                });
         });
         return this;
     };
@@ -159,7 +102,7 @@
             $forms.each(function (i) {
                 var $form = $forms.eq(i);
                 $form.data("focus", f);
-                $form.find("[name]").each(function () {
+                $form.find("[data-valid]").each(function () {
                     if (!valid.check.call(this, $form))
                         r = f;
                 });
@@ -182,35 +125,28 @@
                 arr.push(t + '=' + encodeURI(json[t]));
             }
             return arr.join('&');
-        },
-        bind: function (json, i) {
-            var $form = this.forms.eq(i || 0);
-            $form.find(".control-error").removeClass("control-error");
-            $form.find(".m-form-tip").remove();
-            if ("object" !== typeof json){
-                this.reset(i);
-                return false;
-            }
-            for (var name in json) {
-                if (json.hasOwnProperty(name))
-                    valid.setValue.call($form, name, json[name]);
-            }
-        },
-        init: function () {
-            for (var i = 0; i < this.forms.length; i++) {
-                var $form = this.forms.eq(i);
-                if (!$form.data("init"))
-                    $form.data("init", this.json(i));
-            }
-        },
-        reset: function (i) {
-            var $form = this.forms.eq(i || 0);
-            $form.find(".m-form-tip").remove();
-            $form.find(".control-error").removeClass("control-error");
-            this.bind($form.data("init"), i);
         }
     };
     $.fn.extend({
+        serializeForm: function (type) {
+            var $form = $(this),
+                serializeObj = {};
+            if ("form" !== $form.get(0).tagName.toLowerCase()) {
+                $form = $("<form>").append($form.clone(true));
+            }
+            if (type && "string" === type) {
+                return $form.serialize();
+            } else if (type && "array" === type) {
+                return $form.serializeArray();
+            }
+            $($form.serializeArray()).each(function () {
+                if (!serializeObj.hasOwnProperty(this.name))
+                    serializeObj[this.name] = this.value;
+                else
+                    serializeObj[this.name] += "," + this.value;
+            });
+            return serializeObj;
+        },
         /**
          * form 表单验证
          */

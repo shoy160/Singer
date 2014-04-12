@@ -1,0 +1,48 @@
+.con {
+  background: rgba(0, 0, 0, 0.5) none repeat scroll 0 0 !important;
+  /*实现FF背景透明，文字不透明*/
+  filter: alpha(opacity=50);
+  background: #000;
+}
+.con p {
+  position: relative;
+  color: #fff;
+  text-align: center;
+  line-height: 30px;
+}
+.test1 {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  width: 300px;
+  background-color: #ef5;
+  margin: 20px auto;
+  height: 100px;
+}
+.test2 {
+  width: 300px;
+  height: 100px;
+  background-color: #ef5;
+  margin: 20px auto;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+  -webkit-transition: all 0.5s ease-in;
+  -moz-transition: all 0.5s ease-in;
+  -ms-transition: all 0.5s ease-in;
+  -o-transition: all 0.5s ease-in;
+  transition: all 0.5s ease-in;
+  -webkit-transform: rotate(360deg) scale(1) skew(1deg) translate(10px);
+  -moz-transform: rotate(360deg) scale(1) skew(1deg) translate(10px);
+  -o-transform: rotate(360deg) scale(1) skew(1deg) translate(10px);
+  -ms-transform: rotate(360deg) scale(1) skew(1deg) translate(10px);
+  transform: rotate(360deg) scale(1) skew(1deg) translate(10px);
+  -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(60%, transparent), to(rgba(255, 255, 255, 0.5)));
+}

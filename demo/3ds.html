@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<canvas id="ht"></canvas>
+<script>
+    var w, m, d,dm,g3d,view,shape,food,snake,score,direction,isRunning;
+    function init() {
+        w = 40; m = 20; d = w * m / 2; food = null;
+        dm = new ht.DataModel();
+        g3d = new ht.graph3d.Graph3dView(dm);
+        g3d.setGridVisible(true);
+        g3d.setGridColor('#29B098');
+        g3d.setGridSize(m);
+        g3d.setGridGap(w);
+        view = g3d.getView();
+        view.className = 'main';
+        document.body.appendChild(view);
+        window.addEventListener('resize', function (e) {  g3d.invalidate(); }, false);
+        g3d.sm().setSelectionMode('none');
+        view.addEventListener(ht.Default.isTouchable ? 'touchstart' : 'mousedown', function(e){
+            if(isRunning){
+                var p = g3d.getHitPosition(e);
+                if(Math.abs(p[0]) < d && Math.abs(p[2]) < d){
+                    if(direction === 'up' || direction === 'down'){
+                        direction = p[0] > snake[0].p3()[0] ? 'right' : 'left';
+                    }
+                    else if(direction === 'left' || direction === 'right'){
+                        direction = p[2] > snake[0].p3()[2] ? 'down' : 'up';
+                    }
+                }
+            }else if(ht.Default.isDoubleClick(e)){
+                start();
+            }
+        }, false);
+        start();
+        setInterval(function(){ if(isRunning){ isRunning = next(); } }, 200);
+    }
+    function start(){
+        dm.clear(); snake = []; score = 0; direction = 'up'; isRunning = true;
+        shape = new ht.Shape();
+        shape.setPoints(new ht.List([
+            {x: -d, y: d},
+            {x: d, y: d},
+            {x: d, y: -d},
+            {x: -d, y: -d},
+            {x: -d, y: d}
+        ]));
+        shape.setThickness(4);
+        shape.setTall(w);
+        shape.setElevation(w/2);
+        shape.s({'all.color': 'rgba(20, 120, 120, 0.5)', 'all.transparent': true, 'all.reverse.cull': true});
+        dm.add(shape);
+        for(var i=0; i<m/2; i++) { snake.push(createNode(m/2 + i, m/2)); }
+        createFood();
+    }
+    function createNode(x, y){
+        var node = new ht.Node();
+        node.a({ x: x,  y: y });
+        node.s3(w*0.9, w*0.9, w*0.9);
+        node.p3(-w*m/2+w*x+w/2, w/2, -w*m/2+w*y+w/2);
+        dm.add(node);
+        return node;
+    }
+    function getRandom(){
+        return parseInt(Math.random() * m);
+    }
+    function createFood(){
+        var x = getRandom(), y = getRandom();
+        while(touchFood(x, y) || touchSnake(x, y)){ x = getRandom(); y = getRandom(); }
+        if(food) dm.remove(food);
+        food = createNode(x, y);
+        food.s({'shape3d': 'sphere',  'shape3d.color': 'red'});
+    }
+    function touchSnake(x, y){
+        for(var i=0; i<snake.length; i++){
+            if(snake[i].a('x') === x && snake[i].a('y') === y){ return true; }
+        }
+        return false;
+    }
+    function touchFood(x, y){
+        return food && food.a('x') === x && food.a('y') === y;
+    }
+    function next(){
+        var node = snake[0], x = node.a('x'), y = node.a('y');
+        if(direction === 'up') y--;
+        if(direction === 'down') y++;
+        if(direction === 'left') x--;
+        if(direction === 'right') x++;
+        if(x < 0 || x >= m || y < 0 || y >= m || touchSnake(x, y)){ return false; }
+        if(touchFood(x, y)){
+            score++;
+            snake.splice(0, 0, createNode(x, y));
+            createFood();
+        }else{
+            snake.splice(0, 0, createNode(x, y));
+            dm.remove(snake.pop());
+        }
+        return true;
+    }
+    (function(){
+        init();
+    })();
+</script>
+</body>
+</html>
