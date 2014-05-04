@@ -78,4 +78,5 @@
         }
         return result;
     };
+    
 })(SINGER);
