@@ -1,7 +1,7 @@
 /**
  * Uri
  */
-(function(S){
+(function (S) {
     S.uri = function (uri) {
         var q = [], qs;
         qs = (uri ? uri + "" : location.search);
@@ -18,5 +18,42 @@
             }
         }
         return q;
+    };
+    S.cookie = {
+        set: function (name, value, minutes, domain) {
+            if ("string" !== typeof name || "" === S.trim(name)) return;
+            var c = name + '=' + encodeURI(value);
+            if ("number" === typeof minutes && minutes > 0) {
+                var time = (new Date()).getTime() + 1000 * 60 * minutes;
+                c += ';expires=' + (new Date(time)).toGMTString();
+            }
+            if ("string" == typeof domain)
+                c += ';domain=' + domain;
+            document.cookie = c + '; path=/';
+        },
+        get: function (name) {
+            var b = document.cookie;
+            var d = name + '=';
+            var c = b.indexOf('; ' + d);
+            if (c == -1) {
+                c = b.indexOf(d);
+                if (c != 0) {
+                    return null;
+                }
+            }
+            else {
+                c += 2;
+            }
+            var a = b.indexOf(';', c);
+            if (a == -1) {
+                a = b.length;
+            }
+            return decodeURI(b.substring(c + d.length, a));
+        },
+        clear: function (name, domain) {
+            if (this.get(name)) {
+                document.cookie = name + '=' + (domain ? '; domain=' + domain : '') + '; expires=Thu, 01-Jan-70 00:00:01 GMT';
+            }
+        }
     };
 })(SINGER);
