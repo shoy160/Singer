@@ -1,7 +1,7 @@
 /**
  * Json 序列化
  */
-(function(S){
+(function (S) {
     S.json = function (json) {
         if (S.isEmpty(json)) return json;
         if (S.isObject(json)) {
@@ -13,26 +13,26 @@
                 return (S.isString(s) || S.isNumber(s)) ? "'" + s + "'" : s;
             };
             var arr = [],
-                arrItem,
-                jsonItem;
+                arrItem;
             if (S.isArray(json)) {
-                for (var i = 0; i < json.length; i++) {
-                    jsonItem = json[i];
+                S.each(json, function (jsonItem) {
                     if (S.isNumber(jsonItem))
                         arr.push(jsonItem);
-                    else if(S.isString(jsonItem))
-                        arr.push("'"+jsonItem+"'");
+                    else if (S.isString(jsonItem))
+                        arr.push("'" + jsonItem + "'");
                     else {
                         arrItem = [];
-                        for (var j in jsonItem) {
-                            arrItem.push("'" + j + "':" + fmt(jsonItem[j]));
-                        }
+                        S.each(S.keys(jsonItem), function (key) {
+                            arrItem.push("'" + key + "':" + fmt(jsonItem[key]));
+                        });
                         arr.push('{' + arrItem.join(',') + '}');
                     }
-                }
+                });
                 return '[' + arr.join(',') + ']';
             } else {
-                for (var i in json) arr.push("'" + i + "':" + fmt(json[i]));
+                S.each(S.keys(json), function (key) {
+                    arr.push("'" + key + "':" + fmt(json[key]));
+                });
                 return '{' + arr.join(',') + '}';
             }
         } else if (S.isString(json)) {

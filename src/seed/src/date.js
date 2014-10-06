@@ -1,3 +1,6 @@
+/**
+ * date
+ */
 (function (S) {
     var AP = Date.prototype;
     AP.addDays = AP.addDays || function (days) {
@@ -30,8 +33,8 @@
         nowTick: Date.now || function () {
             return +new Date();
         },
-        now:function(){
-          return new Date(S.nowTick());
+        now: function () {
+            return new Date(S.nowTick());
         },
         addDays: function (date, days) {
             if (!S.isDate(date)) return S.now();

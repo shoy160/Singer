@@ -87,15 +87,16 @@
          */
         format: function (str) {
             if (arguments.length <= 1) return str || EMPTY;
-            var result = str;
+            var result = str,
+                reg;
             if (2 === arguments.length && S.isObject(arguments[1])) {
                 for (var key in arguments[1]) {
-                    var reg = new RegExp("\\{" + key + "\\}", "gi");
+                    reg = new RegExp("\\{" + key + "\\}", "gi");
                     result = result.replace(reg, arguments[1][key]);
                 }
             } else {
                 for (var i = 1; i < arguments.length; i++) {
-                    var reg = new RegExp("\\{" + (i - 1) + "\\}", "gi");
+                    reg = new RegExp("\\{" + (i - 1) + "\\}", "gi");
                     result = result.replace(reg, arguments[i]);
                 }
             }

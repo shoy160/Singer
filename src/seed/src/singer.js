@@ -18,6 +18,8 @@ var singer = window.SINGER = (function (undefined) {
     function getLogger(logger) {
         var obj = {};
         for (var cat in loggerLevel) {
+            if (!loggerLevel.hasOwnProperty(cat))
+                continue;
             (function (obj, cat) {
                 obj[cat] = function (msg) {
                     return S.log(msg, cat, logger);
@@ -28,15 +30,15 @@ var singer = window.SINGER = (function (undefined) {
     }
 
     S = {
-        __BUILD_TIME: '@TIME@',
+        __BUILD_TIME: '2014-10-04',
         Env: {
             host: self
         },
         Config: {
-            debug: '@DEBUG@',
+            debug: true,
             fns: {}
         },
-        Version: '@VERSION@',
+        Version: '0.5.2',
         /**
          * 类型判断
          * @param obj
@@ -44,7 +46,7 @@ var singer = window.SINGER = (function (undefined) {
          * @return boolean
          */
         is: function (obj, type) {
-            var isNan = {"NaN": 1, "Infinity": 1, "-Infinity": 1}
+            var isNan = {"NaN": 1, "Infinity": 1, "-Infinity": 1};
             type = type.toLowerCase();
             if (type == "finite") {
                 return !isNan["hasOwnProperty"](+obj);
@@ -59,9 +61,19 @@ var singer = window.SINGER = (function (undefined) {
                 (type == "array" && Array.isArray && Array.isArray(obj)) ||
                 Object.prototype.toString.call(obj).slice(8, -1).toLowerCase() == type;
         },
+        /**
+         * 布尔类型判断
+         * @param obj
+         * @returns {boolean|*|Boolean}
+         */
         isBoolean: function (obj) {
             return S.is(obj, "boolean");
         },
+        /**
+         * 日期类型判断
+         * @param obj
+         * @returns {boolean|*|Boolean}
+         */
         isDate: function (obj) {
             return S.is(obj, "date");
         },
@@ -89,6 +101,9 @@ var singer = window.SINGER = (function (undefined) {
         isEmpty: function (obj) {
             return EMPTY === obj || S.isNull(obj);
         },
+        isUndefined: function (obj) {
+            return S.is(obj, "undefined");
+        },
         /**
          * set SINGER Configuration
          * @param configName
@@ -102,11 +117,12 @@ var singer = window.SINGER = (function (undefined) {
                 configFns = Config.fns;
             if (S.isObject(configName)) {
                 for (var c in configName) {
-                    Config[c] = configName[c];
+                    if (configName.hasOwnProperty(c))
+                        Config[c] = configName[c];
                 }
             } else {
                 cfg = configFns[configName];
-                if (configValue === undefined) {
+                if (S.isUndefined(configValue)) {
                     if (cfg) {
                         r = cfg.call(self);
                     } else {
@@ -123,20 +139,18 @@ var singer = window.SINGER = (function (undefined) {
             return r;
         },
         log: function (msg, cat, logger) {
-            if ('@DEBUG@') {
-                var matched = false;
-                if (logger) {
-                    matched = S.isObject(msg);
-                    if (!matched)
-                        msg = logger + ": " + msg;
-                }
-                if (typeof console !== 'undefined' && console.log) {
-                    if (matched) console[cat && console[cat] ? cat : 'log'](logger + ":");
-                    console[cat && console[cat] ? cat : 'log'](msg);
-                    return msg;
-                }
+            if (!S.Config.debug) return undefined;
+            var matched = false;
+            if (logger) {
+                matched = S.isObject(msg);
+                if (!matched)
+                    msg = logger + ": " + msg;
             }
-            return undefined;
+            if (typeof console !== 'undefined' && console.log) {
+                if (matched) console[cat && console[cat] ? cat : 'log'](logger + ":");
+                console[cat && console[cat] ? cat : 'log'](msg);
+                return msg;
+            }
         },
         getLogger: function (logger) {
             return getLogger(logger);
