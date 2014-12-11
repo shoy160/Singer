@@ -75,7 +75,7 @@
             var list = [];
             S.each(S.keys(data), function (key) {
                 var item = data[key];
-                if (S.isString(item))
+                if (!S.isObject(item) && !S.isArray(item))
                     list.push(key + '=' + encodeURIComponent(item));
                 else
                     list.push(key + '=' + encodeURIComponent(S.json(item)));

@@ -29,10 +29,23 @@
             return str.replace(/<\/?[^>]+>/gi, '');
         },
         stripScript: function (h) {
-            return h.replace(/<script[^>]*>([\\S\\s]*?)<\/script>/g, '')
+            return h.replace(/<script[^>]*>([\\S\\s]*?)<\/script>/g, '');
         },
+        /**
+         * 是否是手机号码
+         * @param m
+         * @returns {boolean}
+         */
         isMobile: function (m) {
-            return /^((0[1-9]{2,3}[\s-]?)?\d{7,8})|(1[3,5,8]\d{9})$/.test(L.trim(m))
+            return /^(1[3,5,8]\d{9})$/.test(S.trim(m));
+        },
+        /**
+         * 是否是座机号码
+         * @param str
+         * @returns {boolean}
+         */
+        isTelephone: function (str) {
+            return /((0[1-9]{2,3}[\s-]?)?\d{7,8})/gi.test(S.trim(str));
         },
         /**
          * 替代

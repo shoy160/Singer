@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Top Header</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .top-header {
+            height: 32px;
+            background-color: #f5f5f5;
+            color: #333;
+            font-size: 12px;
+        }
+
+        .top-nav {
+            height: 32px;
+            line-height: 32px;
+            width: 1000px;
+            margin: 0 auto;
+        }
+
+        .top-menus {
+            float: right;
+        }
+
+        .top-link,
+        .top-menu {
+            float: left;
+            position: relative;
+            z-index: 20;
+            margin: 0 5px;
+        }
+
+        .top-link {
+            padding: 0 8px;
+        }
+
+        .top-link a {
+            text-decoration: none;
+            color: #333333;
+        }
+
+        .top-menu {
+            padding: 0 22px 0 8px;
+        }
+
+        .top-link s,
+        .top-menu s,
+        .top-menu i {
+            position: absolute;
+        }
+
+        .top-link s,
+        .top-menu s {
+            border-left: 1px solid #ddd;
+            height: 12px;
+            left: -5px;
+            overflow: hidden;
+            top: 10px;
+            width: 0;
+        }
+
+        .top-menu i {
+            background: url(image/icobg.png) no-repeat 0 0;
+            height: 4px;
+            right: 7px;
+            top: 14px;
+            width: 7px;
+            transition: transform 0.2s ease-in 0s;
+        }
+
+        .menu-list-wrap {
+            display: none;
+        }
+
+        .menu-hover .menu-list,
+        .menu-hover .m-outline,
+        .menu-hover .m-blank {
+            display: block;
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: none repeat scroll 0 0 #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
+        }
+
+        .menu-hover .m-outline,
+        .menu-hover .m-blank {
+            width: 100%;
+        }
+
+        .menu-hover .m-outline {
+            height: 24px;
+            top: 3px;
+            z-index: -1;
+        }
+
+        .menu-hover .m-blank {
+            height: 8px;
+            border-top: none;
+            border-bottom: none;
+            box-shadow: none;
+            top: 25px;
+            z-index: 1;
+        }
+
+        .menu-hover i {
+            transform: rotate(180deg);
+        }
+
+        .menu-hover .menu-list-wrap {
+            display: block;
+        }
+
+        .menu-hover .menu-list {
+            height: 150px;
+            width: 168px;
+            top: 32px;
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    <div class="top-header">
+        <div class="top-nav">
+            <div class="top-user">
+
+            </div>
+            <div class="top-menus">
+                <div class="top-link">
+                    <a href="#">登录</a>
+                </div>
+                <div class="top-link">
+                    <s></s>
+                    <a href="#">注册</a>
+                </div>
+                <div class="top-link">
+                    <s></s>
+                    <a href="#">个人中心</a>
+                </div>
+                <div class="top-menu">
+                    <s></s>
+                    <span class="m-outline"></span>
+                    <span class="m-blank"></span>
+                    我的
+                    <i></i>
+
+                    <div class="menu-list-wrap">
+                        <div class="menu-list">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="top-menu">
+                    <s></s>
+                    <span class="m-outline"></span>
+                    <span class="m-blank"></span>
+                    网站导航
+                    <i></i>
+
+                    <div class="menu-list-wrap">
+                        <div class="menu-list">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<script src="//static.dayeasy.dev/js/jquery.min.js"></script>
+<script>
+    (function ($) {
+        $(".top-menu").hover(function () {
+            $(this).toggleClass("menu-hover");
+        })
+    })(jQuery);
+</script>
+</body>
+</html>

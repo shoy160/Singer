@@ -36,6 +36,7 @@ var singer = window.SINGER = (function (undefined) {
         },
         Config: {
             debug: true,
+            loggerLevel: 'debug',
             fns: {}
         },
         Version: '0.5.2',
@@ -140,6 +141,8 @@ var singer = window.SINGER = (function (undefined) {
         },
         log: function (msg, cat, logger) {
             if (!S.Config.debug) return undefined;
+            if ((loggerLevel[S.Config.loggerLevel] || 1000) > loggerLevel[cat == 'log' ? 'debug' : cat])
+                return "min level";
             var matched = false;
             if (logger) {
                 matched = S.isObject(msg);

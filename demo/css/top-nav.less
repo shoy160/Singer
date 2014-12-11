@@ -1,0 +1,110 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+.top-header {
+  height: 32px;
+  background-color: #f5f5f5;
+  color: #333;
+  font-size: 12px;
+  .top-nav {
+    height: 32px;
+    line-height: 32px;
+    width: 1000px;
+    margin: 0 auto;
+  }
+  .top-user {
+    float: left;
+  }
+  .top-menus {
+    float: right;
+    .top-link,
+    .top-menu {
+      float: left;
+      position: relative;
+      z-index: 20;
+      margin: 0 5px;
+    }
+    .top-link {
+      padding: 0 8px;
+      a {
+        text-decoration: none;
+        color: #333333;
+      }
+    }
+    .top-menu {
+      padding: 0 22px 0 8px;
+      .top-link s,
+      .top-menu s,
+      .top-menu i {
+        position: absolute;
+      }
+
+      .top-link s,
+      .top-menu s {
+        border-left: 1px solid #ddd;
+        height: 12px;
+        left: -5px;
+        overflow: hidden;
+        top: 10px;
+        width: 0;
+      }
+
+      .top-menu i {
+        background: url("../image/icobg.png") no-repeat 0 0;
+        height: 4px;
+        right: 7px;
+        top: 14px;
+        width: 7px;
+        transition: transform 0.2s ease-in 0s;
+      }
+
+      .menu-list-wrap {
+        display: none;
+      }
+
+      .menu-hover {
+        .menu-list,
+        .m-outline,
+        .m-blank {
+          display: block;
+          position: absolute;
+          top: 0;
+          right: 0;
+          background: none repeat scroll 0 0 #fff;
+          border: 1px solid #ddd;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
+        }
+        .m-outline,
+        .m-blank {
+          width: 100%;
+        }
+        .m-outline {
+          height: 24px;
+          top: 3px;
+          z-index: -1;
+        }
+        .m-blank {
+          height: 8px;
+          border-top: none;
+          border-bottom: none;
+          box-shadow: none;
+          top: 25px;
+          z-index: 1;
+        }
+        i {
+          transform: rotate(180deg);
+        }
+        .menu-list-wrap {
+          display: block;
+        }
+        .menu-list {
+          height: 150px;
+          width: 168px;
+          top: 32px;
+        }
+      }
+    }
+  }
+}

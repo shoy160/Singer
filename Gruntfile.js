@@ -21,18 +21,18 @@ module.exports = function (grunt) {
             seed: {
                 src: ['src/seed/src/singer.js', 'src/seed/src/*.js'],
                 dest: 'build/seed.min.js'
-            },
-            list: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: 'plugs',
-                        src: '*.js',
-                        dest: 'build/plugs',
-                        ext: '.min.js'
-                    }
-                ]
             }
+//            ,list: {
+//                files: [
+//                    {
+//                        expand: true,
+//                        cwd: 'plugs',
+//                        src: '*.js',
+//                        dest: 'build/plugs',
+//                        ext: '.min.js'
+//                    }
+//                ]
+//            }
         },
         //css压缩
         cssmin: {
