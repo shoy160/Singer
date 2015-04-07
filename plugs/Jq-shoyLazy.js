@@ -4,10 +4,10 @@
  */
 (function (S) {
     var def = {
-        lazySrc: 'hsrc',
+        lazySrc: 'h-src',
         prePix: 100,
         auto: false,
-        loadClass:''
+        loadClass: 'img-loading'
     };
     S.prototype.shoyLazy = function (opt) {
         opt = S.extend(def, opt);
@@ -24,13 +24,16 @@
                 top = parseInt(b.offset().top);
                 b = b.parent();
             }
-            obj.lazySrc=opt.lazySrc;
+            obj.lazySrc = opt.lazySrc;
             obj.lazyTop = top;
             return obj
         };
         lazyShow = function (obj) {
             obj.setAttribute("src", obj.getAttribute(obj.lazySrc));
             obj.removeAttribute(obj.lazySrc);
+            S(obj).bind("load.shoyLazy", function () {
+                S(this).removeClass(opt.loadClass);
+            });
         };
         lazyScroll = function () {
             var height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
@@ -65,7 +68,7 @@
                     lazyDoms.push(getTop(this));
                 }
             });
-            domHeight= d.height();
+            domHeight = d.height();
             w.bind("scroll.shoyLazy resize.shoyLazy", function () {
                 lazyScroll();
             });

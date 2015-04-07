@@ -39,7 +39,7 @@ var singer = window.SINGER = (function (undefined) {
             loggerLevel: 'debug',
             fns: {}
         },
-        Version: '0.5.2',
+        Version: '0.1.2',
         /**
          * 类型判断
          * @param obj
@@ -603,6 +603,7 @@ var singer = window.SINGER = (function (undefined) {
                 reg;
             if (2 === arguments.length && S.isObject(arguments[1])) {
                 for (var key in arguments[1]) {
+                    if(!arguments[1].hasOwnProperty(key)) continue;
                     reg = new RegExp("\\{" + key + "\\}", "gi");
                     result = result.replace(reg, arguments[1][key]);
                 }

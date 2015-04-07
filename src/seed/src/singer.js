@@ -39,7 +39,7 @@ var singer = window.SINGER = (function (undefined) {
             loggerLevel: 'debug',
             fns: {}
         },
-        Version: '0.5.2',
+        Version: '0.2.2',
         /**
          * 类型判断
          * @param obj
