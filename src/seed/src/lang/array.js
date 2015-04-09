@@ -1,10 +1,12 @@
+/**
+ * Array Model
+ */
 (function (S, undefined) {
     var AP = Array.prototype,
         indexOf = AP.indexOf,
         lastIndexOf = AP.lastIndexOf,
         UF = undefined,
         FALSE = false;
-    ;
     S._mix(S, {
         each: function (object, fn, context) {
             if (object) {

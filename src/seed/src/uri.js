@@ -2,6 +2,8 @@
  * Uri
  */
 (function (S) {
+    // [root, dir, basename, ext]
+    var splitPathRe = /^(\/?)([\s\S]+\/(?!$)|\/)?((?:\.{1,2}$|[\s\S]+?)?(\.[^.\/]*)?)$/;
     S._mix(S, {
         /**
          * 获取页面参数
@@ -81,6 +83,9 @@
                     list.push(key + '=' + encodeURIComponent(S.json(item)));
             });
             return list.join('&');
+        },
+        ext: function (url) {
+            return (url.match(splitPathRe) || [])[4] || '';
         }
     });
 })(SINGER);

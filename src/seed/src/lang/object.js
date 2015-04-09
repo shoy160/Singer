@@ -1,3 +1,6 @@
+/**
+ * Object Model
+ */
 (function (S) {
     var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
         hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),

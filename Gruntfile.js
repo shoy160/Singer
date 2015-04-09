@@ -9,7 +9,7 @@ module.exports = function (grunt) {
             },
             basic: {
                 files: {
-                    'build/seed.js': ['src/seed/src/singer.js', 'src/seed/src/*.js']
+                    'build/seed.js': ['src/seed/src/singer.js', 'src/seed/src/lang/*.js', 'src/seed/src/*.js', 'src/seed/src/loader/*.js']
                 }
             }
         },
@@ -19,7 +19,7 @@ module.exports = function (grunt) {
                 banner: '/*! <%= pkg.name %> version:<%= pkg.version %> <%= grunt.template.today("yyyy-mm-dd HH:MM:ss") %> */\n'
             },
             seed: {
-                src: ['src/seed/src/singer.js', 'src/seed/src/*.js'],
+                src: ['src/seed/src/singer.js', 'src/seed/src/lang/*.js', 'src/seed/src/*.js', 'src/seed/src/loader/*.js'],
                 dest: 'build/seed.min.js'
             }
 //            ,list: {

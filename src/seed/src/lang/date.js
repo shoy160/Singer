@@ -1,5 +1,5 @@
 /**
- * date
+ * Date Model
  */
 (function (S) {
     var AP = Date.prototype;

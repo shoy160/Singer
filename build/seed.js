@@ -39,7 +39,7 @@ var singer = window.SINGER = (function (undefined) {
             loggerLevel: 'debug',
             fns: {}
         },
-        Version: '0.1.2',
+        Version: '0.2.2',
         /**
          * 类型判断
          * @param obj
@@ -177,13 +177,15 @@ var singer = window.SINGER = (function (undefined) {
     };
     return S;
 })();
+/**
+ * Array Model
+ */
 (function (S, undefined) {
     var AP = Array.prototype,
         indexOf = AP.indexOf,
         lastIndexOf = AP.lastIndexOf,
         UF = undefined,
         FALSE = false;
-    ;
     S._mix(S, {
         each: function (object, fn, context) {
             if (object) {
@@ -250,7 +252,7 @@ var singer = window.SINGER = (function (undefined) {
     });
 })(SINGER);
 /**
- * date
+ * Date Model
  */
 (function (S) {
     var AP = Date.prototype;
@@ -300,6 +302,42 @@ var singer = window.SINGER = (function (undefined) {
     });
 })(SINGER);
 /**
+ * Function Model
+ * @author shoy
+ * @date 2015/4/7.
+ */
+(function (S) {
+    S._mix(S, {
+        later: function (method, time, isInterval, context, data) {
+            var timer,
+                f;
+            time = time || 0;
+            if (S.isString(method))
+                method = context[method];
+            if (!method) {
+                S.error("fn is undefined");
+            }
+            f = function () {
+                method.apply(context, data);
+            };
+            timer = (isInterval ? setInterval(f, time) : setTimeout(f, time));
+            return{
+                timer: timer,
+                isInterval: isInterval,
+                cancel: function () {
+                    if (this.isInterval) {
+                        clearInterval(timer);
+                    } else {
+                        clearTimeout(timer);
+                    }
+
+                }
+            }
+        }
+    });
+})(SINGER);
+
+/**
  * Json 序列化
  */
 (function (S) {
@@ -342,6 +380,9 @@ var singer = window.SINGER = (function (undefined) {
         }
     };
 })(SINGER);
+/**
+ * Object Model
+ */
 (function (S) {
     var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
         hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),
@@ -497,6 +538,9 @@ var singer = window.SINGER = (function (undefined) {
         }
     }
 })(SINGER);
+/**
+ * String Model
+ */
 (function (S, undefined) {
     var RE_TRIM = /^[\s\xa0]+|[\s\xa0]+$/g,
         trim = String.prototype.trim,
@@ -603,7 +647,7 @@ var singer = window.SINGER = (function (undefined) {
                 reg;
             if (2 === arguments.length && S.isObject(arguments[1])) {
                 for (var key in arguments[1]) {
-                    if(!arguments[1].hasOwnProperty(key)) continue;
+                    if (!arguments[1].hasOwnProperty(key)) continue;
                     reg = new RegExp("\\{" + key + "\\}", "gi");
                     result = result.replace(reg, arguments[1][key]);
                 }
@@ -616,6 +660,14 @@ var singer = window.SINGER = (function (undefined) {
             return result;
         }
     });
+})(SINGER);
+/**
+ * Path Model
+ * @author shoy
+ * @date 2015/4/7.
+ */
+(function (S) {
+
 })(SINGER);
 /**
  * 终端识别
@@ -1012,6 +1064,8 @@ var singer = window.SINGER = (function (undefined) {
  * Uri
  */
 (function (S) {
+    // [root, dir, basename, ext]
+    var splitPathRe = /^(\/?)([\s\S]+\/(?!$)|\/)?((?:\.{1,2}$|[\s\S]+?)?(\.[^.\/]*)?)$/;
     S._mix(S, {
         /**
          * 获取页面参数
@@ -1091,6 +1145,176 @@ var singer = window.SINGER = (function (undefined) {
                     list.push(key + '=' + encodeURIComponent(S.json(item)));
             });
             return list.join('&');
+        },
+        ext: function (url) {
+            return (url.match(splitPathRe) || [])[4] || '';
+        }
+    });
+})(SINGER);
+/**
+ * 加载script标签
+ * @author shoy
+ * @date 2015/04/07
+ */
+(function (S) {
+    var MILLISECONDS_OF_SECOND = 1000,
+        doc = document,
+        UA = S.UA,
+        headNode = doc.getElementsByTagName('head')[0] || doc.documentElement,
+        jsCssCallbacks = {};
+    S._mix(S, {
+        currentScript: function () {
+            //取得正在解析的script节点
+            if (document.currentScript) { //firefox 4+
+                return document.currentScript.src;
+            }
+            // 参考 https://github.com/samyk/jiagra/blob/master/jiagra.js
+            var stack;
+            try {
+                a.b.c(); //强制报错,以便捕获e.stack
+            } catch (e) {//safari的错误对象只有line,sourceId,sourceURL
+                stack = e.stack;
+                if (!stack && window.opera) {
+                    //opera 9没有e.stack,但有e.Backtrace,但不能直接取得,需要对e对象转字符串进行抽取
+                    stack = (String(e).match(/of linked script \S+/g) || []).join(" ");
+                }
+            }
+            if (stack) {
+                stack = stack.split(/[@ ]/g).pop();//取得最后一行,最后一个空格或@之后的部分
+                stack = stack[0] == "(" ? stack.slice(1, -1) : stack;
+                return stack.replace(/(:\d+)?:\d+$/i, "");//去掉行号与或许存在的出错字符起始位置
+            }
+            var nodes = document.getElementsByTagName("script"); //只在head标签中寻找
+            for (var i = 0, node; node = nodes[i++];) {
+                if (node.readyState === "interactive") {
+                    return node.className = node.src;
+                }
+            }
+        },
+        /**
+         * 加载script
+         * @param url
+         * @param success
+         * @param charset
+         */
+        loadScript: function (url, success, charset) {
+            var
+                config = success,
+                error,
+                attrs,
+                css = 0,
+                timeout,
+                callbacks,
+                timer;
+            if (S.startsWith(S.ext(url).toLowerCase(), '.css')) {
+                css = 1;
+            }
+            if (S.isObject(config)) {
+                success = config.success;
+                error = config.error;
+                attrs = config.attrs;
+                timeout = config.timeout;
+                charset = config.charset;
+            }
+            callbacks = jsCssCallbacks[url] = jsCssCallbacks[url] || [];
+
+            callbacks.push([success, error]);
+
+            if (callbacks.length > 1) {
+                return callbacks.node;
+            }
+
+            var node = doc.createElement(css ? 'link' : 'script'),
+                clearTimer = function () {
+                    if (timer) {
+                        timer.cancel();
+                        timer = undefined;
+                    }
+                };
+
+            if (attrs) {
+                S.each(attrs, function (v, n) {
+                    var attrName = n.toLowerCase();
+                    if (attrName == "async" && !S.isUndefined(node.async)) {
+                        node.async = v;
+                    } else {
+                        node.setAttribute(n, v);
+                    }
+                });
+            }
+
+            if (charset) {
+                node.charset = charset;
+            }
+
+            if (css) {
+                node.href = url;
+                node.rel = 'stylesheet';
+            } else {
+                node.src = url;
+                node.async = true;
+            }
+
+            callbacks.node = node;
+
+            var end = function (error) {
+                var index = error,
+                    fn;
+                clearTimer();
+                S.each(jsCssCallbacks[url], function (callback) {
+                    if ((fn = callback[index])) {
+                        fn.call(node);
+                    }
+                });
+                delete jsCssCallbacks[url];
+            };
+
+            var useNative = 'onload' in node;
+            var forceCssPoll = S.Config.forceCssPoll || (UA.webkit && UA.webkit < 536);
+
+            if (css && forceCssPoll && useNative) {
+                useNative = false;
+            }
+
+            function onload() {
+                var readyState = node.readyState;
+                if (!readyState ||
+                    readyState === 'loaded' ||
+                    readyState === 'complete') {
+                    node.onreadystatechange = node.onload = null;
+                    end(0);
+                }
+            }
+
+            //标准浏览器 css and all script
+            if (useNative) {
+                node.onload = onload;
+                node.onerror = function () {
+                    node.onerror = null;
+                    end(1);
+                };
+            }
+            // old chrome/firefox for css
+            else if (css) {
+                //:todo
+//                pollCss(node, function () {
+//                    end(0);
+//                });
+            } else {
+                node.onreadystatechange = onload;
+            }
+
+            if (timeout) {
+                timer = S.later(function () {
+                    end(1);
+                }, timeout * MILLISECONDS_OF_SECOND);
+            }
+            if (css) {
+                headNode.appendChild(node);
+            } else {
+                headNode.insertBefore(node, headNode.firstChild);
+            }
+            return node;
         }
     });
 })(SINGER);
