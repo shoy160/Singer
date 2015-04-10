@@ -27,7 +27,6 @@
                     } else {
                         clearTimeout(timer);
                     }
-
                 }
             }
         }

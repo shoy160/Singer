@@ -330,7 +330,6 @@ var singer = window.SINGER = (function (undefined) {
                     } else {
                         clearTimeout(timer);
                     }
-
                 }
             }
         }

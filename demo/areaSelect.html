@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Area Select</title>
+    <style>
+        .map {
+            width: 1000px;
+            margin: 20px auto;
+        }
+
+        .map image {
+            width: 780px;
+        }
+
+        .image-map {
+            width: 780px;
+            float: left;
+        }
+
+        .index-map {
+            margin-left: 18px;
+            width: 200px;
+            float: left;
+            border: solid 1px #eee;
+            border-bottom: none;
+        }
+
+        .index-item {
+            border-bottom: solid 1px #eee;
+            padding: 12px 0 12px 10px;
+        }
+
+        .index-num {
+            background-color: #323844;
+            border: 1px solid #323844;
+            border-radius: 50%;
+            color: #fff;
+            cursor: pointer;
+            height: 2em;
+            line-height: 2em;
+            text-align: center;
+            vertical-align: middle;
+            width: 2em;
+        }
+
+        .active .index-num {
+            background-color: #ff5500;
+            border-color: #ff5500;
+            cursor: default;
+        }
+
+        .disabled .index-num {
+            background-color: #888;
+            border-color: #888;
+            opacity: .8;
+            cursor: default;
+        }
+
+        .index-action {
+            border-bottom: 1px solid #eee;
+            line-height: 35px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="map">
+    <div class="image-map">
+        <img src="image/paper-01.jpg" alt="试卷"/>
+    </div>
+    <div class="index-map">
+    </div>
+</div>
+<script src="../build/seed.min.js"></script>
+<script src="../plugs/jquery.min.js"></script>
+<script src="../plugs/Jq-areaSelect.js"></script>
+<script>
+    (function ($, S) {
+        var
+                $imgMap = $(".image-map"),
+                $indexMap = $(".index-map"),
+                $indexList,
+                $img = $imgMap.find("img"),
+                point = {"x": 0, "y": 0, "width": 120, "height": 26},
+                points = [],
+                paddingTop = 10,
+                paddingLeft = 15,
+                bounds = 15,
+                tkWidth = 230,
+                paperWidth = 780,
+                temp = '<div class="index-item"><div class="index-num">{0}</div></div>',
+                questionData = [
+                    {
+                        index: 9,
+                        id: 'aaaaa',
+                        t: true
+                    },
+                    {
+                        index: 10,
+                        id: 'aaaaa',
+                        t: true
+                    },
+                    {
+                        index: 11,
+                        id: 'aaaaa',
+                        t: true
+                    },
+                    {
+                        index: 12,
+                        id: 'aaaaa',
+                        t: true
+                    },
+                    {
+                        index: 13,
+                        id: 'aaaaa',
+                        t: true
+                    },
+                    {
+                        index: 14,
+                        id: 'aaaaa'
+                    },
+                    {
+                        index: 15,
+                        id: 'aaaaa'
+                    },
+                    {
+                        index: 16,
+                        id: 'aaaaa'
+                    },
+                    {
+                        index: 17,
+                        id: 'aaaaa'
+                    },
+                    {
+                        index: 18,
+                        id: 'aaaaa'
+                    }
+                ],
+                index = 0;
+        var initData = function (data) {
+            var $item;
+            for (var i = 0; i < data.length; i++) {
+                $item = $(S.format(temp, data[i].index)).data("id", data[i]);
+                if (i == 0)
+                    $item.addClass('active');
+                $indexMap.append($item);
+            }
+            $indexList = $indexMap.find('.index-item');
+        };
+        initData(questionData);
+        var inArea = function (areas, point) {
+            var area;
+            for (var i = 0; i < areas.length; i++) {
+                area = areas[i];
+                if (point.x >= area.x && point.x <= area.x + area.width
+                        && point.y >= area.y && point.y <= area.y + area.height)
+                    return true;
+            }
+            return false;
+        };
+        $img.bind("load.areaSelect", function () {
+            $img.areaSelect({
+                initAreas: [],
+                deleteMethod: 'doubleClick',//or click
+                padding: 3,
+                area: {strokeStyle: 'red', lineWidth: 1},
+                point: {size: 3, fillStyle: 'black'},
+                create: false
+            });
+        });
+        $imgMap.delegate("canvas", "click.areaSelect", function (e) {
+            if (points.length >= $indexList.length)
+                return;
+            var $t = $(this),
+                    sp = $.extend({}, point),
+                    offset = $t.offset(),
+                    $index = $indexList.eq(index);
+            sp.x = e.clientX - offset.left - paddingTop;
+            sp.y = e.clientY - offset.top - paddingLeft + $(window).scrollTop();
+            sp.width = paperWidth - sp.x - bounds;
+            var data = $index.data('id');
+            if (data.t) {
+                sp.width = tkWidth;
+            } else {
+                if (index > 0) {
+                    var prev = points[index - 1];
+                    !prev.t && (prev.height = sp.y - prev.y - 10);
+                }
+            }
+            if (index == $indexList.length - 1) {
+                sp.height = $t.height() - sp.y - 20;
+                $indexMap.append('<div class="index-action"><button class="btn btn-primary">完成标记</button><button class="btn btn-primary">重新标记</button></div>');
+            }
+            var list = $img.areaSelect('get');
+            if (inArea(list, sp))
+                return;
+            $img.areaSelect('add', sp);
+            sp.id = data.id;
+            sp.index = data.index;
+            sp.t = data.t;
+            points.push(sp);
+            $indexList.eq(index).removeClass('active').addClass('disabled');
+            index++;
+            if (index >= $indexList.length) {
+                $t.unbind('click.areaSelect');
+                return;
+            }
+            $indexList.eq(index).addClass('active');
+            console.log(points);
+        })
+    })(jQuery, SINGER)
+</script>
+</body>
+</html>
