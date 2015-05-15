@@ -3,7 +3,7 @@
  * @author shoy
  * @date 2014-02-18
  */
-var singer = window.SINGER = (function (undefined) {
+var singer = SINGER = window.SINGER = (function (undefined) {
     var self = this,
         S,
         guid = 0,

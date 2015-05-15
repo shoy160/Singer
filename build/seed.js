@@ -3,7 +3,7 @@
  * @author shoy
  * @date 2014-02-18
  */
-var singer = window.SINGER = (function (undefined) {
+var singer = SINGER = window.SINGER = (function (undefined) {
     var self = this,
         S,
         guid = 0,
@@ -282,22 +282,68 @@ var singer = window.SINGER = (function (undefined) {
         }
         return strFormat;
     };
+    AP.left = function () {
+        var arr = {status: true};
+        var nDifference = this - (new Date());
+        if (nDifference < 0) {
+            arr.state = false;
+            nDifference = Math.abs(nDifference);
+        }
+        var iDays = nDifference / (1000 * 60 * 60 * 24);
+        arr.dd = parseInt(iDays);
+        var temp = iDays - arr.dd;
+        arr.hh = parseInt(temp * 24);
+        temp = temp * 24 - arr.hh;
+        arr.mm = parseInt(temp * 60);
+        temp = temp * 60 - arr.mm;
+        arr.ss = parseInt(temp * 60);
+        temp = temp * 60 - arr.ss;
+        arr.ms = parseInt(temp * 60);
+        return arr;
+    };
     S._mix(S, {
+        /**
+         * 当前时间戳
+         */
         nowTick: Date.now || function () {
             return +new Date();
         },
+        /**
+         * 现在的时间
+         * @returns {Date}
+         */
         now: function () {
             return new Date(S.nowTick());
         },
+        /**
+         * 添加天数
+         * @param date
+         * @param days
+         * @returns {*}
+         */
         addDays: function (date, days) {
             if (!S.isDate(date)) return S.now();
             days = (S.isNumber(days) ? days : 0);
             return new Date(date.addDays(days));
         },
+        /**
+         * 格式化时间
+         * @param date
+         * @param strFormat
+         * @returns {*}
+         */
         formatDate: function (date, strFormat) {
             if (!S.isDate(date)) return date;
             strFormat = strFormat || "yyyy-MM-dd";
             return date.format(strFormat);
+        },
+        /**
+         * 计算剩余时间
+         * @param date
+         * @returns {*}
+         */
+        leftTime: function (date) {
+            return date.left();
         }
     });
 })(SINGER);
@@ -331,7 +377,7 @@ var singer = window.SINGER = (function (undefined) {
                         clearTimeout(timer);
                     }
                 }
-            }
+            };
         }
     });
 })(SINGER);
@@ -1148,6 +1194,14 @@ var singer = window.SINGER = (function (undefined) {
         ext: function (url) {
             return (url.match(splitPathRe) || [])[4] || '';
         }
+    });
+})(SINGER);
+/**
+ * @author shoy
+ * @created on 2015/5/12.
+ */
+(function (S) {
+    S._mix(S, {
     });
 })(SINGER);
 /**
