@@ -28,7 +28,7 @@
                         clearTimeout(timer);
                     }
                 }
-            }
+            };
         }
     });
 })(SINGER);

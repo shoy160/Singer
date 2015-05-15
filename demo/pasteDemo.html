@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<label for="txtContent">内容</label>
+<textarea name="content" id="txtContent" cols="30" rows="10"></textarea>
+<script src="../plugs/jquery.min.js"></script>
+<script>
+    $("#txtContent")[0].addEventListener("paste", function (e) {
+        var clipboard = e.clipboardData;
+        for (var i = 0, len = clipboard.items.length; i < len; i++) {
+            if (clipboard.items[i].kind == 'file' || clipboard.items[i].type.indexOf('image') > -1) {
+                console.log(clipboard.items[i]);
+            }
+        }
+        e.preventDefault();
+    });
+</script>
+</body>
+</html>

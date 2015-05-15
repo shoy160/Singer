@@ -3,7 +3,7 @@
  * @author shoy
  * @date 2014-02-18
  */
-var singer = window.SINGER = (function (undefined) {
+var singer = SINGER = window.SINGER = (function (undefined) {
     var self = this,
         S,
         guid = 0,
@@ -56,7 +56,7 @@ var singer = window.SINGER = (function (undefined) {
                 return obj instanceof Array;
             }
             if (undefined === obj && type !== "undefined") return false;
-            return  (type == "null" && obj === null) ||
+            return (type == "null" && obj === null) ||
                 (type == typeof obj && obj !== null) ||
                 (type == "object" && obj === Object(obj)) ||
                 (type == "array" && Array.isArray && Array.isArray(obj)) ||
