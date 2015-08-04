@@ -15,7 +15,7 @@ var gulp = require('gulp'),
     notify = require('gulp-notify'),
 //    cache = require('gulp-cache'),
 //    livereload = require('gulp-livereload'),
-    DEST = "build-gulp",
+    DEST = "build_gulp",
     SEED_SRC = [
         'src/seed/src/singer.js',
         'src/seed/src/lang/*.js',

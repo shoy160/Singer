@@ -4,7 +4,7 @@
 var fs = require('fs');
 var path = require('path');
 var bowerDir = path.resolve(process.cwd(), 'bower_components');
-var buildDir = path.resolve(process.cwd(), 'build');
+var buildDir = path.resolve(process.cwd(), 'build_singer');
 var aggregateBower = require('aggregate-bower');
 var inferBaseCode = 'modulex.init({name:"seed"});';
 var kgConfigContent = 'modulex.config({ packages : { kg : { base : "//g.alicdn.com/kg/" }}});';
