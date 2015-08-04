@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>KnotJS</title>
+    <script src="../plugs/jquery.min.js"></script>
+    <script src="../plugs/knot.min.js"></script>
+    <script type="text/cbs">
+    .example{
+        -> input{value[immediately:1]:name;};
+        -> .message{text: name;};
+    }
+</script>
+</head>
+<body>
+<div class="example">
+    <h3>Greeting from knot.js (V2)</h3>
+
+    <p>
+        <label>Input your name here: </label>
+        <input type="text">
+    </p>
+
+    <p>
+        Hello <b class="message"></b>
+    </p>
+</div>
+</body>
+</html>

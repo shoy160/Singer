@@ -1,0 +1,8 @@
+{
+  "name":"singer",
+  "version": "0.2.5",
+  "dependencies": {
+    "modulex":"1.6.2",
+    "modulex-anim":"1.0.2"
+  }
+}
