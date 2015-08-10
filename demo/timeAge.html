@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>时间轴</title>
+    <link rel="stylesheet" href="//static.deyi.com/css/reset.min.css"/>
+    <link rel="stylesheet" href="//static.deyi.com/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="css/time-age.css"/>
+</head>
+<body>
+<div class="ta-container">
+    <div class="ta-title"></div>
+    <ul class="ta-time-age animated">
+    </ul>
+</div>
+<script src="../build/seed.min.js"></script>
+<script src="//static.deyi.com/js/jquery.min.js"></script>
+<script src="//static.deyi.com/js/artTemplate.min.js"></script>
+<script id="timeAge" type="text/html">
+    {{each list as item}}
+    <li class="">
+        <div class="ta-time">
+            {{#item.time | dateFormat}}
+        </div>
+        <div class="ta-icon">
+            <div class="ta-icon-bg {{item.bgColor||''}}">
+                <i class="{{item.icon}}"></i>
+            </div>
+        </div>
+        <div class="ta-content">
+            {{if item.content.title}}
+            <h2>{{item.content.title}}</h2>
+            {{/if}}
+            {{if item.content.quote}}
+            <blockquote>
+                <p>{{item.content.quote}}</p>
+                <small>{{item.content.author}}</small>
+            </blockquote>
+            {{/if}}
+            {{if item.content.pictures && item.content.pictures.length}}
+            {{each item.content.pictures as picture}}
+            <img src="{{picture}}" alt=""/>
+            {{/each}}
+            {{/if}}
+            {{if item.content.video}}
+            <iframe width="100%" height="450" frameborder="0" allowfullscreen src="{{item.content.video}}"></iframe>
+            {{/if}}
+            {{if item.content.words}}
+            <p>
+                {{item.content.words}}
+            </p>
+            {{/if}}
+        </div>
+    </li>
+    {{/each}}
+</script>
+<script src="../plugs/Jq-timeAge.js"></script>
+</body>
+</html>
