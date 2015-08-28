@@ -16,7 +16,7 @@
 <body>
 <div id="html" class="date"></div>
 
-<script type="text/javascript" src="../build/seed.js"></script>
+<script type="text/javascript" src="../build_gulp/seed-under.min.js"></script>
 <script type="text/javascript">
     (function (S) {
         var tag = "Seed Demo",
@@ -29,7 +29,7 @@
         var t = {};
         var a = S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: true});
         log.info(a);
-        var date = new Date('2015/05/16 15:00:00');
+        var date = new Date('2015/09/16 15:00:00');
         S.later(function () {
             var left = S.leftTime(date),
                     prev = "还剩 ";
@@ -37,7 +37,7 @@
             left.prev = prev;
             var tag = document.getElementById("html");
             tag.innerHTML = S.format('<p>{prev} <em>{dd}</em>天<em>{hh}</em>小时<em>{mm}</em>分<em>{ss}</em>秒</p>', left);
-        }, 1000, true);
+        }, 500, true);
     })(SINGER);
 </script>
 </body>

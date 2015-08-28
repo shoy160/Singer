@@ -257,36 +257,36 @@ var singer = SINGER = window.SINGER = (function (undefined) {
 (function (S) {
     var AP = Date.prototype;
     AP.addDays = AP.addDays || function (days) {
-        this.setDate(this.getDate() + days);
-        return this;
-    };
-    AP.format = AP.format || function (strFormat) {
-        var o = {
-            "M+": this.getMonth() + 1,
-            "d+": this.getDate(),
-            "h+": this.getHours(),
-            "m+": this.getMinutes(),
-            "s+": this.getSeconds(),
-            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
-            "S": this.getMilliseconds() //毫秒
+            this.setDate(this.getDate() + days);
+            return this;
         };
-        if (/(y+)/.test(strFormat))
-            strFormat = strFormat.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-        for (var k in o) {
-            if (new RegExp("(" + k + ")").test(strFormat)) {
-                strFormat =
-                    strFormat.replace(RegExp.$1, (RegExp.$1.length == 1) ?
-                        (o[k]) :
-                        (("00" + o[k]).substr(("" + o[k]).length)));
+    AP.format = AP.format || function (strFormat) {
+            var o = {
+                "M+": this.getMonth() + 1,
+                "d+": this.getDate(),
+                "h+": this.getHours(),
+                "m+": this.getMinutes(),
+                "s+": this.getSeconds(),
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                "S": this.getMilliseconds() //毫秒
+            };
+            if (/(y+)/.test(strFormat))
+                strFormat = strFormat.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o) {
+                if (new RegExp("(" + k + ")").test(strFormat)) {
+                    strFormat =
+                        strFormat.replace(RegExp.$1, (RegExp.$1.length == 1) ?
+                            (o[k]) :
+                            (("00" + o[k]).substr(("" + o[k]).length)));
+                }
             }
-        }
-        return strFormat;
-    };
+            return strFormat;
+        };
     AP.left = function () {
         var arr = {status: true};
         var nDifference = this - (new Date());
         if (nDifference < 0) {
-            arr.state = false;
+            arr.status = false;
             nDifference = Math.abs(nDifference);
         }
         var iDays = nDifference / (1000 * 60 * 60 * 24);
@@ -703,6 +703,32 @@ var singer = SINGER = window.SINGER = (function (undefined) {
                 }
             }
             return result;
+        },
+        /**
+         * 左侧填充
+         * @param obj
+         * @param len
+         * @param ch
+         */
+        padLeft: function (obj, len, ch) {
+            ch = S.isUndefined(ch) ? '0' : ch;
+            var s = String(obj);
+            while (s.length < len)
+                s = ch + s;
+            return s;
+        },
+        /**
+         * 右侧填充
+         * @param obj
+         * @param len
+         * @param ch
+         */
+        padRight: function (obj, len, ch) {
+            ch = S.isUndefined(ch) ? '0' : ch;
+            var s = String(obj);
+            while (s.length < len)
+                s += ch;
+            return s;
         }
     });
 })(SINGER);

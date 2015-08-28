@@ -118,6 +118,32 @@
                 }
             }
             return result;
+        },
+        /**
+         * 左侧填充
+         * @param obj
+         * @param len
+         * @param ch
+         */
+        padLeft: function (obj, len, ch) {
+            ch = S.isUndefined(ch) ? '0' : ch;
+            var s = String(obj);
+            while (s.length < len)
+                s = ch + s;
+            return s;
+        },
+        /**
+         * 右侧填充
+         * @param obj
+         * @param len
+         * @param ch
+         */
+        padRight: function (obj, len, ch) {
+            ch = S.isUndefined(ch) ? '0' : ch;
+            var s = String(obj);
+            while (s.length < len)
+                s += ch;
+            return s;
         }
     });
 })(SINGER);

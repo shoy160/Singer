@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+<select name="fields" id="fields">
+    <option value="-1">请选择</option>
+    <option value="projectName">项目名称</option>
+    <option value="project.projectID">项目ID</option>
+    <option value="project.createUserID">用户</option>
+    <option value="project.createTime">时间</option>
+</select>
+<select name="fieldOperations" id="fieldOperations"></select>
+<script src="../plugs/jquery.min.js"></script>
+<script>
+    var operations = {
+        "projectName": {
+            options: [
+                {value: 'like', text: '包含'},
+                {value: '=', text: '等于'}
+            ],
+            field: 'text',
+            callback: function () {
+                //:todo
+            }
+        },
+        "project.projectID": {
+            options: [{value: '=', text: '等于'}],
+            field: 'text',
+            callback: function () {
+                //:todo
+            }
+        },
+        "project.createUserID": {
+            options: [{value: '=', text: '等于'}],
+            field: 'select',
+            fieldData: [{value: 'test', name: 'test'}, {value: 'grace', name: 'grace'}],
+            callback: function () {
+                //:todo
+            }
+        },
+        "project.createTime": {
+            options: [{value: '>=', text: '大于等于'}, {value: '<=', text: '小于等于'}],
+            field: 'text',
+            callback: function () {
+                //:todo
+                $('#fieldValues').bind('click', function () {
+                    alert('Wdate');
+                });
+            }
+        }
+    };
+    $('#fields').bind('change', function () {
+        var val = $(this).val(),
+                $operation = $('#fieldOperations'),
+                current = operations[val],
+                i, option;
+        $operation.empty().next().remove();
+        for (i = 0; i < current.options.length; i++) {
+            option = current.options[i];
+            $operation.append('<option value="' + option.value + '">' + option.text + '</option>');
+        }
+        if (current.field == 'text')
+            $operation.after('<input type="text" value="" id="fieldValues" />');
+        else if (current.field == 'select') {
+            var $select = $('<select id="fieldValues">');
+            for (i = 0; i < current.fieldData.length; i++) {
+                option = current.fieldData[i];
+                $select.append('<option value="' + option.value + '">' + option.name + '</option>');
+            }
+            $operation.after($select);
+        }
+        current.callback && current.callback.call(this);
+    });
+</script>
+</body>
+</html>

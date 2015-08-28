@@ -48,6 +48,25 @@ gulp.task("seed", function () {
         .pipe(notify({message: 'seed task complete'}));
 });
 
+gulp.task('seed-under', function () {
+    var src = SEED_SRC;
+    src.push('plugs/underscore/underscore.js');
+    src.push('plugs/underscore/singer.underscore.js');
+    return gulp.src(src)
+        //合并文件
+        .pipe(concat("seed-under.js"))
+        //写文件
+        .pipe(gulp.dest(DEST))
+//        .pipe(jshint('.jshintrc'))
+//        .pipe(jshint.reporter('default'))
+        //压缩文件
+        .pipe(uglify())
+        //重命名
+        .pipe(rename({suffix: '.min'}))
+        .pipe(gulp.dest(DEST))
+        .pipe(notify({message: 'seed-under task complete'}));
+});
+
 // styles
 gulp.task('styles', function () {
     return gulp.src(CSS_SRC)
