@@ -11,10 +11,51 @@
             font-weight: 700;
             padding: 0 3px;
         }
+
+        .table td, .table th {
+            padding-left: 16px;
+            min-width: 120px;
+            text-align: left;
+        }
+
+        .table tr:nth-child(2) {
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.16);
+            -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.16);
+            display: inline-block;
+        }
     </style>
+    <link rel="stylesheet" href="//static.deyi.com/css/bootstrap.min.css"/>
 </head>
 <body>
 <div id="html" class="date"></div>
+<div class="col-md-5">
+    <table class="table table-bordered">
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td>0</td>
+            <td>11</td>
+            <td>22</td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td>0</td>
+            <td>11</td>
+            <td>22</td>
+        </tr>
+    </table>
+</div>
 
 <script type="text/javascript" src="../build_gulp/seed-under.min.js"></script>
 <script type="text/javascript">

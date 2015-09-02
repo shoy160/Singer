@@ -260,7 +260,44 @@ var singer = SINGER = window.SINGER = (function (undefined) {
             this.setDate(this.getDate() + days);
             return this;
         };
+    var weeks = ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
     AP.format = AP.format || function (strFormat) {
+            if (strFormat === 'soon' || strFormat === 'week') {
+                var left = this.left();
+                console.log(left);
+                if (left.dd < 5) {
+                    var str = '';
+                    var dd = S.now().getDate() - this.getDate();
+                    if (left.dd == 0 && dd != 0) {
+                        left.status = dd < 0;
+                        left.dd = 1;
+                    }
+                    //var dd = S.now().getDate() - this.getDate();
+                    //left.status = dd < 0;
+                    //left.dd = Math.abs(dd);
+                    if (left.dd > 0) {
+                        if (left.dd == 1)
+                            return (left.status ? "明天" : "昨天") + this.format(' hh:mm');
+                        if (strFormat == 'week') {
+                            return weeks[this.getDay()];
+                        } else {
+                            str = left.dd + '天';
+                        }
+                    } else if (left.hh > 0) {
+                        str = left.hh + '小时';
+                    } else if (left.mm > 0) {
+                        str = left.mm + '分钟';
+                    } else if (left.ss > 10) {
+                        str = left.ss + '秒';
+                    } else {
+                        return '刚刚';
+                    }
+                    return str + (left.status ? '后' : '前');
+                }
+                strFormat = 'yyyy-MM-dd';
+            }
+            if (strFormat === "date")
+                return this;
             var o = {
                 "M+": this.getMonth() + 1,
                 "d+": this.getDate(),
@@ -289,16 +326,21 @@ var singer = SINGER = window.SINGER = (function (undefined) {
             arr.status = false;
             nDifference = Math.abs(nDifference);
         }
+        console.log(nDifference);
         var iDays = nDifference / (1000 * 60 * 60 * 24);
-        arr.dd = parseInt(iDays);
+        arr.dd = iDays > 1 ? parseInt(iDays) : 0;
         var temp = iDays - arr.dd;
-        arr.hh = parseInt(temp * 24);
+        var hh = temp * 24;
+        arr.hh = hh > 1 ? parseInt(hh) : 0;
         temp = temp * 24 - arr.hh;
-        arr.mm = parseInt(temp * 60);
+        hh = temp * 60;
+        arr.mm = hh > 1 ? parseInt(hh) : 0;
         temp = temp * 60 - arr.mm;
-        arr.ss = parseInt(temp * 60);
+        hh = temp * 60;
+        arr.ss = hh > 1 ? parseInt(hh) : 0;
         temp = temp * 60 - arr.ss;
-        arr.ms = parseInt(temp * 60);
+        hh = temp * 1000;
+        arr.ms = hh > 1 ? parseInt(hh) : 0;
         return arr;
     };
     S._mix(S, {
@@ -333,6 +375,9 @@ var singer = SINGER = window.SINGER = (function (undefined) {
          * @returns {*}
          */
         formatDate: function (date, strFormat) {
+            if (S.isString(date) && /Date\((\d+)\)/gi.test(date)) {
+                date = new Date(RegExp.$1 * 1);
+            }
             if (!S.isDate(date)) return date;
             strFormat = strFormat || "yyyy-MM-dd";
             return date.format(strFormat);

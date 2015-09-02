@@ -5,11 +5,17 @@
     <title>base Test</title>
 </head>
 <body>
-<script src="../../../build/seed.js"></script>
+<script src="../../../build_gulp/seed.js"></script>
 <script>
-    var logger = SINGER.getLogger("base");
-    SINGER.config({debug: true});
-    logger.warn("警告");
+    (function (S) {
+        var logger = S.getLogger("base");
+        S.config({debug: true});
+        logger.warn("警告");
+        var time = '\/Date(1440744275883)\/';
+        logger.info(S.formatDate(time, 'date'));
+        logger.info(S.formatDate(time, 'soon'));
+        logger.info(S.formatDate(time, 'yyyy-MM-dd hh:mm:ss'));
+    })(SINGER);
 </script>
 </body>
 </html>
