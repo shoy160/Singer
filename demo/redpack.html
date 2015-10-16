@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>抢红包</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            background-color: rgba(0, 0, 0, .5);
+        }
+
+        .r-container {
+            background-color: #000;
+            color: #fff;
+            max-width: 650px;
+            margin: 0 auto;
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .r-time {
+            font-size: 14px;
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            color: #fff;
+        }
+
+        .r-time-seconds {
+            font-family: arial, sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .r-money {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            color: #00d6b2;
+            font-size: 18px;
+        }
+
+        .red-pack {
+            background: url(image/red.png) no-repeat 0 0;
+            width: 40px;
+            height: 50px;
+            position: absolute;
+            left: 15px;
+            top: -50px;
+        }
+
+        .red-pow {
+            position: absolute;
+            bottom: 0;
+            width: 60px;
+            height: 6px;
+            background-color: #009900;
+        }
+    </style>
+</head>
+<body>
+<div class="r-container">
+    <div class="r-time">
+        剩余时间：<span class="r-time-seconds">30s</span>
+    </div>
+    <div class="r-money">0元</div>
+    <div class="packs">
+    </div>
+    <div class="red-pow"></div>
+</div>
+<script src="../build/seed.min.js"></script>
+<script src="//static.dayeasy.dev/js/jquery.min.js"></script>
+<script>
+    (function (S, $) {
+        var $container = $('.r-container'),
+                $packs = $('.packs'),
+                boxWidth = $container.width(),
+                boxHeight = $container.height(),
+                types = [-1, 0, 1],//红包类型概率：-1炸弹；0空红包；1：1元红包
+                total = 30,//总时长(s)
+                topStep = 20,//掉落阶长
+                rotateStep = 30,//旋转阶长
+                money = 0;//当前money
+        /**
+         * 显示money变化
+         */
+        var moneyChange = function (step) {
+            money += step;
+
+            $('.r-money').html(money + '元');
+        };
+        /**
+         * 掉落 红包
+         */
+        var showPack = function () {
+            var $pack = $('<div class="red-pack">'),
+                    left = (boxWidth - $pack.width()) * Math.random(),//随机起始位置
+                    rotate = 360 * Math.random(),//随机起始旋转度数
+                    type = types[~~(types.length * Math.random())],//随机红包类型
+                    top = -50,
+                    timer;
+            $pack.data('type', type).css({
+                left: left,
+                top: top
+            });
+            $packs.append($pack);
+            //红包动画timer
+            timer = S.later(function () {
+                rotate += rotateStep;
+                top += topStep;
+                $pack.css({
+                    transform: 'rotate(' + rotate + 'deg)',
+                    top: top
+                });
+                if (top >= boxHeight) {
+                    timer.cancel();
+                    switch ($pack.data('type')) {
+                        case -1:
+                            moneyChange(-1);
+                            break;
+                        case 1:
+                            moneyChange(1);
+                            break;
+                        default:
+                            moneyChange(0);
+                            break;
+                    }
+                }
+            }, (50 + total * 2), true);
+        };
+        var totalTimer, packTimer;
+        //全局时长timer
+        totalTimer = S.later(function () {
+            total--;
+            $('.r-time-seconds').html(total + 's');
+            if (total <= 0) {
+                totalTimer.cancel();
+                packTimer.cancel();
+                alert('game over');
+            }
+        }, 1000, true);
+        //红包掉落timer
+        packTimer = S.later(function () {
+            showPack();
+        }, 500, true);
+    })(SINGER, jQuery);
+</script>
+</body>
+</html>
