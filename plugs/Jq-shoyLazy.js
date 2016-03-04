@@ -12,9 +12,17 @@
     S.prototype.shoyLazy = function (opt) {
         opt = S.extend(def, opt);
         var t = S(this), w = S(window), d = S(document), getTop, lazyScroll, lazyShow, preTop = 0, domHeight, unLazy;
+        /**
+         * 取消延迟加载事件绑定
+         */
         unLazy = function () {
             w.unbind("scroll.shoyLazy resize.shoyLazy");
         };
+        /**
+         * 获取元素加载高度
+         * @param obj
+         * @returns {*}
+         */
         getTop = function (obj) {
             var b = S(obj);
             if (opt.loadClass)
@@ -28,6 +36,10 @@
             obj.lazyTop = top;
             return obj
         };
+        /**
+         * 加载图片
+         * @param obj
+         */
         lazyShow = function (obj) {
             obj.setAttribute("src", obj.getAttribute(obj.lazySrc));
             obj.removeAttribute(obj.lazySrc);
@@ -35,8 +47,14 @@
                 S(this).removeClass(opt.loadClass);
             });
         };
+        /**
+         * 滚动事件
+         */
         lazyScroll = function () {
-            var height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+            var height =
+                window.innerHeight ||
+                document.documentElement.clientHeight ||
+                document.body.clientHeight, i;
             height += w.scrollTop() + opt.prePix;
             if (height < preTop) return;
             preTop = height;
@@ -45,14 +63,14 @@
                 return;
             }
             if (domHeight - opt.prePix < height) {
-                for (var i = 0; i < lazyDoms.length; i++) {
+                for (i = 0; i < lazyDoms.length; i++) {
                     lazyShow(lazyDoms[i]);
                 }
                 lazyDoms.splice(0);
                 unLazy();
                 return;
             }
-            for (var i = 0; i < lazyDoms.length; i++) {
+            for (i = 0; i < lazyDoms.length; i++) {
                 if (lazyDoms[i].lazyTop < height) {
                     lazyShow(lazyDoms[i]);
                     lazyDoms.splice(i--, 1);

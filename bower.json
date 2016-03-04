@@ -1,8 +1,11 @@
 {
-  "name":"singer",
+  "name": "singer",
   "version": "0.2.5",
   "dependencies": {
-    "modulex":"1.6.2",
-    "modulex-anim":"1.0.2"
+    "modulex": "1.6.2",
+    "modulex-anim": "1.0.2"
+  },
+  "devDependencies": {
+    "iNotify": "inotify#~1.0.9"
   }
 }

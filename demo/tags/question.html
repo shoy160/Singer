@@ -1,0 +1,75 @@
+<question>
+    <div class="q-item">
+        <div class="q-main">
+            <div class="q-body">{body}</div>
+            <q-image if={images!=null&&images.length>0}></q-image>
+            <div class="q-details" if={details!=null && details.length>0}>
+                <q-detail each={details}></q-detail>
+            </div>
+            <div if={answers!=null && answers.length>1}
+                class={'q-options':true,'q-options-horizontal':optionModel}>
+                <q-answer each={answers}></q-answer>
+            </div>
+        </div>
+    </div>
+    <script>
+        var self = this;
+        self.optionModelFn = function (options) {
+            for (var i = 0; i < options.length; i++) {
+                var item = options[i],
+                        len = 0;
+                //有公式
+                if (item.body.indexOf('\\[') >= 0)
+                    return true;
+                len += (item.images && item.images.length) ? 18 : 0;
+                if (item.body.length + len > 35)
+                    return false;
+            }
+            return true;
+        };
+        (function () {
+            $.ajax({
+                url: 'http://open.dayeasy.dev/v3/home_load',
+                data: {id: opts.id},
+                dataType: 'jsonp',
+                cache: true,
+                success: function (json) {
+                    self.optionModel = self.optionModelFn(json.answers);
+                    self.update(json);
+                }
+            });
+        })();
+    </script>
+</question>
+<!--小问-->
+<q-detail>
+    <div class="q-detail">
+        <div class="q-body">{body}</div>
+        <div class={'q-options':true,'q-options-horizontal':optionModel}>
+            <q-answer each={answers}></q-answer>
+        </div>
+        <q-image if={images!=null&&images.length>0}></q-image>
+    </div>
+    <script>
+        var self = this;
+        (function () {
+            self.optionModel = self.parent.optionModelFn(self.answers);
+        })();
+    </script>
+</q-detail>
+<!--选项-->
+<q-answer>
+    <div class="q-option">
+        <div class="q-body">
+            <span class="q-option-word">{tag}.</span>
+
+            <div class="q-option-body">{body}</div>
+        </div>
+        <q-image if={images!=null&&images.length>0}></q-image>
+    </div>
+</q-answer>
+<q-image>
+    <div class="q-image">
+        <img src="{images[0]}" alt=""/>
+    </div>
+</q-image>

@@ -1,0 +1,146 @@
+@import "base";
+
+@border-color: #ddd;
+@name-color: #666;
+@gray-color: #999;
+@floor-01: #fc6e51;
+@floor-02: #f6bb42;
+@floor-03: #4fc1e9;
+@floor-04: #eee;
+
+.hide {
+  display: none;
+}
+
+.d-comments {
+  font-size: 14px;
+  color: #333;
+}
+
+.d-comment-leader {
+  border-bottom: solid 1px @border-color;
+  padding: 6px 0;
+  margin: 12px 0;
+  font-size: 16px;
+  small {
+    color: @gray-color;
+    font-size: 85%;
+    margin-left: 6px;
+  }
+}
+
+.d-comment-list {
+  margin: 12px 0 30px;
+}
+
+.d-comment-item {
+  border-bottom: solid 1px @border-color;
+  position: relative;
+  margin-bottom: 15px;
+  .d-comment-avatar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    img {
+      width: 40px;
+      height: 40px;
+      .rounded-corners(50%);
+    }
+  }
+  .d-comment-wrap {
+    padding-left: 40px;
+  }
+  .d-comment-info {
+    margin-left: 15px;
+    .d-comment-user {
+      color: @name-color;
+    }
+    .d-comment-time {
+      color: @gray-color;
+      font-size: 90%;
+      margin-left: 12px;
+    }
+    .d-comment-floor {
+      float: right;
+      color: @gray-color;
+      font-size: 12px;
+    }
+  }
+  .d-comment-message {
+    margin-left: 15px;
+    padding: 12px 0 8px;
+  }
+  .d-comment-actions {
+    text-align: right;
+    height: 24px;
+    line-height: 24px;
+    .linkColor(@gray-color, @name-color);
+    a {
+      margin-left: 8px;
+      font-size: 12px;
+    }
+    .d-comment-more {
+
+    }
+  }
+  .d-comment-floor {
+    span {
+      color: @color-default;
+      padding: 2px 6px;
+    }
+    .d-floor-01 {
+      background-color: @floor-01;
+    }
+    .d-floor-02 {
+      background-color: @floor-02;
+    }
+    .d-floor-03 {
+      background-color: @floor-03;
+    }
+    .d-floor-04 {
+      background-color: @floor-04;
+      color: @gray-color;
+    }
+  }
+}
+
+.d-comment-replies {
+  .d-comment-list {
+    margin: 6px 0 0;
+  }
+  .d-comment-item {
+    border-top: dashed 1px @border-color;
+    border-bottom: none;
+    padding: 12px 0;
+    margin-bottom: 0;
+  }
+  .d-comment-avatar {
+    top: 12px;
+  }
+}
+
+.d-comment-send {
+  .d-comment-input {
+    text-align: right;
+    textarea {
+      width: 90%;
+    }
+  }
+  .d-comment-btn {
+    margin: 15px 0;
+    text-align: right;
+    .btn {
+      width: 150px;
+      height: 36px;
+      background-color: @color-primary;
+      color: @color-default;
+      border: solid 1px @color-primary-border;
+      cursor: pointer;
+    }
+    .d-comment-helper {
+      font-size: 12px;
+      color: @gray-color;
+      margin-top: 12px;
+    }
+  }
+}

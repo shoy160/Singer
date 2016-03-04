@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>通用评论</title>
+    <style>
+        .d-other,
+        .d-list {
+            width: 1000px;
+            margin: 15px auto;
+        }
+
+        /*.d-list .d-comments {*/
+        /*width: 480px;*/
+        /*float: left;*/
+        /*margin-right: 20px;*/
+        /*overflow: hidden;*/
+        /*}*/
+    </style>
+</head>
+<body>
+<div class="d-other">
+    其他的内容
+</div>
+<div class="d-list">
+    <div class="d-comments"
+         data-source-id="topic_ad9a4e3db4904c559ae989284e1d6dba"
+         data-size="15"
+         data-index="0"
+         data-sort="time">
+    </div>
+</div>
+<script type="text/html" id="commentItem">
+    <div class="d-comment-item">
+        <!--头像-->
+        <div class="d-comment-avatar">
+            <img src="{{user.avatar}}" alt=""/>
+        </div>
+        <div class="d-comment-wrap">
+            <div class="d-comment-info">
+                <span class="d-comment-user">{{user.name}}</span>
+                <span class="d-comment-time">{{time}}</span>
+                {{if floor}}
+                <div class="d-comment-floor">{{#floor}}</div>
+                {{/if}}
+            </div>
+            <div class="d-comment-message">{{message}}</div>
+            <div class="d-comment-actions">
+                    <span class="d-comment-more hide">
+                        <a href="#" class="d-comment-report">举报</a>
+                        <a href="#">撤回</a>
+                    </span>
+                <a href="#">赞</a>
+                <a href="#">回复</a>
+            </div>
+            {{include 'commentReply'}}
+        </div>
+    </div>
+</script>
+<script type="text/html" id="commentReply">
+    <!--回复-->
+    <div class="d-comment-replies">
+        <div class="d-comment-list">
+            {{each replys as item}}
+            {{include 'commentItem' item}}
+            {{/each}}
+        </div>
+    </div>
+</script>
+<script type="text/html" id="commentTemp">
+    <div class="d-comment-leader">
+        全部回复
+        <small>({{count}})</small>
+    </div>
+    <!--列表-->
+    <div class="d-comment-list">
+        {{each comments as item}}
+        {{include 'commentItem' item}}
+        {{/each}}
+    </div>
+    <div class="d-comment-send">
+        <div class="d-comment-avatar">
+            <img src="" alt=""/>
+        </div>
+        <div class="d-comment-input">
+            <textarea name="message" cols="30" rows="3"></textarea>
+
+            <div class="d-comment-btn">
+                <button class="btn btn-primary">发送回复</button>
+                <div class="d-comment-helper">Ctrl+Enter键快速提交回复</div>
+            </div>
+        </div>
+    </div>
+</script>
+<script src="../build_gulp/seed.js"></script>
+<script src="../plugs/jquery.min.js"></script>
+<script src="../plugs/artTemplate.min.js"></script>
+<script>
+    (function ($, S) {
+        var initComments, loadComment, bindComment, floors, getFloor;
+        /**
+         * 特殊楼层
+         */
+        floors = ['<span class="d-floor-01">沙发</span>',
+            '<span class="d-floor-02">板凳</span>',
+            '<span class="d-floor-03">地板</span>',
+            '<span class="d-floor-04">地下室</span>'];
+
+        getFloor = function (floor) {
+            if (floor <= 0 || floor > floors.length)
+                return floor + '楼';
+            return floors[floor - 1];
+        };
+        /**
+         * 初始化所有评论
+         */
+        initComments = function () {
+            var $comments = $('.d-comments');
+            $comments.each(function (index, item) {
+                loadComment(item);
+            });
+        };
+        /**
+         * 加载评论列表
+         * @param obj
+         */
+        loadComment = function (obj) {
+            var $obj, config;
+            $obj = $(obj);
+            config = {
+                sourceId: $obj.data('source-id'),
+                size: $obj.data('size'),
+                index: $obj.data('index'),
+                sort: $obj.data('sort')
+            };
+            $.ajax({
+                url: 'http://www.dayeasy.dev/message/comments-data',
+                data: config,
+                dataType: 'jsonp',
+                jsonp: 'callback',
+                success: function (data) {
+                    bindComment($obj, data);
+                }
+            });
+        };
+        /**
+         * 绑定评论
+         * @param $comments
+         * @param data
+         */
+        bindComment = function ($comments, data) {
+            //组装用户数据
+            for (var i = 0; i < data.comments.length; i++) {
+                var item = data.comments[i];
+                item.user = data.users[item.userId];
+                item.floor = getFloor(item.floor);
+                if (item.replys && item.replys.length) {
+                    for (var j = 0; j < item.replys.length; j++) {
+                        var reply = item.replys[j];
+                        reply.user = data.users[reply.userId];
+                        reply.floor = '';
+                    }
+                }
+            }
+            var html = template('commentTemp', data);
+            $comments.html(html);
+        };
+
+        /**
+         * 加载指定css并初始化插件
+         */
+        S.loadScript('css/comment.css', {
+            success: function () {
+                initComments();
+            },
+            error: function () {
+            },
+            charset: 'utf-8'
+        });
+        $('.d-comments')
+                .delegate('.d-comment-item', 'mouseenter', function (e) {
+                    $(this).find('.d-comment-more').eq(0).removeClass('hide');
+                })
+                .delegate('.d-comment-item', 'mouseleave', function (e) {
+                    $(this).find('.d-comment-more').eq(0).addClass('hide');
+                })
+        ;
+    })(jQuery, SINGER);
+</script>
+</body>
+</html>

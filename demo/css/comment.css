@@ -1,0 +1,134 @@
+.hide {
+  display: none;
+}
+.d-comments {
+  font-size: 14px;
+  color: #333;
+}
+.d-comment-leader {
+  border-bottom: solid 1px #ddd;
+  padding: 6px 0;
+  margin: 12px 0;
+  font-size: 16px;
+}
+.d-comment-leader small {
+  color: #999;
+  font-size: 85%;
+  margin-left: 6px;
+}
+.d-comment-list {
+  margin: 12px 0 30px;
+}
+.d-comment-item {
+  border-bottom: solid 1px #ddd;
+  position: relative;
+  margin-bottom: 15px;
+}
+.d-comment-item .d-comment-avatar {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.d-comment-item .d-comment-avatar img {
+  width: 40px;
+  height: 40px;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -o-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+}
+.d-comment-item .d-comment-wrap {
+  padding-left: 40px;
+}
+.d-comment-item .d-comment-info {
+  margin-left: 15px;
+}
+.d-comment-item .d-comment-info .d-comment-user {
+  color: #666;
+}
+.d-comment-item .d-comment-info .d-comment-time {
+  color: #999;
+  font-size: 90%;
+  margin-left: 12px;
+}
+.d-comment-item .d-comment-info .d-comment-floor {
+  float: right;
+  color: #999;
+  font-size: 12px;
+}
+.d-comment-item .d-comment-message {
+  margin-left: 15px;
+  padding: 12px 0 8px;
+}
+.d-comment-item .d-comment-actions {
+  text-align: right;
+  height: 24px;
+  line-height: 24px;
+}
+.d-comment-item .d-comment-actions a:link,
+.d-comment-item .d-comment-actions a:active,
+.d-comment-item .d-comment-actions a:visited {
+  color: #999;
+  text-decoration: none;
+}
+.d-comment-item .d-comment-actions a:hover {
+  color: #666;
+  text-decoration: none;
+}
+.d-comment-item .d-comment-actions a {
+  margin-left: 8px;
+  font-size: 12px;
+}
+.d-comment-item .d-comment-floor span {
+  color: #fff;
+  padding: 2px 6px;
+}
+.d-comment-item .d-comment-floor .d-floor-01 {
+  background-color: #fc6e51;
+}
+.d-comment-item .d-comment-floor .d-floor-02 {
+  background-color: #f6bb42;
+}
+.d-comment-item .d-comment-floor .d-floor-03 {
+  background-color: #4fc1e9;
+}
+.d-comment-item .d-comment-floor .d-floor-04 {
+  background-color: #eee;
+  color: #999;
+}
+.d-comment-replies .d-comment-list {
+  margin: 6px 0 0;
+}
+.d-comment-replies .d-comment-item {
+  border-top: dashed 1px #ddd;
+  border-bottom: none;
+  padding: 12px 0;
+  margin-bottom: 0;
+}
+.d-comment-replies .d-comment-avatar {
+  top: 12px;
+}
+.d-comment-send .d-comment-input {
+  text-align: right;
+}
+.d-comment-send .d-comment-input textarea {
+  width: 90%;
+}
+.d-comment-send .d-comment-btn {
+  margin: 15px 0;
+  text-align: right;
+}
+.d-comment-send .d-comment-btn .btn {
+  width: 150px;
+  height: 36px;
+  background-color: #337ab7;
+  color: #fff;
+  border: solid 1px #2e6da4;
+  cursor: pointer;
+}
+.d-comment-send .d-comment-btn .d-comment-helper {
+  font-size: 12px;
+  color: #999;
+  margin-top: 12px;
+}

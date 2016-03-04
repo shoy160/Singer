@@ -40,7 +40,7 @@
         temp = temp * 60 - arr.ss;
         arr.ms = parseInt(temp * 60);
         return arr;
-    }
+    };
     $.fn.countDown = function (opt) {
         opt = $.extend(def, opt || {});
         var $t = $(this), dc , date, cf = $t.data("config");

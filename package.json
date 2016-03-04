@@ -2,7 +2,7 @@
   "name": "singer",
   "version": "0.2.5",
   "devDependencies": {
-    "gulp": "~3.8.11",
+    "gulp": "~3.9.0",
     "gulp-watch": "~4.2.4",
     "gulp-concat": "~2.5.2",
     "gulp-clean": "latest",

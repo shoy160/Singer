@@ -73,15 +73,15 @@
         });
     })(jQuery);
 </script>
-<script type="text/javascript" src="../singer.js"></script>
+<script type="text/javascript" src="../build/seed.min.js"></script>
 <script type="text/javascript">
-    (function () {
-        SINGER.Config.lv=SINGER.Level.INFO;
-        SINGER.log(SINGER.Json('{"state":5,"msg":"ddd"}'), "warn");
-        SINGER.cookie.set("test", "http://www.baidu.com", 0.5);
-        SINGER.log(SINGER.cookie.get("test"), "info");
-        SINGER.log(SINGER.isMobile("13585625325"), "warn");
-    })();
+    (function (S) {
+        S.config({loggerLevel: S.Logger.Level.WARN});
+        S.log(S.json('{"state":5,"msg":"ddd"}'), "warn");
+        S.cookie.set("test", "http://www.baidu.com", 0.5);
+        S.log(S.cookie.get("test"), "info");
+        S.log(S.isMobile("13585625325"), "warn");
+    })(SINGER);
 </script>
 </body>
 </html>
