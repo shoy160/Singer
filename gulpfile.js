@@ -38,8 +38,8 @@ gulp.task("seed", function () {
         .pipe(concat("seed.js"))
         //写文件
         .pipe(gulp.dest(DEST))
-//        .pipe(jshint('.jshintrc'))
-//        .pipe(jshint.reporter('default'))
+        //        .pipe(jshint('.jshintrc'))
+        //        .pipe(jshint.reporter('default'))
         //压缩文件
         .pipe(uglify())
         //重命名
@@ -57,8 +57,8 @@ gulp.task('seed-under', function () {
         .pipe(concat("seed-under.js"))
         //写文件
         .pipe(gulp.dest(DEST))
-//        .pipe(jshint('.jshintrc'))
-//        .pipe(jshint.reporter('default'))
+        //        .pipe(jshint('.jshintrc'))
+        //        .pipe(jshint.reporter('default'))
         //压缩文件
         .pipe(uglify())
         //重命名

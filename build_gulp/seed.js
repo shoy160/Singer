@@ -272,9 +272,6 @@ var singer = SINGER = window.SINGER = (function (undefined) {
                         left.status = dd < 0;
                         left.dd = 1;
                     }
-                    //var dd = S.now().getDate() - this.getDate();
-                    //left.status = dd < 0;
-                    //left.dd = Math.abs(dd);
                     if (left.dd > 0) {
                         if (left.dd == 1)
                             return (left.status ? "明天" : "昨天") + this.format(' hh:mm');
