@@ -248,6 +248,24 @@ var singer = SINGER = window.SINGER = (function (undefined) {
         },
         inArray: function (item, arr) {
             return S.index(item, arr) >= 0;
+        },
+        find: function (list, fn, context) {
+            var current = null;
+            S.each(list, function (item, i) {
+                if (fn.call(context, item, i)) {
+                    current = item;
+                    return false;
+                }
+            });
+            return current;
+        },
+        filter: function (list, fn, context) {
+            var results = [];
+            S.each(list, function (item, i) {
+                if (fn.call(context, item, i))
+                    results.push(item);
+            });
+            return results;
         }
     });
 })(SINGER);
@@ -323,7 +341,7 @@ var singer = SINGER = window.SINGER = (function (undefined) {
             arr.status = false;
             nDifference = Math.abs(nDifference);
         }
-        console.log(nDifference);
+        //console.log(nDifference);
         var iDays = nDifference / (1000 * 60 * 60 * 24);
         arr.dd = iDays > 1 ? parseInt(iDays) : 0;
         var temp = iDays - arr.dd;
@@ -670,7 +688,7 @@ var singer = SINGER = window.SINGER = (function (undefined) {
          * @returns {boolean}
          */
         isMobile: function (m) {
-            return /^(1[3,5,8]\d{9})$/.test(S.trim(m));
+            return /^(1[3456789]\d{9})$/.test(S.trim(m));
         },
         /**
          * 是否是座机号码

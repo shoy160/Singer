@@ -40,7 +40,7 @@
          * @returns {boolean}
          */
         isMobile: function (m) {
-            return /^(1[3,5,8]\d{9})$/.test(S.trim(m));
+            return /^(1[3456789]\d{9})$/.test(S.trim(m));
         },
         /**
          * 是否是座机号码

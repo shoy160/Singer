@@ -1,0 +1,32 @@
+.cloud-item {
+  color: #666;
+  font-family: "Microsoft YaHei", serif;
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  font-size: 14px;
+  height: 40px;
+  line-height: 20px;
+  padding-left: 50px;
+  position: relative;
+  cursor: pointer;
+}
+.cloud-item img {
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -o-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 40px;
+  height: 40px;
+}
+.cloud-item .cloud-desc {
+  color: #999;
+}
+.cloud-item .cloud-desc em {
+  color: #ed5565;
+  font-style: normal;
+}

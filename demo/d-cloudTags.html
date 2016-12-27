@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>3D标签云</title>
+    <link rel="stylesheet" href="css/normalize.css"/>
+    <link rel="stylesheet" href="css/d-cloudTags.css"/>
+    <style>
+        .container {
+            width: 800px;
+            margin: 40px auto;
+            height: 600px;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="cloud-item">
+        <img src="https://unsplash.it/50/50" alt=""/>
+
+        <div class="cloud-title">名称名称</div>
+        <div class="cloud-desc"><em>362</em>名师生</div>
+    </div>
+</div>
+<script src="../plugs/jquery.min.js"></script>
+<script src="../plugs/d-cloudTags.js"></script>
+<script>
+    (function ($) {
+        $('.container').cloudTags();
+    })(jQuery);
+</script>
+</body>
+</html>
