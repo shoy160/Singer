@@ -663,7 +663,7 @@ var singer = SINGER = window.SINGER = (function (undefined) {
         trim: function (str) {
             return S.isEmpty(str) ? str : (trim ? trim.call(str) : (str + '').replace(RE_TRIM, EMPTY));
         },
-        lengthCn: function (str) {
+        lenCn: function (str) {
             if (!S.isString(str)) return 0;
             return str.replace(/[\u4e00-\u9fa5]/g, "**").length;
         },
@@ -676,11 +676,25 @@ var singer = SINGER = window.SINGER = (function (undefined) {
             }
             return str;
         },
-        stripTags: function (str) {
-            return str.replace(/<\/?[^>]+>/gi, '');
+        clearTags: function (str, tag, includeContent) {
+            tag = tag || EMPTY;
+            var reg;
+            if (!tag) {
+                reg = new RegExp('</?[0-9a-z]+[^>]*>', 'gi');
+            } else {
+                if (includeContent) {
+                    reg = new RegExp('<' + tag + '[^>]*>([\\S\\s]*?)<\/' + tag + '>', 'gi');
+                } else {
+                    reg = new RegExp('</?' + tag + '[^>]*>', 'gi');
+                }
+            }
+            return str.replace(reg, EMPTY);
         },
-        stripScript: function (h) {
-            return h.replace(/<script[^>]*>([\\S\\s]*?)<\/script>/g, '');
+        clearScript: function (str) {
+            return S.clearTags(str, 'script', true);
+        },
+        clearTrn: function (str) {
+            return str.replace(/[\r\n\t]/g, '');
         },
         /**
          * 是否是手机号码

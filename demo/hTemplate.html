@@ -6,30 +6,39 @@
     <link rel="stylesheet" href="../build/css/h-pager.min.css" type="text/css" media="all">
 </head>
 <body>
-    <div class="container">
+<div class="container">
 
-    </div>
-    <div class="h-pager"></div>
-    <script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
-    <script src="../build/plugs/hTemplate.min.js"></script>
-    <script>
-        var h = new hTemplate({
-            tmp:'{id}=--{name}<br/>',
-            container:$(".container"),
-            filter:function(json){
-                for(var s in json){
-                    if("id" === s)
-                        json[s] = "id:"+json[s];
-                    if("name" === s)
-                        json[s] = '<span style="color:red">'+json[s]+'</span>';
-                }
-                return json;
+</div>
+<div class="h-pager"></div>
+<script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="../plugs/hTemplate.js"></script>
+<script>
+    var h = new hTemplate({
+        tmp: '{id}=--{name}<br/>',
+        container: $(".container"),
+        pageClick: function (h, page) {
+            h.bind([
+                {id: 23, name: '单独辅导_page' + page},
+                {id: 23, name: "单独辅导_page" + page},
+                {id: 23, name: "单独辅导_page" + page}
+            ], 120);
+        },
+        filter: function (json) {
+            for (var s in json) {
+                if (!json.hasOwnProperty(s))
+                    continue;
+                if ("id" === s)
+                    json[s] = "id:" + json[s];
+                if ("name" === s)
+                    json[s] = '<span style="color:red">' + json[s] + '</span>';
             }
-        });
-        (function(){
-            h.set({page:1});
-            h.bind([{id:23,name:"单独辅导"},{id:23,name:"单独辅导"},{id:23,name:"单独辅导"}],120);
-        })();
-    </script>
+            return json;
+        }
+    });
+    (function () {
+        h.set({page: 1});
+        h.bind([{id: 23, name: "单独辅导"}, {id: 23, name: "单独辅导"}, {id: 23, name: "单独辅导"}], 120);
+    })();
+</script>
 </body>
 </html>

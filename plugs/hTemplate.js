@@ -8,11 +8,21 @@ var hTemplate = window.hTemplate = (function ($, f) {
             return this.replace(g, str);
         };
     }
+    /**
+     * 绑定
+     * @param name
+     * @param value
+     */
     String.prototype.bind = function (name, value) {
         if (isNaN(value))
             value = value || "";
         return this.replaceAll('\\{' + name + '\\}', value);
     };
+    /**
+     * 填充模板
+     * @param json
+     * @returns {*}
+     */
     String.prototype.fill = function (json) {
         if ("object" !== typeof json)
             return "";
@@ -24,6 +34,10 @@ var hTemplate = window.hTemplate = (function ($, f) {
         t = t.bind("[^}]+", "");
         return t;
     };
+    /**
+     * 格式化
+     * @returns {String}
+     */
     String.prototype.format = function () {
         if (arguments.length <= 0) return this;
         var result = this,
@@ -112,7 +126,11 @@ var hTemplate = window.hTemplate = (function ($, f) {
                     html += pagerTmp.format({"class": "disabled", "page": "..."});
                 html += getItem(total);
             }
-            html = pagerTmp.format({"class": (prev ? "" : "disabled"), "page": "&laquo;", "act": (prev ? -1 : 0)}) + html;
+            html = pagerTmp.format({
+                    "class": (prev ? "" : "disabled"),
+                    "page": "&laquo;",
+                    "act": (prev ? -1 : 0)
+                }) + html;
             html += pagerTmp.format({"class": (next ? "" : "disabled"), "page": "&raquo;", "act": (next ? 1 : 0)});
             opt.pager.html("<ul>" + html + "</ul>");
             opt.pager.find("ul li a").bind("click.hPager", function () {
@@ -127,7 +145,7 @@ var hTemplate = window.hTemplate = (function ($, f) {
                     page = ~~$t.html();
                 }
                 h.set({page: page});
-                opt.pageClick && "function" === typeof opt.pageClick && opt.pageClick(page);
+                opt.pageClick && "function" === typeof opt.pageClick && opt.pageClick(h, page);
                 h.pager();
                 return false;
             });
