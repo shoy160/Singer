@@ -70,7 +70,7 @@
             arr.status = false;
             nDifference = Math.abs(nDifference);
         }
-        console.log(nDifference);
+        //console.log(nDifference);
         var iDays = nDifference / (1000 * 60 * 60 * 24);
         arr.dd = iDays > 1 ? parseInt(iDays) : 0;
         var temp = iDays - arr.dd;

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>得一简易图表</title>
+</head>
+<link rel="stylesheet" href="css/normalize.css"/>
+<link rel="stylesheet" href="css/d-charts.css"/>
+<body>
+<div class="container01" style="margin: 35px auto;"></div>
+<div class="container02" style="margin: 35px auto;"></div>
+</body>
+<script src="../plugs/jquery.min.js"></script>
+<script src="../plugs/d-charts.js"></script>
+<script>
+    var getValue = function (max) {
+        return (Math.random() * max).toFixed(2);
+    };
+    var data1 = [], data2 = [];
+    for (var i = 1; i < 15; i++) {
+        data1.push({
+            name: i + '班',
+            value: getValue(150)
+        });
+        data2.push({
+            name: i + '班',
+            value: getValue(100)
+        });
+    }
+    $('.container01').chart({
+        type: 'score',
+        data: data1,
+        width: 800,
+        height: 250
+    });
+    $('.container02').chart({
+        type: 'percent',
+        data: data2,
+//        direct: 'v',
+        showAverage: true,
+        width: 820,
+        height: 300
+    });
+</script>
+</html>

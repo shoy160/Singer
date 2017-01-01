@@ -69,6 +69,24 @@
         },
         inArray: function (item, arr) {
             return S.index(item, arr) >= 0;
+        },
+        find: function (list, fn, context) {
+            var current = null;
+            S.each(list, function (item, i) {
+                if (fn.call(context, item, i)) {
+                    current = item;
+                    return false;
+                }
+            });
+            return current;
+        },
+        filter: function (list, fn, context) {
+            var results = [];
+            S.each(list, function (item, i) {
+                if (fn.call(context, item, i))
+                    results.push(item);
+            });
+            return results;
         }
     });
 })(SINGER);

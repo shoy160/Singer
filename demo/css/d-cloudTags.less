@@ -1,0 +1,32 @@
+@import "base";
+
+@tag-color: #666;
+@tag-color01: #999;
+@number-color: #ed5565;
+
+.cloud-item {
+  color: @tag-color;
+  font-family: "Microsoft YaHei", serif;
+  .inline-block;
+  font-size: 14px;
+  height: 40px;
+  line-height: 20px;
+  padding-left: 50px;
+  position: relative;
+  cursor: pointer;
+  img {
+    .rounded-corners(50%);
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 40px;
+    height: 40px;
+  }
+  .cloud-desc {
+    color: @tag-color01;
+    em {
+      color: @number-color;
+      font-style: normal;
+    }
+  }
+}

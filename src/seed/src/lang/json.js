@@ -20,6 +20,9 @@
                         arr.push(jsonItem);
                     else if (S.isString(jsonItem))
                         arr.push("'" + jsonItem + "'");
+                    else if (S.isArray(jsonItem)) {
+                        arr.push(S.json(jsonItem));
+                    }
                     else {
                         arrItem = [];
                         S.each(S.keys(jsonItem), function (key) {

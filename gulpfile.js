@@ -49,7 +49,7 @@ gulp.task("seed", function () {
 });
 
 gulp.task('seed-under', function () {
-    var src = SEED_SRC;
+    var src = SEED_SRC.concat();
     src.push('plugs/underscore/underscore.js');
     src.push('plugs/underscore/singer.underscore.js');
     return gulp.src(src)

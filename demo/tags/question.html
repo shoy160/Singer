@@ -18,7 +18,7 @@
             for (var i = 0; i < options.length; i++) {
                 var item = options[i],
                         len = 0;
-                //ÓÐ¹«Ê½
+                //æœ‰å…¬å¼
                 if (item.body.indexOf('\\[') >= 0)
                     return true;
                 len += (item.images && item.images.length) ? 18 : 0;
@@ -30,7 +30,7 @@
         (function () {
             $.ajax({
                 url: 'http://open.dayeasy.dev/v3/home_load',
-                data: {id: opts.id},
+                data: {id: opts.qid},
                 dataType: 'jsonp',
                 cache: true,
                 success: function (json) {
@@ -41,7 +41,7 @@
         })();
     </script>
 </question>
-<!--Ð¡ÎÊ-->
+<!--å°é—®-->
 <q-detail>
     <div class="q-detail">
         <div class="q-body">{body}</div>
@@ -57,7 +57,7 @@
         })();
     </script>
 </q-detail>
-<!--Ñ¡Ïî-->
+<!--é€‰é¡¹-->
 <q-answer>
     <div class="q-option">
         <div class="q-body">

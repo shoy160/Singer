@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>大神来了</title>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <link href="//static.dayeasy.net" rel="dns-prefetch">
+    <link href="//file.dayeasy.net" rel="dns-prefetch">
+    <link href="//file01.dayeasy.net" rel="dns-prefetch">
+    <link href="//file02.dayeasy.net" rel="dns-prefetch">
+    <link rel="apple-touch-icon-precomposed" href="/image/logo_114x114.png">
+    <link type="image/x-icon" rel="Shortcut Icon" href="/image/logo_114x114.png">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+    <style>
+        .d-tpl-image {
+            width: 90%;
+            margin: 0 auto;
+            height: 60%;
+        }
+
+        .d-custom img {
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="d-preview">
+    <div class="d-tpl-image" id="canvasBox">
+        <!--<canvas id="godCanvas" width="350px" height="525px"></canvas>-->
+        <!--<div class="tpl">-->
+        <!--<img src="/image/god/tpl01.png" alt=""/>-->
+        <!--</div>-->
+        <!--<div class="d-custom">-->
+        <!--<img id="preview" width="400" src="" alt=""/>            -->
+        <!--</div>-->
+    </div>
+    <div>
+        <input type="file" id="takePicture" accept="image/*">
+    </div>
+</div>
+<div>
+    <img src="" alt="" id="preview"/>
+</div>
+<div class="d-tpl">
+    <button id="getImage">获取图片</button>
+</div>
+<script>
+    (function () {
+        var imageCanvas = document.createElement('canvas'),
+                context = imageCanvas.getContext('2d'),
+                customUrl,
+                backgroundImg,
+                customImage;
+        imageCanvas.width = 300;
+        imageCanvas.height = 450;
+        document.getElementById('canvasBox').appendChild(imageCanvas);
+        var drawTpl = function (callback) {
+            //模版背景
+            if (backgroundImg) {
+                context.drawImage(backgroundImg, 0, 0, 300, 450);
+                callback && callback.call(this);
+            } else {
+                backgroundImg = new Image();
+                backgroundImg.src = '/image/god/tpl01.png';
+                backgroundImg.onload = function () {
+                    context.drawImage(backgroundImg, 0, 0, 300, 450);
+                    callback && callback.call(this);
+                };
+            }
+        };
+        var drawImage = function (x, y) {
+            context.clearRect(0, 0, imageCanvas.width, imageCanvas.height);
+            drawTpl(function () {
+                imageCanvas.style.cursor = 'move';
+                if (customUrl) {
+                    if (customImage) {
+                        context.globalCompositeOperation = 'destination-over';
+                        var height = (300 / customImage.width) * customImage.height;
+                        context.drawImage(customImage, x, y, 300, height);
+                    } else {
+                        customImage = new Image();
+                        customImage.src = customUrl;
+                        customImage.onload = function () {
+                            //指新旧图形都显示，把旧图形显示在上层
+                            context.globalCompositeOperation = 'destination-over';
+                            var height = (300 / customImage.width) * customImage.height;
+                            context.drawImage(customImage, x, y, 300, height);
+                        };
+                    }
+                }
+            });
+        };
+        drawTpl();
+
+        var takePicture = document.querySelector('#takePicture');
+        //选图
+        takePicture.onchange = function (event) {
+            // Get a reference to the taken picture or chosen file
+            var files = event.target.files,
+                    file;
+//            alert(1);
+            if (files && files.length > 0) {
+                file = files[0];
+                try {
+                    // Fallback if createObjectURL is not supported
+                    var fileReader = new FileReader();
+                    fileReader.onload = function (event) {
+                        customUrl = event.target.result;
+                        drawImage(0, 0);
+                    };
+                    fileReader.readAsDataURL(file);
+                }
+                catch (e) {
+                    var error = document.querySelector("#error");
+                    if (error) {
+                        error.innerHTML = "Neither createObjectURL or FileReader are supported";
+                    }
+                }
+            }
+        };
+        document.getElementById('getImage').onclick = function () {
+            document.getElementById('preview').src = imageCanvas.toDataURL("image/png");
+        };
+        var startX, startY, currentX, currentY;
+        var touchStart = function (event) {
+            event.preventDefault();
+            if (!event.touches.length) return;
+            var touch = event.touches[0];
+            startX = touch.pageX;
+            startY = touch.pageY;
+        };
+        var touchMove = function (event) {
+            event.preventDefault();
+            if (!event.touches.length) return;
+            var touch = event.touches[0];
+            var x = touch.pageX - startX;
+            var y = touch.pageY - startY;
+            drawImage(x, y);
+        };
+        var touchEnd = function (event) {
+//            event.preventDefault();
+//            if (!event.touches.length) return;
+//            var touch = event.touches[0];
+        };
+        imageCanvas.addEventListener('touchstart', touchStart, false);
+        imageCanvas.addEventListener('touchmove', touchMove, false);
+        imageCanvas.addEventListener('touchend', touchEnd, false);
+    })();
+</script>
+</body>
+</html>
