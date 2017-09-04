@@ -9,7 +9,7 @@ module.exports = function (grunt) {
             },
             basic: {
                 files: {
-                    'build/seed.js': ['src/seed/src/singer.js', 'src/seed/src/lang/*.js', 'src/seed/src/*.js', 'src/seed/src/loader/*.js']
+                    'dist/seed.js': ['src/seed/src/singer.js', 'src/seed/src/lang/*.js', 'src/seed/src/*.js', 'src/seed/src/loader/*.js']
                 }
             }
         },
@@ -20,7 +20,7 @@ module.exports = function (grunt) {
             },
             seed: {
                 src: ['src/seed/src/singer.js', 'src/seed/src/lang/*.js', 'src/seed/src/*.js', 'src/seed/src/loader/*.js'],
-                dest: 'build/seed.min.js'
+                dest: 'dist/seed.min.js'
             }
 //            ,list: {
 //                files: [
