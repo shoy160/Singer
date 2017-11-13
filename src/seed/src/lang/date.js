@@ -4,68 +4,70 @@
 (function (S) {
     var AP = Date.prototype;
     AP.addDays = AP.addDays || function (days) {
-            this.setDate(this.getDate() + days);
-            return this;
-        };
+        this.setDate(this.getDate() + days);
+        return this;
+    };
     var weeks = ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
     AP.format = AP.format || function (strFormat) {
-            if (strFormat === 'soon' || strFormat === 'week') {
-                var left = this.left();
-                console.log(left);
-                if (left.dd < 5) {
-                    var str = '';
-                    var dd = S.now().getDate() - this.getDate();
-                    if (left.dd == 0 && dd != 0) {
-                        left.status = dd < 0;
-                        left.dd = 1;
-                    }
-                    if (left.dd > 0) {
-                        if (left.dd == 1)
-                            return (left.status ? "明天" : "昨天") + this.format(' hh:mm');
-                        if (strFormat == 'week') {
-                            return weeks[this.getDay()];
-                        } else {
-                            str = left.dd + '天';
-                        }
-                    } else if (left.hh > 0) {
-                        str = left.hh + '小时';
-                    } else if (left.mm > 0) {
-                        str = left.mm + '分钟';
-                    } else if (left.ss > 10) {
-                        str = left.ss + '秒';
+        if (strFormat === 'soon' || strFormat === 'week') {
+            var left = this.left();
+            console.log(left);
+            if (left.dd < 5) {
+                var str = '';
+                var dd = S.now().getDate() - this.getDate();
+                if (left.dd == 0 && dd != 0) {
+                    left.status = dd < 0;
+                    left.dd = 1;
+                }
+                if (left.dd > 0) {
+                    if (left.dd == 1)
+                        return (left.status ? "明天" : "昨天") + this.format(' hh:mm');
+                    if (strFormat == 'week') {
+                        return weeks[this.getDay()];
                     } else {
-                        return '刚刚';
+                        str = left.dd + '天';
                     }
-                    return str + (left.status ? '后' : '前');
+                } else if (left.hh > 0) {
+                    str = left.hh + '小时';
+                } else if (left.mm > 0) {
+                    str = left.mm + '分钟';
+                } else if (left.ss > 10) {
+                    str = left.ss + '秒';
+                } else {
+                    return '刚刚';
                 }
-                strFormat = 'yyyy-MM-dd';
+                return str + (left.status ? '后' : '前');
             }
-            if (strFormat === "date")
-                return this;
-            var o = {
-                "M+": this.getMonth() + 1,
-                "d+": this.getDate(),
-                "h+": this.getHours(),
-                "m+": this.getMinutes(),
-                "s+": this.getSeconds(),
-                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
-                "S": this.getMilliseconds() //毫秒
-            };
-            if (/(y+)/.test(strFormat))
-                strFormat = strFormat.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-            for (var k in o) {
-                if (new RegExp("(" + k + ")").test(strFormat)) {
-                    strFormat =
-                        strFormat.replace(RegExp.$1, (RegExp.$1.length == 1) ?
-                            (o[k]) :
-                            (("00" + o[k]).substr(("" + o[k]).length)));
-                }
-            }
-            return strFormat;
+            strFormat = 'yyyy-MM-dd';
+        }
+        if (strFormat === "date")
+            return this;
+        var o = {
+            "M+": this.getMonth() + 1,
+            "d+": this.getDate(),
+            "h+": this.getHours(),
+            "m+": this.getMinutes(),
+            "s+": this.getSeconds(),
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
         };
-    AP.left = function () {
-        var arr = {status: true};
-        var nDifference = this - (new Date());
+        if (/(y+)/.test(strFormat))
+            strFormat = strFormat.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o) {
+            if (new RegExp("(" + k + ")").test(strFormat)) {
+                strFormat =
+                    strFormat.replace(RegExp.$1, (RegExp.$1.length == 1) ?
+                        (o[k]) :
+                        (("00" + o[k]).substr(("" + o[k]).length)));
+            }
+        }
+        return strFormat;
+    };
+    AP.left = function (date) {
+        var arr = {
+            status: true
+        };
+        var nDifference = this - (date ? date : new Date());
         if (nDifference < 0) {
             arr.status = false;
             nDifference = Math.abs(nDifference);
@@ -129,10 +131,11 @@
         /**
          * 计算剩余时间
          * @param date
+         * @param begin 默认当前时间
          * @returns {*}
          */
-        leftTime: function (date) {
-            return date.left();
+        leftTime: function (date, begin) {
+            return date.left(begin);
         }
     });
 })(SINGER);

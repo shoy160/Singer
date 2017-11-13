@@ -11,7 +11,7 @@
             border: solid 1px #009900;
         }
     </style>
-    <script src="../build_singer/seed.js" data-config="{combine:false}"></script>
+    <script src="../dist/kissy/seed.js" data-config="{combine:false}"></script>
 </head>
 <body>
 <div id="anim-el"></div>
@@ -19,18 +19,18 @@
     require(["anim"], function (Anim) {
         // 初始化动画实例
         var animIns = new Anim('#anim-el',
-                // 动画目标样式
-                {
-                    'background-color': '#fcc',
-                    'border-width': '5px'
-                },
-                {
-                    duration: 5,            // 动画时长，秒
-                    easing: 'bounceOut',     // 动画特效
-                    complete: function () {   // 动画结束的回调
-                        alert('动画结束');
-                    }
-                });
+            // 动画目标样式
+            {
+                'background-color': '#fcc',
+                'border-width': '5px'
+            },
+            {
+                duration: 5,            // 动画时长，秒
+                easing: 'bounceOut',     // 动画特效
+                complete: function () {   // 动画结束的回调
+                    alert('动画结束');
+                }
+            });
 
         // 开始执行动画
         animIns.run();
