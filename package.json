@@ -10,7 +10,7 @@
     "webpack-cli": "^3.1.2"
   },
   "description": "Singer\r ======",
-  "main": "index.js",
+  "main": "./src/singer.js",
   "dependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

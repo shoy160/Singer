@@ -10,7 +10,7 @@ var self = window,
         error: 40
     };
 
-var singer = {
+const singer = {
     __BUILD_TIME: '2018-11-02',
     Version: '2.0.1',
     Env: {

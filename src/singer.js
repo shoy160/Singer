@@ -10,3 +10,6 @@ export * from './lang/object'
 export * from './lang/array'
 export * from './lang/json'
 export * from './lang/function'
+export * from './lang/date'
+
+export * from './loader/load-script'
