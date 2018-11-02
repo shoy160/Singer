@@ -1,7 +1,7 @@
 /**
  * Date Model
  */
-import {
+import singer, {
     isDate,
     isNumber,
     isString
@@ -16,7 +16,6 @@ var weeks = ['星期天', '星期一', '星期二', '星期三', '星期四', '�
 AP.format = AP.format || function (strFormat) {
     if (strFormat === 'soon' || strFormat === 'week') {
         var left = this.left();
-        console.log(left);
         if (left.dd < 5) {
             var str = '';
             var dd = now().getDate() - this.getDate();
@@ -72,12 +71,12 @@ AP.left = function (date) {
     var arr = {
         status: true
     };
+    date = parseDate(date)
     var nDifference = this - (date ? date : new Date());
     if (nDifference < 0) {
         arr.status = false;
         nDifference = Math.abs(nDifference);
     }
-    //console.log(nDifference);
     var iDays = nDifference / (1000 * 60 * 60 * 24);
     arr.dd = iDays > 1 ? parseInt(iDays) : 0;
     var temp = iDays - arr.dd;
@@ -94,6 +93,25 @@ AP.left = function (date) {
     arr.ms = hh > 1 ? parseInt(hh) : 0;
     return arr;
 };
+/**
+ * 转换时间
+ * @param {*} date 
+ */
+export const parseDate = date => {
+    if (isDate(date) || !date)
+        return date
+    try {
+        if (isString(date) && /Date\((\d+)\)/gi.test(date)) {
+            date = new Date(RegExp.$1 * 1);
+        }
+        if (isNumber(date) || isString(date)) {
+            return new Date(date)
+        }
+    } catch (e) {
+        singer.getLogger().error(`${date} parse to date error`)
+        return date
+    }
+}
 /**
  * 当前时间戳
  */
@@ -114,6 +132,7 @@ export const now = () => {
  * @returns {*}
  */
 export const addDays = (date, days) => {
+    date = parseDate(date)
     if (!isDate(date)) return now();
     days = (isNumber(days) ? days : 0);
     return new Date(date.addDays(days));
@@ -125,9 +144,7 @@ export const addDays = (date, days) => {
  * @returns {*}
  */
 export const formatDate = (date, strFormat) => {
-    if (isString(date) && /Date\((\d+)\)/gi.test(date)) {
-        date = new Date(RegExp.$1 * 1);
-    }
+    date = parseDate(date)
     if (!isDate(date)) return date;
     strFormat = strFormat || "yyyy-MM-dd";
     return date.format(strFormat);
@@ -139,5 +156,6 @@ export const formatDate = (date, strFormat) => {
  * @returns {*}
  */
 export const leftTime = (date, begin) => {
+    date = parseDate(date)
     return date.left(begin)
 }

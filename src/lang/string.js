@@ -120,7 +120,6 @@ export const endsWith = (str, suffix) => {
  * @returns {*}
  */
 export const format = (str, ...args) => {
-    console.log(args)
     if (args.length <= 0) return str || EMPTY;
     var result = str,
         reg;

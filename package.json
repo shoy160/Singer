@@ -1,6 +1,6 @@
 {
   "name": "singerjs",
-  "version": "2.0.1",
+  "version": "1.0.2",
   "devDependencies": {
     "autoprefixer": "^9.3.1",
     "babel-core": "^6.26.3",
@@ -38,5 +38,9 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
+  ],
+  "files": [
+    "src",
+    "dist"
   ]
 }

@@ -122,7 +122,7 @@ export const config = (configName, configValue) => {
     return r;
 }
 
-export const log = (msg, cat, logger) => {
+const _log = (msg, cat, logger) => {
     if (!singer.Config.debug) return undefined;
     if ((loggerLevel[singer.Config.loggerLevel] || 1000) > loggerLevel[cat == 'log' ? 'debug' : cat])
         return "min level";
@@ -146,7 +146,7 @@ export const getLogger = logger => {
             continue;
         (function (obj, cat) {
             obj[cat] = function (msg) {
-                return log(msg, cat, logger);
+                return _log(msg, cat, logger);
             };
         })(obj, cat);
     }
