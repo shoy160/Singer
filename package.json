@@ -1,32 +1,21 @@
 {
   "name": "singerjs",
-  "version": "0.2.5",
+  "version": "2.0.1",
   "devDependencies": {
-    "gulp": "~3.9.0",
-    "gulp-watch": "~4.2.4",
-    "gulp-concat": "~2.5.2",
-    "gulp-clean": "~0.3.1",
-    "gulp-less": "~3.0.3",
-    "gulp-uglify": "~1.2.0",
-    "gulp-minify-css": "~1.2.1",
-    "gulp-rename": "~1.2.2",
-    "gulp-imagemin": "~2.3.0",
-    "imagemin-pngquant": "~4.2.0",
-    "imagemin-jpegtran": "~4.3.1",
-    "imagemin-gifsicle": "~4.2.0",
-    "gulp-notify": "~2.2.0",
-    "gulp-cache": "~0.3.0",
-    "gulp-sourcemaps": "~1.5.2",
-    "gulp-autoprefixer": "~3.0.2",
-    "gulp-jshint": "~1.12.0",
-    "gulp-htmlmin": "~1.2.0",
-    "aggregate-bower": "^1.0.9"
+    "autoprefixer": "^9.3.1",
+    "babel-core": "^6.26.3",
+    "babel-loader": "7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "webpack": "^4.23.1",
+    "webpack-cli": "^3.1.2"
   },
   "description": "Singer\r ======",
   "main": "index.js",
   "dependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:dev": "webpack --mode development",
+    "build": "webpack --mode production"
   },
   "repository": {
     "type": "git",
@@ -40,5 +29,14 @@
   "bugs": {
     "url": "https://github.com/shoy160/Singer/issues"
   },
-  "homepage": "https://github.com/shoy160/Singer#readme"
+  "homepage": "https://github.com/shoy160/Singer#readme",
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
 }

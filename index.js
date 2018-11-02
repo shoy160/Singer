@@ -1,2 +1,5 @@
-module.exports = require('./src/singer');
-module.exports.version = require('./package.json').version;
+'use strict'
+
+import * as singer from './src/singer'
+// console.log(singer)
+export default window.SINGER = singer
