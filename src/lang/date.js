@@ -105,7 +105,7 @@ export const tick = Date.now || (() => {
  * @returns {Date}
  */
 export const now = () => {
-    return new Date(nowTick());
+    return new Date(tick());
 }
 /**
  * 添加天数
