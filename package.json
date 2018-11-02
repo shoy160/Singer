@@ -1,5 +1,5 @@
 {
-  "name": "singer",
+  "name": "singerjs",
   "version": "0.2.5",
   "devDependencies": {
     "gulp": "~3.9.0",
@@ -21,5 +21,24 @@
     "gulp-jshint": "~1.12.0",
     "gulp-htmlmin": "~1.2.0",
     "aggregate-bower": "^1.0.9"
-  }
+  },
+  "description": "Singer\r ======",
+  "main": "index.js",
+  "dependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shoy160/Singer.git"
+  },
+  "keywords": [
+    "singer"
+  ],
+  "author": "shoy160",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shoy160/Singer/issues"
+  },
+  "homepage": "https://github.com/shoy160/Singer#readme"
 }
