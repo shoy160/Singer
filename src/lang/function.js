@@ -7,6 +7,7 @@ import {
     isString,
     getLogger
 } from "../utils/index"
+var logger = getLogger('lang.function')
 
 export const later = (method, time, isInterval, context, data) => {
     var timer,
@@ -15,7 +16,7 @@ export const later = (method, time, isInterval, context, data) => {
     if (isString(method))
         method = context[method];
     if (!method) {
-        getLogger().error("fn is undefined");
+        logger.error("fn is undefined");
         return
     }
     f = function () {

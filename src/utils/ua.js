@@ -188,7 +188,15 @@ function getDescriptorFromUserAgent(ua) {
          * @type Number
          * @member SINGER.UA
          */
-        nodejs: undefined
+        nodejs: undefined,
+        /**
+         * 支付宝
+         */
+        alipay: undefined,
+        /**
+         * 微信
+         */
+        wechat: undefined
     };
 
     // ejecta
@@ -337,6 +345,12 @@ function getDescriptorFromUserAgent(ua) {
             os = 'rhino';
         }
     }
+    if ((m = ua.match(/MicroMessenger\/([^\s]*)/)) && m[1]) {
+        UA['wechat'] = numberify(m[1])
+    }
+    if ((m = ua.match(/AlipayClient\/([\d.]*)/)) && m[1]) {
+        UA['alipay'] = numberify(m[1])
+    }
 
     UA.os = os;
     UA.core = UA.core || core;
@@ -359,7 +373,7 @@ if (typeof process === 'object') {
 }
 
 // use by analysis tools in nodejs
-UA.getDescriptorFromUserAgent = getDescriptorFromUserAgent;
+// UA.getDescriptorFromUserAgent = getDescriptorFromUserAgent;
 
 export {
     UA

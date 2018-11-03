@@ -9,10 +9,20 @@
 </head>
 
 <body>
+    <div id="userAgent">
+
+    </div>
     <script src="../dist/singer.js"></script>
     <script>
-        var logger = SINGER.getLogger('demo');
-        logger.info('test')
+        (function (S) {
+            var logger = S.getLogger('demo')
+            logger.info(S.formatDate('2018-10-28 10:50', 'week'))
+            var html = '<p>' + window.navigator.userAgent + '</p>';
+            for (var key in S.UA) {
+                html += '<p>' + key + ':' + S.UA[key] + '</p>'
+            }
+            document.getElementById('userAgent').innerHTML = html;
+        })(SINGER)
     </script>
 </body>
 

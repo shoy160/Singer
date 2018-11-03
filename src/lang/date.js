@@ -1,35 +1,78 @@
 /**
  * Date Model
  */
-import singer, {
+import {
     isDate,
     isNumber,
-    isString
+    isString,
+    getLogger
 } from '../utils/index'
-
+const weeks = ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+var logger = getLogger('lang.date')
 var AP = Date.prototype;
 AP.addDays = AP.addDays || function (days) {
     this.setDate(this.getDate() + days);
     return this;
 };
-var weeks = ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+
+/**
+ * 相差天数
+ */
+AP.differDate = function (date) {
+    date = parseDate(date)
+    var currentDate = new Date(this.getFullYear(), this.getMonth() + 1, this.getDate());
+    var targetDate = new Date(date.getFullYear(), date.getMonth() + 1, date.getDate());
+    var diff = currentDate - targetDate;
+    logger.debug(`diff:${diff}`)
+    return diff / (1000 * 60 * 60 * 24);
+};
+
+/**
+ * 日期对比
+ */
+AP.left = function (date) {
+    var arr = {
+        status: true,
+    };
+    date = parseDate(date)
+    var nDifference = this - (date ? date : new Date());
+    if (nDifference < 0) {
+        arr.status = false;
+        nDifference = Math.abs(nDifference);
+    }
+    var iDays = nDifference / (1000 * 60 * 60 * 24);
+    arr.dd = iDays > 1 ? parseInt(iDays) : 0;
+    var temp = iDays - arr.dd;
+    var hh = temp * 24;
+    arr.hh = hh > 1 ? parseInt(hh) : 0;
+    temp = temp * 24 - arr.hh;
+    hh = temp * 60;
+    arr.mm = hh > 1 ? parseInt(hh) : 0;
+    temp = temp * 60 - arr.mm;
+    hh = temp * 60;
+    arr.ss = hh > 1 ? parseInt(hh) : 0;
+    temp = temp * 60 - arr.ss;
+    hh = temp * 1000;
+    arr.ms = hh > 1 ? parseInt(hh) : 0;
+    return arr;
+};
+
+/**
+ * 日期格式化
+ */
 AP.format = AP.format || function (strFormat) {
     if (strFormat === 'soon' || strFormat === 'week') {
         var left = this.left();
-        if (left.dd < 5) {
+        var leftDay = Math.abs(this.differDate(now()))
+        if (leftDay < 5) {
             var str = '';
-            var dd = now().getDate() - this.getDate();
-            if (left.dd == 0 && dd != 0) {
-                left.status = dd < 0;
-                left.dd = 1;
-            }
-            if (left.dd > 0) {
-                if (left.dd == 1)
+            if (leftDay > 0) {
+                if (leftDay == 1)
                     return (left.status ? "明天" : "昨天") + this.format(' hh:mm');
                 if (strFormat == 'week') {
                     return weeks[this.getDay()];
                 } else {
-                    str = left.dd + '天';
+                    str = leftDay + '天';
                 }
             } else if (left.hh > 0) {
                 str = left.hh + '小时';
@@ -55,6 +98,7 @@ AP.format = AP.format || function (strFormat) {
         "q+": Math.floor((this.getMonth() + 3) / 3), //季度
         "S": this.getMilliseconds() //毫秒
     };
+    //替换年
     if (/(y+)/.test(strFormat))
         strFormat = strFormat.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
     for (var k in o) {
@@ -67,32 +111,7 @@ AP.format = AP.format || function (strFormat) {
     }
     return strFormat;
 };
-AP.left = function (date) {
-    var arr = {
-        status: true
-    };
-    date = parseDate(date)
-    var nDifference = this - (date ? date : new Date());
-    if (nDifference < 0) {
-        arr.status = false;
-        nDifference = Math.abs(nDifference);
-    }
-    var iDays = nDifference / (1000 * 60 * 60 * 24);
-    arr.dd = iDays > 1 ? parseInt(iDays) : 0;
-    var temp = iDays - arr.dd;
-    var hh = temp * 24;
-    arr.hh = hh > 1 ? parseInt(hh) : 0;
-    temp = temp * 24 - arr.hh;
-    hh = temp * 60;
-    arr.mm = hh > 1 ? parseInt(hh) : 0;
-    temp = temp * 60 - arr.mm;
-    hh = temp * 60;
-    arr.ss = hh > 1 ? parseInt(hh) : 0;
-    temp = temp * 60 - arr.ss;
-    hh = temp * 1000;
-    arr.ms = hh > 1 ? parseInt(hh) : 0;
-    return arr;
-};
+
 /**
  * 转换时间
  * @param {*} date 
@@ -108,7 +127,7 @@ export const parseDate = date => {
             return new Date(date)
         }
     } catch (e) {
-        singer.getLogger().error(`${date} parse to date error`)
+        logger.error(`${date} parse to date error`, e)
         return date
     }
 }
