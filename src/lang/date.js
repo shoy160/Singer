@@ -7,7 +7,7 @@ import {
     isString,
     getLogger
 } from '../utils/index'
-const weeks = ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+var weeks = ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
 var logger = getLogger('lang.date')
 var AP = Date.prototype;
 AP.addDays = AP.addDays || function (days) {

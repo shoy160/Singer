@@ -12,9 +12,10 @@
     <div id="userAgent">
 
     </div>
-    <script src="../dist/singer.js"></script>
+    <script src="../dist/singer.min.js"></script>
     <script>
         (function (S) {
+            S.config('loggerLevel', 'info')
             var logger = S.getLogger('demo')
             logger.info(S.formatDate('2018-10-28 10:50', 'week'))
             var html = '<p>' + window.navigator.userAgent + '</p>';
@@ -25,5 +26,4 @@
         })(SINGER)
     </script>
 </body>
-
 </html>

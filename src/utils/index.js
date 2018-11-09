@@ -10,7 +10,7 @@ var self = window,
         error: 40
     };
 
-const singer = {
+var singer = {
     __BUILD_TIME: '2018-11-02',
     Version: '2.0.1',
     Env: {
@@ -122,7 +122,7 @@ export const config = (configName, configValue) => {
     return r;
 }
 
-const _log = (msg, cat, logger) => {
+var _log = (msg, cat, logger) => {
     if (!singer.Config.debug) return undefined;
     if ((loggerLevel[singer.Config.loggerLevel] || 1000) > loggerLevel[cat == 'log' ? 'debug' : cat])
         return "min level";

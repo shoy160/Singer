@@ -50,7 +50,7 @@ export const uri = uri => {
 /**
  * cookie操作
  */
-const cookie = {
+var cookie = {
     set(name, value, minutes, domain) {
         if ("string" !== typeof name || "" === trim(name)) return;
         var c = name + '=' + encodeURI(value);
