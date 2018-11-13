@@ -4,7 +4,7 @@
 import {
     isUndefined,
     isFunction
-} from '../utils/index'
+} from '../utils'
 
 import {
     keys
@@ -20,7 +20,7 @@ export const each = (object, fn, context) => {
     if (object) {
         var key,
             val,
-            keys,
+            __keys,
             i = 0,
             length = object && object.length,
             isObj = isUndefined(length) || isFunction(object);
@@ -28,9 +28,9 @@ export const each = (object, fn, context) => {
         context = context || null;
 
         if (isObj) {
-            keys = keys(object);
-            for (; i < keys.length; i++) {
-                key = keys[i];
+            __keys = keys(object);
+            for (; i < __keys.length; i++) {
+                key = __keys[i];
                 if (fn.call(context, object[key], key, object) === FALSE) {
                     break;
                 }

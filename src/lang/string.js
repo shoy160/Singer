@@ -6,7 +6,7 @@ import {
     isString,
     isObject,
     isUndefined
-} from "../utils/index";
+} from "../utils";
 var RE_TRIM = /^[\s\xa0]+|[\s\xa0]+$/g,
     _trim = String.prototype.trim,
     SUBSTITUTE_REG = /\\?\{([^{}]+)\}/g,
@@ -26,7 +26,7 @@ export const lenCn = str => {
 export const subCn = (str, num, strip) => {
     if (lenCn(str) <= num) return str.toString();
     for (var i = 0; i < str.length; i++) {
-        if (lenCn(this.substr(0, i)) >= num) {
+        if (lenCn(str.substr(0, i)) >= num) {
             return str.substr(0, i) + (strip || "...");
         }
     }

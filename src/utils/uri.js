@@ -5,7 +5,7 @@
 import {
     isObject,
     isArray
-} from './index'
+} from './seed'
 
 import {
     each
@@ -23,7 +23,7 @@ import {
     trim
 } from '../lang/string'
 
-var splitPathRe = /^(\/?)([\s\S]+\/(?!$)|\/)?((?:\.{1,2}$|[\s\S]+?)?(\.[^.\/]*)?)$/;
+const splitPathRe = /^(\/?)([\s\S]+\/(?!$)|\/)?((?:\.{1,2}$|[\s\S]+?)?(\.[^.\/]*)?)$/;
 /**
  * 获取页面参数
  * @param uri

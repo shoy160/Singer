@@ -6,7 +6,7 @@
 import {
     isString,
     getLogger
-} from "../utils/index"
+} from "../utils"
 var logger = getLogger('lang.function')
 
 export const later = (method, time, isInterval, context, data) => {

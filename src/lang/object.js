@@ -5,7 +5,7 @@ import {
     isArray,
     isObject,
     isFunction
-} from "../utils/index"
+} from "../utils"
 
 var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
     hasEnumBug = !({
@@ -25,7 +25,7 @@ function _mixInternal(target, resource, overwrite, whiteList, deep, cache) {
     if (!resource || !target) {
         return resource;
     }
-    var i, p, keys, len;
+    var i, p, __keys, len;
 
     // 记录循环标志
     resource[MIX_CIRCULAR_DETECTION] = target;
@@ -34,10 +34,10 @@ function _mixInternal(target, resource, overwrite, whiteList, deep, cache) {
     cache.push(resource);
 
     // mix all properties
-    keys = keys(resource);
-    len = keys.length;
+    __keys = keys(resource);
+    len = __keys.length;
     for (i = 0; i < len; i++) {
-        p = keys[i];
+        p = __keys[i];
         if (p !== MIX_CIRCULAR_DETECTION) {
             // no hasOwnProperty judge!
             _mix(p, target, resource, overwrite, whiteList, deep, cache);
@@ -151,7 +151,7 @@ export const clone = (obj) => {
     for (var key in obj) {
         if (obj.hasOwnProperty(key) && objClone[key] != obj[key]) {
             if (typeof (obj[key]) == 'object') {
-                objClone[key] = obj[key].clone();
+                objClone[key] = clone(obj[key]);
             } else {
                 objClone[key] = obj[key];
             }

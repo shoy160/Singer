@@ -1,17 +1,24 @@
 /**
  * 终端识别
  */
-/*global process*/
-import singer from './index'
+import {
+    isUndefined,
+    getLogger
+} from './seed'
 
-var win = singer.Env.host,
-    doc = win.document,
-    navigator = win.navigator,
-    ua = navigator && navigator.userAgent || '';
+var EMPTY = '',
+    VERSION_PLACEHOLDER = '{{version}}',
+    IE_DETECT_RANGE = [6, 9],
+    IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><' + 's></s><![endif]-->',
+    logger = getLogger('utils/ua')
 
+/**
+ * convert '1.2.3.4' to 1.234
+ * @param {*} s 
+ */
 function numberify(s) {
     var c = 0;
-    // convert '1.2.3.4' to 1.234
+    // 
     return parseFloat(s.replace(/\./g, function () {
         return (c++ === 0) ? '.' : '';
     }));
@@ -38,18 +45,14 @@ function getIEVersion(ua) {
     return 0;
 }
 
-function getDescriptorFromUserAgent(ua) {
-    var EMPTY = '',
-        os,
+function getDescriptorFromUserAgent(ua, doc) {
+    var os,
         core = EMPTY,
         shell = EMPTY,
         m,
-        IE_DETECT_RANGE = [6, 9],
         ieVersion,
         v,
         end,
-        VERSION_PLACEHOLDER = '{{version}}',
-        IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><' + 's></s><![endif]-->',
         div = doc && doc.createElement('div'),
         s = [];
     /**
@@ -360,7 +363,16 @@ function getDescriptorFromUserAgent(ua) {
     return UA;
 }
 
-var UA = getDescriptorFromUserAgent(ua);
+export const UA = ua => {
+    var doc
+    try {
+        ua = ua || (window.navigator && window.navigator.userAgent || '')
+        doc = window.document
+    } catch (e) {
+        logger.warn(e.message)
+    }
+    return getDescriptorFromUserAgent(ua || '', doc)
+}
 
 // nodejs
 if (typeof process === 'object') {
@@ -371,39 +383,3 @@ if (typeof process === 'object') {
         UA.nodejs = numberify(nodeVersion);
     }
 }
-
-// use by analysis tools in nodejs
-// UA.getDescriptorFromUserAgent = getDescriptorFromUserAgent;
-
-export {
-    UA
-}
-
-//设置html的Css
-//    var browsers = [
-//            // browser core type
-//            'webkit',
-//            'trident',
-//            'gecko',
-//            'presto',
-//            // browser type
-//            'chrome',
-//            'safari',
-//            'firefox',
-//            'ie',
-//            'opera'
-//        ],
-//        documentElement = doc && doc.documentElement,
-//        className = '';
-//    if (documentElement) {
-//        S.each(browsers, function (key) {
-//            var v = UA[key];
-//            if (v) {
-//                className += ' ks-' + key + (parseInt(v) + '');
-//                className += ' ks-' + key;
-//            }
-//        });
-//        if (S.trim(className)) {
-//            documentElement.className = S.trim(documentElement.className + className);
-//        }
-//    }

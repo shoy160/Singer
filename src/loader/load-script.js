@@ -3,32 +3,22 @@
  * @author shoy
  * @date 2015/04/07
  */
-import singer from '../utils/index'
+import singer from '../utils/seed'
 import {
     isObject,
-    isUndefined
-} from '../utils/index'
-
-import {
-    ext
-} from '../utils/uri'
-import {
-    each
-} from '../lang/array'
-
-import {
+    isUndefined,
+    ext,
     UA
-} from '../utils/ua'
+} from '../utils'
+
 import {
-    startsWith
-} from '../lang/string'
-import {
+    each,
+    startsWith,
     later
-} from '../lang/function'
+} from '../lang'
+
 
 var MILLISECONDS_OF_SECOND = 1000,
-    doc = document,
-    headNode = doc.getElementsByTagName('head')[0] || doc.documentElement,
     jsCssCallbacks = {};
 
 export const currentScript = () => {
@@ -176,6 +166,8 @@ export const loadScript = (url, success, charset) => {
             end(1);
         }, timeout * MILLISECONDS_OF_SECOND);
     }
+    var doc = document,
+        headNode = doc.getElementsByTagName('head')[0] || doc.documentElement;
     if (css) {
         headNode.appendChild(node);
     } else {

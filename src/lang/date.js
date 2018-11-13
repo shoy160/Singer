@@ -6,7 +6,7 @@ import {
     isNumber,
     isString,
     getLogger
-} from '../utils/index'
+} from '../utils'
 var weeks = ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
 var logger = getLogger('lang.date')
 var AP = Date.prototype;
@@ -123,8 +123,11 @@ export const parseDate = date => {
         if (isString(date) && /Date\((\d+)\)/gi.test(date)) {
             date = new Date(RegExp.$1 * 1);
         }
-        if (isNumber(date) || isString(date)) {
+        if (isNumber(date)) {
             return new Date(date)
+        }
+        if (isString(date)) {
+            return new Date(date.replace('-', '/'))
         }
     } catch (e) {
         logger.error(`${date} parse to date error`, e)

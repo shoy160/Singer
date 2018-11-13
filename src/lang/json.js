@@ -7,7 +7,7 @@ import {
     isString,
     isObject,
     isNumber
-} from "../utils/index"
+} from "../utils"
 import {
     each
 } from './array'
