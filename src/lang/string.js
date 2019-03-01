@@ -163,3 +163,33 @@ export const padRight = (obj, len, ch) => {
         s += ch;
     return s
 }
+
+export const compare = (source, target, tmp = '<b style="color:red">{0}</b>') => {
+    if (source === target) return source;
+    if (!isString(source) || !isString(target)) return source;
+    var diff = EMPTY
+    var index = 0
+    var str = EMPTY
+    while (source.length > 0) {
+        var char = source[0]
+        if (target.length - 1 < index) {
+            str += format(tmp, diff + source)
+            return str
+        }
+        if (target[index] === char) {
+            if (diff != EMPTY) {
+                char = format(tmp, diff)
+                diff = EMPTY
+            }
+            str += char
+        } else {
+            diff += char
+        }
+        source = source.substr(1)
+        index++
+    }
+    if (diff != EMPTY) {
+        str += format(tmp, diff)
+    }
+    return str
+}

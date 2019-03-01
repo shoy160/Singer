@@ -16,7 +16,7 @@
   "main": "./lib/singer.js",
   "dependencies": {},
   "scripts": {
-    "test": "tap tests/*/*.js",
+    "test": "tap tests/lang/string.js",
     "compile": "babel -d lib/ src/",
     "prepublish": "npm run compile",
     "build": "webpack --config build/webpack.prod.js",
