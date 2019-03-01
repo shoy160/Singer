@@ -49,18 +49,18 @@ var singer = SINGER = window.SINGER = (function (undefined) {
         is: function (obj, type) {
             var isNan = {"NaN": 1, "Infinity": 1, "-Infinity": 1};
             type = type.toLowerCase();
-            if (type == "finite") {
+            if (type === "finite") {
                 return !isNan["hasOwnProperty"](+obj);
             }
-            if (type == "array") {
+            if (type === "array") {
                 return obj instanceof Array;
             }
             if (undefined === obj && type !== "undefined") return false;
-            return (type == "null" && obj === null) ||
-                (type == typeof obj && obj !== null) ||
-                (type == "object" && obj === Object(obj)) ||
-                (type == "array" && Array.isArray && Array.isArray(obj)) ||
-                Object.prototype.toString.call(obj).slice(8, -1).toLowerCase() == type;
+            return (type === "null" && obj === null) ||
+                (type === typeof obj && obj !== null) ||
+                (type === "object" && obj === Object(obj)) ||
+                (type === "array" && Array.isArray && Array.isArray(obj)) ||
+                Object.prototype.toString.call(obj).slice(8, -1).toLowerCase() === type;
         },
         /**
          * 布尔类型判断
@@ -141,7 +141,7 @@ var singer = SINGER = window.SINGER = (function (undefined) {
         },
         log: function (msg, cat, logger) {
             if (!S.Config.debug) return undefined;
-            if ((loggerLevel[S.Config.loggerLevel] || 1000) > loggerLevel[cat == 'log' ? 'debug' : cat])
+            if ((loggerLevel[S.Config.loggerLevel] || 1000) > loggerLevel[cat === 'log' ? 'debug' : cat])
                 return "min level";
             var matched = false;
             if (logger) {
@@ -274,69 +274,72 @@ var singer = SINGER = window.SINGER = (function (undefined) {
  */
 (function (S) {
     var AP = Date.prototype;
+    var logger = S.getLogger('lang.date');
     AP.addDays = AP.addDays || function (days) {
-            this.setDate(this.getDate() + days);
-            return this;
-        };
+        this.setDate(this.getDate() + days);
+        return this;
+    };
     var weeks = ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
     AP.format = AP.format || function (strFormat) {
-            if (strFormat === 'soon' || strFormat === 'week') {
-                var left = this.left();
-                console.log(left);
-                if (left.dd < 5) {
-                    var str = '';
-                    var dd = S.now().getDate() - this.getDate();
-                    if (left.dd == 0 && dd != 0) {
-                        left.status = dd < 0;
-                        left.dd = 1;
-                    }
-                    if (left.dd > 0) {
-                        if (left.dd == 1)
-                            return (left.status ? "明天" : "昨天") + this.format(' hh:mm');
-                        if (strFormat == 'week') {
-                            return weeks[this.getDay()];
-                        } else {
-                            str = left.dd + '天';
-                        }
-                    } else if (left.hh > 0) {
-                        str = left.hh + '小时';
-                    } else if (left.mm > 0) {
-                        str = left.mm + '分钟';
-                    } else if (left.ss > 10) {
-                        str = left.ss + '秒';
+        if (strFormat === 'soon' || strFormat === 'week') {
+            var left = this.left();
+            console.log(left);
+            if (left.dd < 5) {
+                var str = '';
+                var dd = S.now().getDate() - this.getDate();
+                if (left.dd == 0 && dd != 0) {
+                    left.status = dd < 0;
+                    left.dd = 1;
+                }
+                if (left.dd > 0) {
+                    if (left.dd == 1)
+                        return (left.status ? "明天" : "昨天") + this.format(' hh:mm');
+                    if (strFormat == 'week') {
+                        return weeks[this.getDay()];
                     } else {
-                        return '刚刚';
+                        str = left.dd + '天';
                     }
-                    return str + (left.status ? '后' : '前');
+                } else if (left.hh > 0) {
+                    str = left.hh + '小时';
+                } else if (left.mm > 0) {
+                    str = left.mm + '分钟';
+                } else if (left.ss > 10) {
+                    str = left.ss + '秒';
+                } else {
+                    return '刚刚';
                 }
-                strFormat = 'yyyy-MM-dd';
+                return str + (left.status ? '后' : '前');
             }
-            if (strFormat === "date")
-                return this;
-            var o = {
-                "M+": this.getMonth() + 1,
-                "d+": this.getDate(),
-                "h+": this.getHours(),
-                "m+": this.getMinutes(),
-                "s+": this.getSeconds(),
-                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
-                "S": this.getMilliseconds() //毫秒
-            };
-            if (/(y+)/.test(strFormat))
-                strFormat = strFormat.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-            for (var k in o) {
-                if (new RegExp("(" + k + ")").test(strFormat)) {
-                    strFormat =
-                        strFormat.replace(RegExp.$1, (RegExp.$1.length == 1) ?
-                            (o[k]) :
-                            (("00" + o[k]).substr(("" + o[k]).length)));
-                }
-            }
-            return strFormat;
+            strFormat = 'yyyy-MM-dd';
+        }
+        if (strFormat === "date")
+            return this;
+        var o = {
+            "M+": this.getMonth() + 1,
+            "d+": this.getDate(),
+            "h+": this.getHours(),
+            "m+": this.getMinutes(),
+            "s+": this.getSeconds(),
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
         };
-    AP.left = function () {
-        var arr = {status: true};
-        var nDifference = this - (new Date());
+        if (/(y+)/.test(strFormat))
+            strFormat = strFormat.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o) {
+            if (new RegExp("(" + k + ")").test(strFormat)) {
+                strFormat =
+                    strFormat.replace(RegExp.$1, (RegExp.$1.length == 1) ?
+                        (o[k]) :
+                        (("00" + o[k]).substr(("" + o[k]).length)));
+            }
+        }
+        return strFormat;
+    };
+    AP.left = function (date) {
+        var arr = {
+            status: true
+        };
+        var nDifference = this - (date ? date : new Date());
         if (nDifference < 0) {
             arr.status = false;
             nDifference = Math.abs(nDifference);
@@ -373,6 +376,28 @@ var singer = SINGER = window.SINGER = (function (undefined) {
             return new Date(S.nowTick());
         },
         /**
+         * 时间格式转换
+         * @param {*} date 
+         */
+        parseDate: function (date) {
+            if (S.isDate(date) || !date)
+                return date
+            try {
+                if (S.isString(date) && /Date\((\d+)\)/gi.test(date)) {
+                    date = new Date(RegExp.$1 * 1);
+                }
+                if (S.isNumber(date)) {
+                    return new Date(date)
+                }
+                if (S.isString(date)) {
+                    return new Date(date.replace('-', '/'))
+                }
+            } catch (e) {
+                logger.error(S.format('{0} parse to date error', date), e)
+                return date
+            }
+        },
+        /**
          * 添加天数
          * @param date
          * @param days
@@ -400,10 +425,12 @@ var singer = SINGER = window.SINGER = (function (undefined) {
         /**
          * 计算剩余时间
          * @param date
+         * @param begin 默认当前时间
          * @returns {*}
          */
-        leftTime: function (date) {
-            return date.left();
+        leftTime: function (date, begin) {
+            date = S.parseDate(date);
+            return date.left(begin);
         }
     });
 })(SINGER);
@@ -423,11 +450,14 @@ var singer = SINGER = window.SINGER = (function (undefined) {
             if (!method) {
                 S.error("fn is undefined");
             }
-            f = function () {
-                method.apply(context, data);
-            };
+            f = method;
+            if (context) {
+                f = function () {
+                    method.apply(context, data);
+                };
+            }
             timer = (isInterval ? setInterval(f, time) : setTimeout(f, time));
-            return{
+            return {
                 timer: timer,
                 isInterval: isInterval,
                 cancel: function () {
@@ -441,7 +471,6 @@ var singer = SINGER = window.SINGER = (function (undefined) {
         }
     });
 })(SINGER);
-
 /**
  * Json 序列化
  */

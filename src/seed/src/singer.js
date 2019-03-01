@@ -49,18 +49,18 @@ var singer = SINGER = window.SINGER = (function (undefined) {
         is: function (obj, type) {
             var isNan = {"NaN": 1, "Infinity": 1, "-Infinity": 1};
             type = type.toLowerCase();
-            if (type == "finite") {
+            if (type === "finite") {
                 return !isNan["hasOwnProperty"](+obj);
             }
-            if (type == "array") {
+            if (type === "array") {
                 return obj instanceof Array;
             }
             if (undefined === obj && type !== "undefined") return false;
-            return (type == "null" && obj === null) ||
-                (type == typeof obj && obj !== null) ||
-                (type == "object" && obj === Object(obj)) ||
-                (type == "array" && Array.isArray && Array.isArray(obj)) ||
-                Object.prototype.toString.call(obj).slice(8, -1).toLowerCase() == type;
+            return (type === "null" && obj === null) ||
+                (type === typeof obj && obj !== null) ||
+                (type === "object" && obj === Object(obj)) ||
+                (type === "array" && Array.isArray && Array.isArray(obj)) ||
+                Object.prototype.toString.call(obj).slice(8, -1).toLowerCase() === type;
         },
         /**
          * 布尔类型判断
@@ -141,7 +141,7 @@ var singer = SINGER = window.SINGER = (function (undefined) {
         },
         log: function (msg, cat, logger) {
             if (!S.Config.debug) return undefined;
-            if ((loggerLevel[S.Config.loggerLevel] || 1000) > loggerLevel[cat == 'log' ? 'debug' : cat])
+            if ((loggerLevel[S.Config.loggerLevel] || 1000) > loggerLevel[cat === 'log' ? 'debug' : cat])
                 return "min level";
             var matched = false;
             if (logger) {

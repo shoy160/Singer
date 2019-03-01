@@ -3,6 +3,7 @@
  */
 (function (S) {
     var AP = Date.prototype;
+    var logger = S.getLogger('lang.date');
     AP.addDays = AP.addDays || function (days) {
         this.setDate(this.getDate() + days);
         return this;
@@ -104,6 +105,28 @@
             return new Date(S.nowTick());
         },
         /**
+         * 时间格式转换
+         * @param {*} date 
+         */
+        parseDate: function (date) {
+            if (S.isDate(date) || !date)
+                return date
+            try {
+                if (S.isString(date) && /Date\((\d+)\)/gi.test(date)) {
+                    date = new Date(RegExp.$1 * 1);
+                }
+                if (S.isNumber(date)) {
+                    return new Date(date)
+                }
+                if (S.isString(date)) {
+                    return new Date(date.replace('-', '/'))
+                }
+            } catch (e) {
+                logger.error(S.format('{0} parse to date error', date), e)
+                return date
+            }
+        },
+        /**
          * 添加天数
          * @param date
          * @param days
@@ -135,6 +158,7 @@
          * @returns {*}
          */
         leftTime: function (date, begin) {
+            date = S.parseDate(date);
             return date.left(begin);
         }
     });

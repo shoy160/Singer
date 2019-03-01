@@ -14,11 +14,14 @@
             if (!method) {
                 S.error("fn is undefined");
             }
-            f = function () {
-                method.apply(context, data);
-            };
+            f = method;
+            if (context) {
+                f = function () {
+                    method.apply(context, data);
+                };
+            }
             timer = (isInterval ? setInterval(f, time) : setTimeout(f, time));
-            return{
+            return {
                 timer: timer,
                 isInterval: isInterval,
                 cancel: function () {
