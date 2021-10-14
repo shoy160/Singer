@@ -1,0 +1,404 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-overflow-scrolling: touch;
+  font-size: 12px;
+}
+header,
+section,
+footer,
+div,
+ul,
+ol,
+li,
+img,
+a,
+span,
+em,
+del,
+legend,
+center,
+strong,
+var,
+fieldset,
+form,
+label,
+dl,
+dt,
+dd,
+cite,
+input,
+hr,
+time,
+mark,
+code,
+figcaption,
+figure,
+textarea,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  // border:0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-user-select: auto;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+p {
+  margin: 0;
+}
+
+li {
+  list-style: none;
+}
+
+// 盒相关的CSS
+div {
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  // color: transparent;
+}
+::-webkit-scrollbar-thumb{
+  border-radius: 10px;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+  background: #535353;
+}
+::-webkit-scrollbar-track{
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+  // border-radius: 10px;
+  background: #EDEDED;
+}
+::-webkit-scrollbar-corner {
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+  background: #EDEDED;
+}
+
+.ant-table-hide-scrollbar::-webkit-scrollbar{
+  width: 0;
+  height: 0;
+}
+
+// 完全展开
+.expand {
+  min-height: 100%;
+  width: 100%;
+}
+
+// 定位
+.relative {
+  position: relative;
+}
+
+// 数值均从 1 递增到 100
+.generate-columns(100);
+
+.generate-columns(@n, @i: 1) when (@i =< @n) {
+  .m@{i} {
+    margin: @i*1px;
+  }
+
+  .ml@{i} {
+    margin-left: @i*1px;
+  }
+
+  .mr@{i} {
+    margin-right: @i*1px;
+  }
+
+  .mt@{i} {
+    margin-top: @i*1px;
+  }
+
+  .mb@{i} {
+    margin-bottom: @i*1px;
+  }
+
+  // Padding
+  .p@{i} {
+    padding: @i*1px;
+  }
+
+  .pl@{i} {
+    padding-left: @i*1px;
+  }
+
+  .pr@{i} {
+    padding-right: @i*1px;
+  }
+
+  .pt@{i} {
+    padding-top: @i*1px;
+  }
+
+  .pb@{i} {
+    padding-bottom: @i*1px;
+  }
+
+  // Height: rem
+  .h-@{i} {
+    height: @i*1px;
+  }
+
+  // Height: %
+  .h-pt-@{i} {
+    height: @i * 1%;
+  }
+
+  // Width: rem
+  .w-@{i} {
+    width: @i*1px;
+  }
+
+  // Width: %
+  .w-pt-@{i} {
+    width: @i * 1%;
+  }
+
+  .l-h-@{i} {
+    line-height: @i * 1px;
+  }
+
+  .generate-columns(@n, (@i + 1));
+}
+
+.generate-font(50);
+
+.generate-font(@n, @i: 12) when (@i =< @n) {
+  .f@{i} {
+    font-size: @i * 1px;
+  }
+  .generate-font(@n, (@i + 1));
+}
+
+@fw: 400, 500, 600,bold;
+
+each(@fw, {
+  .fw-@{value} {
+    font-weight: @value;
+  }
+});
+
+.mg-auto {
+  margin: auto;
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+// 布局方式
+// Float
+.f_l {
+  float: left;
+}
+
+.f_r {
+  float: right;
+}
+
+.text_l {
+  text-align: left;
+}
+
+.text_c {
+  text-align: center;
+}
+
+.text_r {
+  text-align: right;
+}
+
+.text_lt {
+  text-decoration: line-through;
+}
+
+.cl {
+  clear: both;
+  height: 0;
+  width: 0;
+}
+
+// clear float
+.cf:after {
+  clear: both;
+  content: ".";
+  display: block;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+.cf {
+  clear: both;
+}
+
+// Display inline-block
+.dl {
+  display: inline-block;
+}
+
+.db {
+  display: block;
+}
+
+// Display Flex
+.dflex {
+  display: flex;
+  align-items: center;
+  &.hc {
+    justify-content: center;
+  }
+  &.wrap{
+    flex-wrap: wrap;
+  }
+  .df_md {
+    flex: 1 1;
+  }
+  .df_lf,
+  .df_rf {
+    width: auto;
+  }
+}
+
+.df_hc_vc {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.df_hbt_vc {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.df_hba_vc {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.df_hl_vc {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.df_hr_vc {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.df_hr_vb {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.df_hr_vt {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.df_hc_vb {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.df_hc_vt {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.df_hl_vt {
+  display: flex;
+  align-items: flex-start;
+  justify-content: left;
+}
+
+// 溢出...
+.ell1 {
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ell2 {
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.ell3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.no-scroll {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.d-list {
+  margin: 30px 0;
+  background-color: #fff;
+}
+.d-cover {
+  width: 120px;
+  img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+  }
+}
+.d-actions{
+  text-align: right;
+}
+.d-action {
+  position: relative;
+  display: inline-block;
+  padding-right: 8px;
+  margin-right: 8px;
+  &::after {
+    content: ' ';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 1px;
+    height: 12px;
+    margin-top: -7px;
+    background-color: #f0f0f0;
+  }
+}
+
+.d-bind {
+  text-align: center;
+  margin: 8px 0;
+}

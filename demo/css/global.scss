@@ -1,0 +1,365 @@
+@use "sass:math";
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+p {
+  margin: 0;
+}
+
+li {
+  list-style: none;
+}
+
+// 盒相关的CSS
+div {
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+}
+
+img {
+  vertical-align: middle;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+// 完全展开
+.expand {
+  min-height: 100%;
+  width: 100%;
+}
+
+.relative {
+  position: relative;
+}
+
+// 数值均从 1 递增到 100
+@for $i from 1 to 101 {
+  $_value: #{$i};
+  $_rem: math.div($i, 37.5);
+  // Margin
+  .m#{$_value} {
+    margin: #{$_rem}rem;
+  }
+  .ml#{$_value} {
+    margin-left: #{$_rem}rem;
+  }
+  .mr#{$_value} {
+    margin-right: #{$_rem}rem;
+  }
+  .mt#{$_value} {
+    margin-top: #{$_rem}rem;
+  }
+  .mb#{$_value} {
+    margin-bottom: #{$_rem}rem;
+  }
+  // Padding
+  .p#{$_value} {
+    padding: #{$_rem}rem;
+  }
+  .pl#{$_value} {
+    padding-left: #{$_rem}rem;
+  }
+  .pr#{$_value} {
+    padding-right: #{$_rem}rem;
+  }
+  .pt#{$_value} {
+    padding-top: #{$_rem}rem;
+  }
+  .pb#{$_value} {
+    padding-bottom: #{$_rem}rem;
+  }
+  // Height: rem
+  .h-#{$_value} {
+    height: #{$_rem}rem;
+  }
+  // Height: %
+  .h-pt-#{$_value} {
+    height: #{$_value + '%'};
+  }
+  // Width: rem
+  .w-#{$_value} {
+    width: #{$_rem}rem;
+  }
+  .min-w-#{$_value} {
+    min-width: #{$_rem}rem;
+  }
+  // Width: %
+  .w-pt-#{$_value} {
+    width: #{$_value + '%'};
+  }
+
+  .l-h-#{$_value} {
+    line-height: #{$_rem}rem;
+  }
+}
+
+.mg-auto {
+  margin: auto;
+}
+
+// Font-Size
+@each $i in 52, 48, 42, 38, 36, 34, 32, 30, 28, 26, 24, 22, 20, 18, 17, 16, 14,
+  13, 12, 11, 10
+{
+  $_value: #{$i};
+  $_result: math.div($i, 37.5);
+  .f#{$_value} {
+    font-size: #{$_result}rem;
+  }
+}
+
+// Font-Weight
+@each $i in 300, 400, 500, bold {
+  $_value: #{$i};
+  .fw-#{$_value} {
+    font-weight: #{$_value};
+  }
+}
+
+// Border Text-indent Letter-Spacing
+@for $i from 1 to 21 {
+  $_rem: math.div($i, 37.5);
+  .bd-rd-#{$i} {
+    border-radius: #{$_rem}rem;
+  }
+  .text-indent-#{$i} {
+    text-indent: #{$_rem}rem;
+  }
+  .letter-spacing-#{$i} {
+    letter-spacing: #{$_rem}rem;
+  }
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+// 布局方式
+// Float
+.f_l {
+  float: left;
+}
+
+.text_l {
+  text-align: left;
+}
+
+.text_c {
+  text-align: center;
+  input {
+    text-align: center;
+  }
+}
+
+.text_r {
+  text-align: right;
+}
+
+.text_lt {
+  text-decoration: line-through;
+}
+
+.f_r {
+  float: right;
+}
+
+// clear float
+.cf:after {
+  clear: both;
+  content: '.';
+  display: block;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+.cf {
+  clear: both;
+}
+
+// Display inline-block
+.dl {
+  display: inline-block;
+}
+
+.db {
+  display: block;
+}
+
+// Display Flex
+.flex {
+  flex: 1;
+}
+
+.df_hc_vc {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.df_hbt_vc {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.df_hl_vc {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.df_hr_vc {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.df_hr_vb {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.df_hr_vt {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.df_hc_vb {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.df_hc_vt {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.df_hl_vt {
+  display: flex;
+  align-items: flex-start;
+  justify-content: left;
+}
+
+// 溢出...
+.of-hidden {
+  overflow: hidden;
+}
+
+.ell1 {
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ell2 {
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.ell3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.ell4 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+}
+
+.no-scroll {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+// px 转 rem
+@function px2rem($args) {
+  @return math.div($args, 37.5) * 1rem;
+}
+
+@function fontPx($args) {
+  @return $args * 1px;
+}
+
+// 字体颜色
+.color-white {
+  color: #fff;
+}
+
+.color-6 {
+  color: #666;
+}
+
+.color-9 {
+  color: #999;
+}
+
+.color-c {
+  color: #ccc;
+}
+
+.color-9c {
+  color: #9c9c9c;
+}
+
+.color-323232 {
+  color: #323232;
+}
+
+.color-bb9957 {
+  color: #bb9957;
+}
+
+.color-f-60 {
+  color: rgba($color: #fff, $alpha: 0.6);
+}
+// 背景
+.bgc-f {
+  background-color: #fff;
+}
+
+.bgc-btn {
+  background-color: #bb9957;
+}
+
+.card {
+  box-shadow: 0 px2rem(10) px2rem(20) 0 rgba(0, 0, 0, 0.06);
+  border-radius: px2rem(5);
+  overflow: hidden;
+}
+
+.rich-text {
+  font-size: px2rem(14);
+  font-weight: 300;
+  :deep(img) {
+    max-width: 100%;
+    height: auto;
+  }
+}
